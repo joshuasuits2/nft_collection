@@ -14,13 +14,9 @@ body {
   background-color: #141118;
   letter-spacing: 0.32px;
   color: #fff;
+  overflow-x: hidden;
 }
 
-.page-container {
-  width: 100%;
-  max-width: 1240px;
-  margin: 0 auto;
-}
 /* width */
 ::-webkit-scrollbar {
   width: 12px;

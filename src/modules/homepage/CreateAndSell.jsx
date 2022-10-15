@@ -64,15 +64,15 @@ const CreateAndSell = () => {
   return (
     <CreateAndSellStyles>
       <Heading>CREATE & SELL YOUR NFTs</Heading>
-      <div className="flex  mt-[75px] gap-x-[125px]">
+      <div className="flex mt-[75px] gap-x-[125px]">
         <div className="flex flex-[55%] flex-col">
           <h3 className="text-[20px] font-bold">
-            &ensp; Should You Invest In Non Fungible Tokens (NFT)?
+            Should You Invest In Non Fungible Tokens (NFT)?
           </h3>
           <p className="text-[14px] leading-[40px] font-[300] mt-[20px] font-['Montserrat']">
-            &ensp; After gaining momentum in 2017, NFTs (Non-Fungible Tokens)
-            have been proved instrumental in the development and growth of the
-            virtual world. This enabled land ownership in the virtual realm. The
+            After gaining momentum in 2017, NFTs (Non-Fungible Tokens) have been
+            proved instrumental in the development and growth of the virtual
+            world. This enabled land ownership in the virtual realm. The
             potential of virtual land economically is significant as it allows
             investors to construct a secure and solid business for online sales
             or advertising in the digital space. <br></br> With no sign of

@@ -1,13 +1,33 @@
-import React from "react";
-import "./styles/ExplorePage.scss";
+import React, { useRef, useState } from "react";
+import Partner from "../components/layout/Partner";
+import ExploreCollection from "../modules/explore/ExploreCollection";
+import LandingExplore from "../modules/explore/LandingExplore";
+import styled from "styled-components";
+import PageContainer from "../components/layout/PageContainer";
+import AllNFTs from "../modules/explore/AllNFTs";
+import Footer from "../components/layout/Footer";
+
+const ExplorePageStyles = styled.div`
+  width: 100%;
+  background: #141418;
+  background-size: cover;
+  background-position: top left;
+  padding: 0 !important;
+  width: 100%;
+`;
 
 const ExplorePage = () => {
+  const pageRefs = useRef({});
   return (
-    <div className="bg-[#141118] w-full">
-      <div className="page-container pt-[25px]">
-        <div className="general">Long time no see</div>
-      </div>
-    </div>
+    <ExplorePageStyles>
+      <LandingExplore pageRefs={pageRefs}></LandingExplore>
+      <PageContainer>
+        <Partner></Partner>
+        <ExploreCollection></ExploreCollection>
+        <AllNFTs pageRefs={pageRefs}></AllNFTs>
+        <Footer></Footer>
+      </PageContainer>
+    </ExplorePageStyles>
   );
 };
 

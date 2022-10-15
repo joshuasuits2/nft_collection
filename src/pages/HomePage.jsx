@@ -7,10 +7,11 @@ import NewItemsPage from "../modules/homepage/NewItemsPage";
 import TopCollectionPage from "../modules/homepage/TopCollectionPage";
 import CreateAndSell from "../modules/homepage/CreateAndSell";
 import Footer from "../components/layout/Footer";
+import PageContainer from "../components/layout/PageContainer";
 
 const HomePage = () => {
   return (
-    <div className="h-[4750px]">
+    <PageContainer>
       <LandingPage></LandingPage>
       <Partner></Partner>
       <TrendingCollection></TrendingCollection>
@@ -18,7 +19,7 @@ const HomePage = () => {
       <TopCollectionPage></TopCollectionPage>
       <CreateAndSell></CreateAndSell>
       <Footer></Footer>
-    </div>
+    </PageContainer>
   );
 };
 

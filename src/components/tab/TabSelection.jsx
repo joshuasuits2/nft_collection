@@ -5,6 +5,9 @@ import styled from "styled-components";
 
 const TabSelectionStyles = styled.div`
   .off {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: 0.5px solid #bb71fa;
     span {
       background: linear-gradient(180deg, #ddb9ff 0%, #a749f8 100%);
@@ -14,6 +17,9 @@ const TabSelectionStyles = styled.div`
     }
   }
   .on {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: linear-gradient(180deg, #ddb9ff 0%, #a749f8 100%);
     span {
       background: linear-gradient(
@@ -35,37 +41,37 @@ const TabSelection = () => {
         <Tab.List className="flex gap-[40px] mt-[25px]">
           <Tab>
             {({ selected }) => (
-              <button
+              <div
                 className={`w-[105px] h-[49px] font-[500] cursor-pointer rounded-lg ${
                   selected ? "on" : "off"
                 }`}
               >
                 <span>24h</span>
-              </button>
+              </div>
             )}
           </Tab>
 
           <Tab>
             {({ selected }) => (
-              <button
+              <div
                 className={`w-[105px] h-[49px] font-[500] cursor-pointer rounded-lg ${
                   selected ? "on" : "off"
                 }`}
               >
                 <span>A week</span>
-              </button>
+              </div>
             )}
           </Tab>
 
           <Tab>
             {({ selected }) => (
-              <button
+              <div
                 className={`w-[105px] h-[49px] font-[500] cursor-pointer rounded-lg ${
                   selected ? "on" : "off"
                 }`}
               >
                 <span>A month</span>
-              </button>
+              </div>
             )}
           </Tab>
         </Tab.List>

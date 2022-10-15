@@ -3,6 +3,9 @@ import styled from "styled-components";
 
 const InputStyle = styled.div`
   position: relative;
+  .search-input {
+    width: ${(props) => props.width || "300px"};
+  }
 `;
 
 const Input = ({
@@ -13,13 +16,13 @@ const Input = ({
   ...props
 }) => {
   return (
-    <InputStyle className={className}>
+    <InputStyle className={className} {...props}>
       <input
         type={type}
         kind={kind}
         placeholder={placeholder}
-        className="search-input w-[300px] h-[55px] border border-[#9b9b9bce] border-solid rounded-lg py-[14px] px-5 pr-[55px] outline-none bg-transparent font-light text-[14px] text-white tracking-[0.02em] 
-focus:border-purple-400 transition-all"
+        className={`search-input h-[55px] border border-[#9b9b9bce] border-solid rounded-lg py-[14px] px-5 pr-[55px] outline-none bg-transparent font-light text-[14px] text-white tracking-[0.02em] 
+focus:border-purple-400 transition-all`}
       />
       {kind === "search" && (
         <span className="absolute right-[23px] top-1/2 -translate-y-1/2">

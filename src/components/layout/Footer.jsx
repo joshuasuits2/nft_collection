@@ -5,6 +5,7 @@ import Input from "../input/Input";
 
 const FooterStyles = styled.div`
   margin-top: 150px;
+  padding-bottom: 100px;
   .line {
     background-image: linear-gradient(180deg, #b444ff 0%, #f582ff 100%);
   }
