@@ -156,7 +156,7 @@ const LandingExplore = ({ pageRefs }) => {
   function scrollIntoView(type) {
     pageRefs.current[type].scrollIntoView({
       behavior: "smooth",
-      block: "center",
+      block: "start",
       inline: "nearest",
       duration: "1000ms",
     });
