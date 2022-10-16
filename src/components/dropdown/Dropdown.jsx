@@ -12,7 +12,28 @@ const DropdownStyles = styled.div`
     background-clip: text;
     opacity: 1 !important;
   }
-
+  .list-border {
+    position: relative;
+    &:after {
+      z-index: 0;
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      background: linear-gradient(
+          93deg,
+          rgba(235, 235, 235, 0) -6.21%,
+          rgba(235, 235, 235, 0.33) -6.2%,
+          rgba(219, 219, 219, 0.14) 118.18%
+        )
+        border-box;
+      -webkit-mask: linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+    }
+  }
   .themeColor {
     background: linear-gradient(
       180deg,
@@ -34,51 +55,58 @@ const DropdownStyles = styled.div`
   }
 `;
 
-const Dropdown = ({ listArr = { listArr } }) => {
-  const [selectedPerson, setSelectedPerson] = useState(listArr[0]);
-  const [selectArrow, setSelectArrow] = useState(true);
+const Dropdown = ({ listArr, className = "" }) => {
+  const [selected, setSelected] = useState(listArr[0]);
   return (
     <DropdownStyles>
-      <div className="w-[180px] text-[15px] font-[500]">
-        <Listbox value={selectedPerson} onChange={setSelectedPerson}>
-          <Listbox.Button
-            className="relative border border-solid border-purple-400 rounded-lg w-full py-4 pl-5 pr-4 itemText text-start flex justify-between items-center"
-            onClick={() => setSelectArrow(false)}
-          >
-            {selectedPerson.name}
-            {selectArrow ? (
-              <ArrowUpDown state={true}></ArrowUpDown>
-            ) : (
-              <ArrowUpDown state={false}></ArrowUpDown>
-            )}
-          </Listbox.Button>
-          <Transition
-            as={Fragment}
-            leave="transition ease-in duration-100"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <Listbox.Options className="themeColor mt-[15px] border border-solid border-purple-400 px-2 pb-[10px] pt-[10px]">
-              {listArr.map((person) => (
-                <Listbox.Option className="" key={person.id} value={person}>
-                  {({ active }) => (
-                    <li className="w-full relative h-[50px] flex items-center ">
-                      <div
-                        className={`
-                  absolute
-                  option
-                  w-full h-full flex items-center 
-                 ${active ? "on" : "off"}`}
-                      ></div>
-                      <span className="itemText absolute pl-[13px]">
-                        {person.name}
-                      </span>
-                    </li>
-                  )}
-                </Listbox.Option>
-              ))}
-            </Listbox.Options>
-          </Transition>
+      <div className={`text-[15px] font-[500] ${className}`}>
+        <Listbox value={selected} onChange={setSelected}>
+          {({ open }) => (
+            <>
+              {open && (
+                <div>
+                  <Listbox.Button className="relative border border-solid border-purple-400 rounded-lg w-full py-4 pl-5 pr-4 itemText text-start flex justify-between items-center">
+                    {selected.name}
+                    <ArrowUpDown state={false}></ArrowUpDown>
+                  </Listbox.Button>
+                  <Transition
+                    as={Fragment}
+                    leave="transition ease-in duration-250"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <Listbox.Options className="themeColor mt-[15px] list-border px-2 pb-[10px] pt-[10px]">
+                      {listArr.map((item) => (
+                        <Listbox.Option key={item.id} value={item}>
+                          {({ active }) => (
+                            <div className="w-full relative h-[50px] flex items-center ">
+                              <div
+                                className={`
+                      absolute
+                      option
+                      z-10
+                      w-full h-full flex items-center
+                     ${active ? "on" : "off"}`}
+                              ></div>
+                              <span className="itemText absolute pl-[13px]">
+                                {item.name}
+                              </span>
+                            </div>
+                          )}
+                        </Listbox.Option>
+                      ))}
+                    </Listbox.Options>
+                  </Transition>
+                </div>
+              )}
+              {!open && (
+                <Listbox.Button className="relative border border-solid border-purple-400 rounded-lg w-full py-4 pl-5 pr-4 itemText text-start flex justify-between items-center ">
+                  {selected.name}
+                  <ArrowUpDown state={true}></ArrowUpDown>
+                </Listbox.Button>
+              )}
+            </>
+          )}
         </Listbox>
       </div>
     </DropdownStyles>
