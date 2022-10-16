@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Partner from "../components/layout/Partner";
 import ExploreCollection from "../modules/explore/ExploreCollection";
 import LandingExplore from "../modules/explore/LandingExplore";
@@ -18,6 +18,13 @@ const ExplorePageStyles = styled.div`
 
 const ExplorePage = () => {
   const pageRefs = useRef({});
+  useEffect(() => {
+    setTimeout(() => {
+      document.body.style.overflowY = "auto";
+    }, 2500);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+  document.body.style.overflowY = "hidden";
   return (
     <ExplorePageStyles>
       <LandingExplore pageRefs={pageRefs}></LandingExplore>
