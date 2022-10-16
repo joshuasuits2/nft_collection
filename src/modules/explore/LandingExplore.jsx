@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import PageContainer from "../../components/layout/PageContainer";
-import Partner from "../../components/layout/Partner";
 import planet_large from "../../assets/outside/planet_large.png";
 import planet_small from "../../assets/outside/planet_small.png";
 import general from "../../assets/outside/general.png";

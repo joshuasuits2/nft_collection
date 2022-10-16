@@ -35,6 +35,8 @@ const DropdownStyles = styled.div`
     }
   }
   .themeColor {
+    position: relative;
+    z-index: 999;
     background: linear-gradient(
       180deg,
       rgba(52, 51, 53, 0.5) 0%,
@@ -81,14 +83,11 @@ const Dropdown = ({ listArr, className = "" }) => {
                           {({ active }) => (
                             <div className="w-full relative h-[50px] flex items-center ">
                               <div
-                                className={`
-                      absolute
-                      option
-                      z-10
-                      w-full h-full flex items-center
-                     ${active ? "on" : "off"}`}
+                                className={`absolute option z-[100] w-full h-full flex items-center ${
+                                  active ? "on" : "off"
+                                }`}
                               ></div>
-                              <span className="itemText absolute pl-[13px]">
+                              <span className="itemText absolute z-[100] pl-[13px]">
                                 {item.name}
                               </span>
                             </div>

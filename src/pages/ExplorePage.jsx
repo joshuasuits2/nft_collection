@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import Partner from "../components/layout/Partner";
 import ExploreCollection from "../modules/explore/ExploreCollection";
 import LandingExplore from "../modules/explore/LandingExplore";

@@ -1,8 +1,8 @@
 import React from "react";
 import Dropdown from "../../../components/dropdown/Dropdown";
 import Heading from "../../../components/layout/Heading";
-import Blood_bat from "../../../assets/collection/Blood_bat.png";
-import verify from "../../../assets/outside/verify.png";
+import StatsCollection from "../../../components/layout/StatsCollection";
+import styled from "styled-components";
 
 const categories = [
   { id: 1, name: "All categories" },
@@ -22,13 +22,25 @@ const chains = [
   { id: 5, name: "Klaytn" },
 ];
 
+const CollectionStatsStyles = styled.div`
+  .stats-item:nth-child(odd) {
+    background-color: #1d1922;
+  }
+`;
+
 const CollectionStats = () => {
   return (
-    <>
+    <CollectionStatsStyles>
       <Heading alignItems="start">COLLECTION STATS</Heading>
-      <div className="mt-[25px] flex gap-x-10">
-        <Dropdown className="w-[180px]" listArr={categories}></Dropdown>
-        <Dropdown className="w-[150px]" listArr={chains}></Dropdown>
+      <div className="mt-[25px] mb-[101px] flex gap-x-10 relative">
+        <Dropdown
+          className="w-[180px] absolute top-0 left-0"
+          listArr={categories}
+        ></Dropdown>
+        <Dropdown
+          className="w-[150px] absolute left-[220px]"
+          listArr={chains}
+        ></Dropdown>
       </div>
       <div className="mt-[45px] font-[600] text-[14px]">
         <div className="header flex opacity-70">
@@ -43,32 +55,21 @@ const CollectionStats = () => {
           </div>
           <div className="flex-1 flex items-center justify-center">Sales</div>
         </div>
-        <div className="body flex mt-10 rounded-lg items-center justify-center bg-[#1D1922] h-20">
-          <div className="flex-1 flex items-center justify-center">1</div>
-          <div className="flex-[3] flex items-center">
-            <img
-              src={Blood_bat}
-              alt=""
-              className="w-[60px] h-[60px] object-cover rounded-[4px] mr-9"
-            />
-            <span className="mr-[10px]">Blood bats</span>
-            <img src={verify} alt="" className="w-4 h-4 object-cover" />
-          </div>
-          <div className="flex-1 flex items-center justify-center">
-            <span className="">691 ETH</span>
-          </div>
-          <div className="flex-1 flex items-center justify-center">
-            <span className=" text-[#1CFD76]">+124%</span>
-          </div>
-          <div className="flex-1 flex items-center justify-center text-[#FF910F]">
-            15.10 ETH
-          </div>
-          <div className="flex-1 flex items-center justify-center text-[#c88efe]">
-            43
-          </div>
+        {/* Data Collection */}
+        <div className="body mt-10 list">
+          <StatsCollection index={1} className="stats-item"></StatsCollection>
+          <StatsCollection index={2} className="stats-item"></StatsCollection>
+          <StatsCollection index={3} className="stats-item"></StatsCollection>
+          <StatsCollection index={4} className="stats-item"></StatsCollection>
+          <StatsCollection index={5} className="stats-item"></StatsCollection>
+          <StatsCollection index={6} className="stats-item"></StatsCollection>
+          <StatsCollection index={7} className="stats-item"></StatsCollection>
+          <StatsCollection index={8} className="stats-item"></StatsCollection>
+          <StatsCollection index={9} className="stats-item"></StatsCollection>
+          <StatsCollection index={10} className="stats-item"></StatsCollection>
         </div>
       </div>
-    </>
+    </CollectionStatsStyles>
   );
 };
 
