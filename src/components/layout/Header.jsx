@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 import Input from "../input/Input";
 
@@ -48,7 +48,9 @@ const Header = () => {
     <HeaderStyles>
       <header className="grid grid-cols-2 gap-[100px] w-full max-w-[1240px] mx-auto">
         <div className="header-left flex items-center ">
-          <img srcSet="./logo.png 2x" alt="" className="inline-block" />
+          <Link to="/">
+            <img srcSet="./logo.png 2x" alt="" className="inline-block" />
+          </Link>
           <Input
             className="ml-[85px]"
             placeholder="Search item here..."

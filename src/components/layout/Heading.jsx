@@ -23,9 +23,9 @@ const HeadingStyles = styled.div`
   }
 `;
 
-const Heading = ({ children, desc, ...props }) => {
+const Heading = ({ children, desc, className = " ", ...props }) => {
   return (
-    <HeadingStyles {...props}>
+    <HeadingStyles className={className} {...props}>
       <span>
         <svg
           width="62"

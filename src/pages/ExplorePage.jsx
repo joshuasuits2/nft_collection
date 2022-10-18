@@ -13,7 +13,21 @@ const ExplorePageStyles = styled.div`
   background-size: cover;
   background-position: top left;
   padding: 0 !important;
-  width: 100%;
+  .animate {
+    opacity: 0;
+    animation: animate-partner 1.5s ease-in-out forwards 1s;
+    transform: translateY(250%);
+  }
+  @keyframes animate-partner {
+    0% {
+      opacity: 0;
+      transform: translateY(250%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0%);
+    }
+  }
 `;
 
 const ExplorePage = () => {
@@ -29,7 +43,7 @@ const ExplorePage = () => {
     <ExplorePageStyles>
       <LandingExplore pageRefs={pageRefs}></LandingExplore>
       <PageContainer>
-        <Partner></Partner>
+        <Partner className="animate"></Partner>
         <ExploreCollection></ExploreCollection>
         <AllNFTs pageRefs={pageRefs}></AllNFTs>
         <Footer></Footer>

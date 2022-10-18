@@ -44,9 +44,9 @@ const ListPartners = [
   },
 ];
 
-const Partner = () => {
+const Partner = ({ className }) => {
   return (
-    <section className="mt-[150px]">
+    <section className={`mt-[150px] ${className}`}>
       <ul className="flex justify-between">
         {ListPartners.map((partner) => {
           return (

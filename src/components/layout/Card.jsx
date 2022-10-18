@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const CardStyles = styled.div`
@@ -44,11 +45,13 @@ const Card = ({
         <div className="w-full h-full before-layout absolute"></div>
         <div className="h-full after-layout absolute"></div>
         <div className="content relative z-10">
-          <img
-            src={srcTop}
-            alt=""
-            className="h-[240px] object-cover rounded-lg cursor-pointer"
-          />
+          <Link to="/123">
+            <img
+              src={srcTop}
+              alt=""
+              className="h-[240px] object-cover rounded-lg cursor-pointer"
+            />
+          </Link>
           <div className="px-1 text-[13px] flex-1 flex flex-col">
             <div className="top flex justify-between mt-[10px]">
               <div className="top-left flex flex-col">
