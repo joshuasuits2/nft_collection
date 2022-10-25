@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const CardStyles = styled.div`
@@ -39,6 +39,7 @@ const Card = ({
   srcCoin,
   ...props
 }) => {
+  const nagvigate = useNavigate();
   return (
     <CardStyles>
       <div className="card-item h-[355px] flex flex-col relative p-[14px]">

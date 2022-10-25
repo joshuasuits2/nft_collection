@@ -10,13 +10,6 @@ import Heading from "../components/layout/Heading";
 import CardList from "../components/layout/CardList";
 
 const CategoryDetailStyles = styled.div`
-  width: 100%;
-  background: #141418;
-  background-size: cover;
-  background-position: top left;
-  padding: 0 !important;
-  position: relative;
-  z-index: 0;
   .linear-property {
     background: linear-gradient(
       93deg,
@@ -87,7 +80,7 @@ const CategoryDetail = () => {
     document.body.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
   return (
-    <CategoryDetailStyles>
+    <CategoryDetailStyles className="body">
       <PageContainer>
         <div className="flex gap-x-[130px]">
           <div className="flex-[50%] flex flex-col">
@@ -141,7 +134,7 @@ const CategoryDetail = () => {
                     ETH
                   </div>
                 </div>
-                <span className="text-[16px] font-[500]">$4,429.87</span>
+                <span className="text-[16px] font-[500]">$ 4,429.87</span>
                 <div className="view flex items-center gap-x-[10px] text-[16px] font-[400]">
                   <span>
                     <svg
@@ -256,10 +249,10 @@ const CategoryDetail = () => {
                   </div>
                 </div>
                 <div className="deal  flex flex-col gap-y-5">
-                  <button className="w-[150px] h-[60px] font-[400] bg-[#FBFF2A] rounded-lg text-[#141118]">
+                  <button className="w-[150px] h-[55px] font-[500] bg-[#FBFF2A] rounded-lg text-[#141118]">
                     Buy Now
                   </button>
-                  <button className="w-[150px] h-[60px] font-[400] rounded-lg border border-solid border-white">
+                  <button className="w-[150px] h-[55px] font-[500] rounded-lg border border-solid border-white">
                     Make Offer
                   </button>
                 </div>

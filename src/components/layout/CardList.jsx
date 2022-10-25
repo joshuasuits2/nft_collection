@@ -6,6 +6,14 @@ import LovelyWork from "../../assets/nfts/lovely_work.png";
 import MeeCat608 from "../../assets/nfts/MeeCat608.png";
 import MeeCat6902 from "../../assets/nfts/MeeCat6902.png";
 
+const ListCard = [
+  {
+    id: 1,
+    idCard: "mee-cat-602",
+    srcCoin: Ethereum,
+  },
+];
+
 const CardList = ({ className }) => {
   return (
     <div

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./styles/HomePage.scss";
 import Partner from "../components/layout/Partner";
 import LandingPage from "../modules/homepage/LandingPage";
@@ -10,6 +10,9 @@ import Footer from "../components/layout/Footer";
 import PageContainer from "../components/layout/PageContainer";
 
 const HomePage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
   return (
     <PageContainer>
       <LandingPage></LandingPage>

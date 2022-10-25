@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const InputStyle = styled.div`
@@ -18,8 +18,6 @@ const Input = ({
   kind = "",
   ...props
 }) => {
-  const { toggle } = props;
-  console.log(toggle);
   return (
     <InputStyle className={className} {...props}>
       <input
