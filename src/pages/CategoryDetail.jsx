@@ -77,7 +77,11 @@ const CategoryDetailStyles = styled.div`
 `;
 const CategoryDetail = () => {
   useEffect(() => {
-    document.body.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      // behavior: "smooth",
+    });
   }, []);
   return (
     <CategoryDetailStyles className="body">
