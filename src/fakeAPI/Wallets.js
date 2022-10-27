@@ -5,6 +5,9 @@ import Phantom from "../assets/wallets/phantom.png";
 import Glow from "../assets/wallets/glow.png";
 import Fortmatic from "../assets/wallets/Fortmatic.png";
 import Kaikas from "../assets/wallets/kaikas.png";
+import Bitski from "../assets/wallets/bitski.png";
+import Solflare from "../assets/wallets/solflare 1.png";
+import Venly from "../assets/wallets/venly.png";
 
 export const ListWallets = [
   {
@@ -46,17 +49,17 @@ export const ListWallets = [
   },
   {
     id: 8,
-    title: "Glow",
-    img: Glow,
+    title: "Bitski",
+    img: Bitski,
   },
   {
     id: 9,
-    title: "Glow",
-    img: Glow,
+    title: "Solflare",
+    img: Solflare,
   },
   {
     id: 10,
-    title: "Glow",
-    img: Glow,
+    title: "Venly",
+    img: Venly,
   },
 ];

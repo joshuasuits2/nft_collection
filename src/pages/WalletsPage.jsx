@@ -48,7 +48,7 @@ const WalletsPage = () => {
           {ListWallets.map((item) => (
             <div
               key={item.id}
-              className="hover:transition-all hover:delay-1000 linear-blur flex items-center justify-center flex-col py-[15px]"
+              className="hover:transition-all hover:delay-1000 linear-blur flex items-center justify-center flex-col py-[15px] cursor-pointer"
             >
               <img
                 src={item.img}

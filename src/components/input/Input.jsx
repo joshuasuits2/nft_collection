@@ -24,7 +24,7 @@ const Input = ({
         type={type}
         kind={kind}
         placeholder={placeholder}
-        className={`search-input h-[55px] border border-[#9b9b9bce] border-solid rounded-lg py-[14px] px-5 pr-[55px] outline-none bg-transparent font-light text-[14px] text-white tracking-[0.02em] 
+        className={`search-input h-[53px] border border-[#9b9b9bce] border-solid rounded-lg py-[10px] px-5 pr-[55px] outline-none bg-transparent font-light text-[14px] text-white tracking-[0.02em] 
 focus:border-purple-400 transition-all 
          `}
       />

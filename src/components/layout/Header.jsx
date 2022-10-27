@@ -22,14 +22,24 @@ const ListLink = [
 ];
 
 const HeaderStyles = styled.div`
-  margin-bottom: 60px;
+  margin-bottom: 58px;
+  #header {
+    --transition-curve: cubic-bezier(0.05, 0, 0.2, 1);
+
+    transition: top 0.5s var(--transition-curve),
+      background-color 0.2s var(--transition-curve),
+      box-shadow 0.2s var(--transition-curve),
+      color 0.2s var(--transition-curve);
+  }
   .header-fixed {
-    transition-duration: 1000ms;
-    transition-property: width;
     position: fixed;
+    --transition-curve: cubic-bezier(0.05, 0, 0.2, 1);
+
+    transition: top 0.5s var(--transition-curve),
+      background-color 0.2s var(--transition-curve),
+      box-shadow 0.2s var(--transition-curve),
+      color 0.2s var(--transition-curve);
     top: 0;
-    left: 50%;
-    transform: translateX(-50%) !important;
     z-index: 1000;
     background: linear-gradient(
       180deg,
@@ -78,7 +88,7 @@ const Header = () => {
   }, []);
   return (
     <HeaderStyles>
-      <div className="w-full py-[5px]" id="header">
+      <div className="w-full py-[7px]" id="header">
         <header className="grid grid-cols-2 gap-[100px] w-full max-w-[1240px] mx-auto">
           <div className="header-left flex items-center">
             <Link
@@ -152,7 +162,7 @@ const Header = () => {
                   </svg>
                 </div>
               </Link>
-              <button className="flex items-center justify-center px-6 py-4 font-semibold tracking-[0.02em] border border-solid border-purple-400 rounded-lg h-[57px]">
+              <button className="flex items-center justify-center px-5 py-4 font-semibold tracking-[0.02em] border border-solid border-purple-400 rounded-lg h-[53px]">
                 <Link
                   to="/wallets"
                   onClick={() => {
