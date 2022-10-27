@@ -83,10 +83,9 @@ const CategoryDetailStyles = styled.div`
 const CategoryDetail = () => {
   const { slug } = useParams();
   const category = ListCategory.find((item) => slugify(item.name) === slug);
-
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [slug]);
   return (
     <CategoryDetailStyles className="body">
       <PageContainer>

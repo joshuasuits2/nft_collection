@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PageContainer from "../components/layout/PageContainer";
 import styled from "styled-components";
 import Footer from "../components/layout/Footer";
@@ -34,6 +34,9 @@ const WalletsPageStyles = styled.div`
 `;
 
 const WalletsPage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <WalletsPageStyles className="body">
       <PageContainer>

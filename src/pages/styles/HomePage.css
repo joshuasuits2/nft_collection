@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Ultra&display=swap");
+body {
+  background: #141414 url("../../assets/outside/background.png") no-repeat;
+  background-size: cover;
+  background-position: top left;
+  width: 100%;
+}
+
+.heading {
+  font-family: "Ultra";
+  font-weight: 400;
+  font-size: 42px;
+  line-height: 54px;
+  letter-spacing: 0.02em;
+}
+
+.circle-white {
+  position: absolute;
+  width: 477px;
+  height: 477px;
+  left: -25%;
+  top: -60%;
+  background: radial-gradient(147.44% 147.44% at 4.55% 11.08%, rgba(255, 255, 255, 0.837) 0%, rgba(255, 255, 255, 0.592) 100%);
+  opacity: 0.2;
+  filter: blur(125px);
+  transform: rotate(-22.77deg);
+  z-index: -2;
+}
+
+.circle-violet {
+  position: absolute;
+  width: 416px;
+  height: 416px;
+  z-index: -1;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #b444ff 0%, #f582ff 100%);
+  opacity: 0.3;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  filter: blur(100px);
+}
+
+.circle-blue {
+  position: absolute;
+  width: 218px;
+  height: 218px;
+  top: 50%;
+  z-index: -1;
+  background: linear-gradient(180deg, #22a7f2 0%, #2a7cf5 100%);
+  opacity: 0.3;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  filter: blur(100px);
+}
+
+.circle-yellow {
+  position: absolute;
+  width: 218px;
+  height: 218px;
+  left: 1176px;
+  top: 20%;
+  left: 65%;
+  z-index: -1;
+  background: linear-gradient(180deg, #f2ea22 0%, #cbdc41 100%);
+  opacity: 0.3;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  filter: blur(100px);
+}
+
+.sub-title {
+  background: linear-gradient(180deg, #a749f8 0%, #ddb9ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.statistics {
+  background: linear-gradient(180deg, #ddb9ff 0%, #a749f8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}/*# sourceMappingURL=HomePage.css.map */
