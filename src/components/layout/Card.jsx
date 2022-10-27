@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import slugify from "react-slugify";
 
 const CardStyles = styled.div`
   .before-layout {
@@ -39,20 +39,24 @@ const Card = ({
   srcCoin,
   ...props
 }) => {
-  const nagvigate = useNavigate();
+  const navigate = useNavigate();
+  const handleNavigation = () => {
+    const slug = slugify(name);
+    navigate(`/${slug}`);
+  };
   return (
     <CardStyles>
       <div className="card-item h-[355px] flex flex-col relative p-[14px]">
         <div className="w-full h-full before-layout absolute"></div>
         <div className="h-full after-layout absolute"></div>
         <div className="content relative z-10">
-          <Link to="/123">
-            <img
-              src={srcTop}
-              alt=""
-              className="h-[240px] object-cover rounded-lg cursor-pointer"
-            />
-          </Link>
+          <img
+            src={srcTop}
+            alt=""
+            className="h-[240px] object-cover rounded-lg cursor-pointer"
+            onClick={handleNavigation}
+          />
+
           <div className="px-1 text-[13px] flex-1 flex flex-col">
             <div className="top flex justify-between mt-[10px]">
               <div className="top-left flex flex-col">
@@ -73,7 +77,10 @@ const Card = ({
                 <span className=" cursor-pointer">{remaining}</span>
               </div>
               <div className="bottom-right">
-                <button className="w-[90px] h-[34px] rounded-lg bg-[#FBFF2A]">
+                <button
+                  className="w-[90px] h-[34px] rounded-lg bg-[#FBFF2A]"
+                  onClick={handleNavigation}
+                >
                   Buy Now
                 </button>
               </div>

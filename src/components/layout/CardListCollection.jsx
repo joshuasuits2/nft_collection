@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from "react";
-import ReactPaginate from "react-paginate";
+import React from "react";
 import CardCollection from "./CardCollection";
-
-const items = Array(9).fill(0);
 
 const CardListCollection = () => {
   return (

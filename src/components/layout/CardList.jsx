@@ -2,17 +2,9 @@ import React from "react";
 import Card from "./Card";
 import Ethereum from "../../assets/outside/ethereum.png";
 import MeeCat602 from "../../assets/nfts/MeeCat602.png";
-import LovelyWork from "../../assets/nfts/lovely_work.png";
+import LovelyWork from "../../assets/nfts/lovely_work_608.png";
 import MeeCat608 from "../../assets/nfts/MeeCat608.png";
 import MeeCat6902 from "../../assets/nfts/MeeCat6902.png";
-
-const ListCard = [
-  {
-    id: 1,
-    idCard: "mee-cat-602",
-    srcCoin: Ethereum,
-  },
-];
 
 const CardList = ({ className }) => {
   return (

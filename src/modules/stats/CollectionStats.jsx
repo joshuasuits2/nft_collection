@@ -1,7 +1,7 @@
 import React from "react";
-import Dropdown from "../../../components/dropdown/Dropdown";
-import Heading from "../../../components/layout/Heading";
-import StatsCollection from "../../../components/layout/StatsCollection";
+import Dropdown from "../../components/dropdown/Dropdown";
+import Heading from "../../components/layout/Heading";
+import StatsCollection from "../../components/layout/StatsCollection";
 import styled from "styled-components";
 
 const categories = [

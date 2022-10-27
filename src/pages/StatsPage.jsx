@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Footer from "../components/layout/Footer";
 import PageContainer from "../components/layout/PageContainer";
-import CollectionStats from "./styles/stats/CollectionStats";
+import CollectionStats from "../modules/stats/CollectionStats";
 
 const StatsPageStyles = styled.div``;
 

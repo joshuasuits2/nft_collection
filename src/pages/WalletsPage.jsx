@@ -1,67 +1,8 @@
 import React from "react";
 import PageContainer from "../components/layout/PageContainer";
 import styled from "styled-components";
-import MetaMask from "../assets/wallets/Metamask.png";
-import CoinBase from "../assets/wallets/Coinbase.png";
-import WalletConnect from "../assets/wallets/WalletConnect.png";
-import Phantom from "../assets/wallets/phantom.png";
-import Glow from "../assets/wallets/glow.png";
 import Footer from "../components/layout/Footer";
-
-const ListWallet = [
-  {
-    id: 1,
-    title: "Metamask",
-    img: MetaMask,
-  },
-
-  {
-    id: 2,
-    title: "Coinbase",
-    img: CoinBase,
-  },
-
-  {
-    id: 3,
-    title: "Wallet Connect",
-    img: WalletConnect,
-  },
-  {
-    id: 4,
-    title: "Phantom",
-    img: Phantom,
-  },
-  {
-    id: 5,
-    title: "Glow",
-    img: Glow,
-  },
-  {
-    id: 6,
-    title: "Glow",
-    img: Glow,
-  },
-  {
-    id: 7,
-    title: "Glow",
-    img: Glow,
-  },
-  {
-    id: 8,
-    title: "Glow",
-    img: Glow,
-  },
-  {
-    id: 9,
-    title: "Glow",
-    img: Glow,
-  },
-  {
-    id: 10,
-    title: "Glow",
-    img: Glow,
-  },
-];
+import { ListWallets } from "../fakeAPI/Wallets";
 
 const WalletsPageStyles = styled.div`
   .text-gradient {
@@ -104,10 +45,10 @@ const WalletsPage = () => {
           </span>
         </div>
         <div className="grid grid-rows-2 gap-x-[60px] gap-y-[60px] grid-cols-5 mt-[60px]">
-          {ListWallet.map((item) => (
+          {ListWallets.map((item) => (
             <div
               key={item.id}
-              className="linear-blur flex items-center justify-center flex-col py-[15px]"
+              className="hover:transition-all hover:delay-1000 linear-blur flex items-center justify-center flex-col py-[15px]"
             >
               <img
                 src={item.img}

@@ -1,13 +1,18 @@
 import React, { useEffect } from "react";
 import PageContainer from "../components/layout/PageContainer";
-import MeeCat602 from "../assets/nfts/MeeCat602.png";
 import styled from "styled-components";
 import Footer from "../components/layout/Footer";
+import Heading from "../components/layout/Heading";
+import CardList from "../components/layout/CardList";
 import verify from "../assets/outside/verify.png";
 import avatar from "../assets/avatar/Ellipse 378.png";
 import MeeCat101 from "../assets/collection/MeeCat101.png";
-import Heading from "../components/layout/Heading";
-import CardList from "../components/layout/CardList";
+import slugify from "react-slugify";
+
+import { ListCategory } from "../fakeAPI/Categories";
+import { useParams } from "react-router-dom";
+import EyeIcon from "../assets/icons/EyeIcon";
+import HeartIcon from "../assets/icons/HeartIcon";
 
 const CategoryDetailStyles = styled.div`
   .linear-property {
@@ -76,6 +81,9 @@ const CategoryDetailStyles = styled.div`
   }
 `;
 const CategoryDetail = () => {
+  const { slug } = useParams();
+  const category = ListCategory.find((item) => slugify(item.name) === slug);
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -86,12 +94,12 @@ const CategoryDetail = () => {
   return (
     <CategoryDetailStyles className="body">
       <PageContainer>
-        <div className="flex gap-x-[130px]">
+        <div className="flex gap-x-[100px]">
           <div className="flex-[50%] flex flex-col">
             <div className="card-top relative z-10">
-              <div className="background-item-blur h-[540px] ">
+              <div className="background-item-blur h-[500px] ">
                 <img
-                  src={MeeCat602}
+                  src={category.img}
                   alt=""
                   className="w-full h-full object-cover rounded-2xl"
                 />
@@ -125,7 +133,9 @@ const CategoryDetail = () => {
           <div className="flex-[70%]">
             <div className="desc flex flex-col">
               <div className="creator flex items-center gap-x-2">
-                <span className="name-linear font-[600]">Layer Lab</span>
+                <span className="name-linear font-[600]">
+                  {category.creator}
+                </span>
                 <img src={verify} alt="" className="w-4 h-4 object-cover" />
               </div>
               <span className="font-bold text-[20px] mt-[10px]">
@@ -140,50 +150,16 @@ const CategoryDetail = () => {
                 </div>
                 <span className="text-[16px] font-[500]">$ 4,429.87</span>
                 <div className="view flex items-center gap-x-[10px] text-[16px] font-[400]">
-                  <span>
-                    <svg
-                      width="22"
-                      height="16"
-                      viewBox="0 0 22 16"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g opacity="0.9">
-                        <path
-                          d="M10.9998 10.909C12.6199 10.909 13.9332 9.60656 13.9332 7.99991C13.9332 6.39326 12.6199 5.09082 10.9998 5.09082C9.37974 5.09082 8.06641 6.39326 8.06641 7.99991C8.06641 9.60656 9.37974 10.909 10.9998 10.909Z"
-                          fill="white"
-                        />
-                        <path
-                          d="M21.9563 7.75273C21.0938 5.54011 19.5964 3.62663 17.6492 2.24879C15.702 0.87095 13.3904 0.089144 11 0C8.60964 0.089144 6.29802 0.87095 4.35083 2.24879C2.40363 3.62663 0.906232 5.54011 0.0436893 7.75273C-0.0145631 7.91251 -0.0145631 8.08749 0.0436893 8.24727C0.906232 10.4599 2.40363 12.3734 4.35083 13.7512C6.29802 15.1291 8.60964 15.9109 11 16C13.3904 15.9109 15.702 15.1291 17.6492 13.7512C19.5964 12.3734 21.0938 10.4599 21.9563 8.24727C22.0146 8.08749 22.0146 7.91251 21.9563 7.75273V7.75273ZM11 12.7273C10.0572 12.7273 9.1356 12.45 8.35171 11.9306C7.56781 11.4111 6.95684 10.6728 6.59605 9.80905C6.23526 8.94525 6.14086 7.99476 6.32479 7.07775C6.50872 6.16075 6.96271 5.31843 7.62936 4.65731C8.29601 3.99619 9.14537 3.54596 10.07 3.36356C10.9947 3.18116 11.9532 3.27477 12.8242 3.63257C13.6952 3.99037 14.4397 4.59627 14.9635 5.37367C15.4872 6.15106 15.7668 7.06503 15.7668 8C15.7649 9.25316 15.262 10.4544 14.3685 11.3406C13.475 12.2267 12.2636 12.7253 11 12.7273V12.7273Z"
-                          fill="white"
-                        />
-                      </g>
-                    </svg>
-                  </span>
+                  <EyeIcon></EyeIcon>
                   <span>2,7k view</span>
                 </div>
                 <div className="like flex items-center gap-x-[10px] text-[16px] font-[400]">
-                  <span>
-                    <svg
-                      width="22"
-                      height="22"
-                      viewBox="0 0 22 22"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g opacity="0.9">
-                        <path
-                          d="M1.94116 8.62046C1.94116 9.78781 2.12794 11.5837 3.80896 13.2001C5.3032 14.6368 10.2529 17.8694 10.4396 18.049C10.6264 18.1388 10.8132 18.2286 11 18.2286C11.1868 18.2286 11.3735 18.1388 11.5603 18.049C11.7471 17.8694 16.6968 14.7266 18.191 13.2001C19.872 11.5837 20.0588 9.78781 20.0588 8.62046C20.0588 5.92659 17.8175 3.77148 15.0158 3.77148C13.5215 3.77148 12.0273 4.57965 11.0934 5.83679C10.1595 4.57965 8.66524 3.77148 6.98422 3.77148C4.27591 3.77148 1.94116 5.92659 1.94116 8.62046Z"
-                          fill="white"
-                        />
-                      </g>
-                    </svg>
-                  </span>
+                  <HeartIcon></HeartIcon>
                   <span>34 favorites</span>
                 </div>
               </div>
               <span className="font-bold mt-[30px]">Description</span>
-              <p className="mt-[30px] font-[300] leading-[35px]">
+              <p className="mt-[30px] text-[15px] font-[300] leading-[35px]">
                 A new metaverse experience! MeeCats living in Meetopia come to
                 visit. The MeeCats team creates an accessible, gamified NFT
                 experience.
@@ -196,7 +172,7 @@ const CategoryDetail = () => {
                     className="w-[60px] h-[60px] object-cover"
                   />
                   <div className="name flex flex-col">
-                    <span>Current Owner</span>
+                    <span className="font-[600]">Current Owner</span>
                     <span>Jane Cooper</span>
                   </div>
                 </div>
@@ -207,7 +183,7 @@ const CategoryDetail = () => {
                     className="w-[60px] h-[60px] object-cover"
                   />
                   <div className="collection  flex flex-col">
-                    <span>Collection</span>
+                    <span className="font-[600]">Collection</span>
                     <span>MeeCat101</span>
                   </div>
                 </div>
@@ -220,7 +196,7 @@ const CategoryDetail = () => {
                     <div className="days flex flex-col gap-y-3 items-center">
                       <div className="number flex gap-x-[5px]">
                         <div className="pri linear-timing flex items-center">
-                          <span className>2</span>
+                          <span>2</span>
                         </div>
                         <div className="sec linear-timing flex items-center">
                           5
@@ -231,18 +207,18 @@ const CategoryDetail = () => {
                     <div className="hours flex flex-col gap-y-3 items-center">
                       <div className="number flex gap-x-[5px]">
                         <div className="pri linear-timing flex items-center">
-                          <span className>1</span>
+                          <span>1</span>
                         </div>
                         <div className="sec linear-timing flex items-center">
                           6
                         </div>
                       </div>
-                      <div className="text">Days</div>
+                      <div className="text">hour</div>
                     </div>
                     <div className="minutes flex flex-col gap-y-3 items-center">
                       <div className="number flex gap-x-[5px]">
                         <div className="pri linear-timing flex items-center">
-                          <span className>3</span>
+                          <span>3</span>
                         </div>
                         <div className="sec linear-timing flex items-center">
                           3

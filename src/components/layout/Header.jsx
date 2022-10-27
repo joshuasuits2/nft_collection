@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 import Input from "../input/Input";
@@ -22,8 +22,10 @@ const ListLink = [
 ];
 
 const HeaderStyles = styled.div`
-  margin-bottom: 55px;
+  margin-bottom: 60px;
   .header-fixed {
+    transition-duration: 1000ms;
+    transition-property: width;
     position: fixed;
     top: 0;
     left: 50%;
@@ -76,7 +78,7 @@ const Header = () => {
   }, []);
   return (
     <HeaderStyles>
-      <div className="w-full py-[10px]" id="header">
+      <div className="w-full py-[5px]" id="header">
         <header className="grid grid-cols-2 gap-[100px] w-full max-w-[1240px] mx-auto">
           <div className="header-left flex items-center">
             <Link
