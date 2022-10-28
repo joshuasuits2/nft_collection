@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 const ButtonStyles = styled.div`
@@ -67,13 +68,15 @@ const ButtonStyles = styled.div`
     backdrop-filter: blur(25px);
   }
 `;
-const Button = ({ children, className, kind = "", ...props }) => {
+const Button = ({ children, className, kind = "", url = "", ...props }) => {
   return (
     <ButtonStyles className={className} kind={kind} {...props}>
-      <div className="button">
-        <span className="title">{children}</span>
-      </div>
-      <div className="blur-after"></div>
+      <Link to={url}>
+        <div className="button">
+          <span className="title">{children}</span>
+        </div>
+        <div className="blur-after"></div>
+      </Link>
     </ButtonStyles>
   );
 };

@@ -18,7 +18,7 @@ const LandingPage = () => {
           Discover Collect <br></br>And Sell Remarkable <br></br> NFTs
         </p>
         <div className="flex items-center gap-[75px] mt-[40px]">
-          <Button>Connect Wallet</Button>
+          <Button url="/wallets">Connect Wallet</Button>
 
           <div className="flex items-center gap-[18px]">
             <span className="cursor-pointer">

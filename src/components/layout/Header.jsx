@@ -46,7 +46,7 @@ const HeaderStyles = styled.div`
       rgba(52, 51, 53, 0.5) 50%,
       rgba(64, 59, 69, 0.5) 100%
     );
-    backdrop-filter: blur(100px);
+    backdrop-filter: blur(50px);
   }
   span.connect {
     background: linear-gradient(180deg, #ddb9ff 0%, #a749f8 100%);
