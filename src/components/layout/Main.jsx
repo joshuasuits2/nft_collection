@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 import { Outlet } from "react-router-dom";
 import ProgressBar from "../progressbar/ProgressBar";
+import DropWallets from "./DropWallets";
 
 const Main = () => {
   return (
