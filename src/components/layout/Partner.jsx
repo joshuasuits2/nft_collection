@@ -52,7 +52,7 @@ const Partner = ({ className }) => {
           return (
             <li
               key={partner.id}
-              className="flex items-center gap-[10px] cursor-pointer transition-all"
+              className="flex items-center gap-[10px] cursor-pointer transition-all duration-300 hover:scale-105"
             >
               <img src={partner.src} alt="" />
               <span>{partner.name}</span>
