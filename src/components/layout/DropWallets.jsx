@@ -5,7 +5,7 @@ import Metamask from "../../assets/wallets/Metamask.png";
 import Coinbase from "../../assets/wallets/Coinbase.png";
 import Wallet_Connect from "../../assets/wallets/Wallet_Connect.png";
 import Phantom from "../../assets/wallets/phantom.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const SmallWallets = [
   {
@@ -74,23 +74,24 @@ const DropWallets = ({
   className = "",
   handleClose = () => {},
 }) => {
-  const navigate = useNavigate();
   console.log(coords);
   useEffect(() => {
     if (open === true) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflowY = "hidden";
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflowY = "auto";
     }
   }, [open]);
   if (typeof document === "undefined") return <div className="modal"></div>;
   return ReactDOM.createPortal(
-    <DropWalletsStyles className={`z-[60] ${className}`}>
+    <DropWalletsStyles className={`z-[60] duration-500 ${className}`}>
       <button
-        className="fixed top-[10px] z-[200] right-[146px] h-[53px]  px-5 py-4 flex items-center justify-center font-semibold tracking-[0.02em] border border-solid border-purple-400 rounded-lg transition-all"
+        className="fixed top-[10px] z-[200] right-[146px] h-[53px]  px-5 py-4 flex items-center justify-center font-semibold tracking-[0.02em] border border-solid border-purple-400 rounded-lg "
         onClick={handleClose}
       >
-        <span className="connect">Connect Wallet</span>
+        <span className="connect duration-500">
+          {open === false ? "Connect Wallet" : "Close Option"}
+        </span>
       </button>
       {open === true ? (
         <div
@@ -99,11 +100,11 @@ const DropWallets = ({
           }
         >
           <div
-            className="transition-all z-[100] absolute -top-[63px] w-full h-[100vh] opacity bg-black bg-opacity-60 cursor-pointer"
+            className="z-[100] absolute -top-[63px] w-full h-[100vh] opacity bg-black bg-opacity-60 cursor-pointer "
             onClick={handleClose}
           ></div>
           <div
-            className={`z-[2000] relative boxed flex items-center flex-col font-[700] w-[352px] h-[436px] p-5  ${
+            className={`z-[2000] relative boxed flex items-center flex-col font-[700] w-[352px] h-[436px] p-5 ${
               open === true ? "show-wallets" : ""
             }`}
             style={{
@@ -119,10 +120,12 @@ const DropWallets = ({
             </p>
             <ul className="flex flex-col mt-[18px] gap-y-[5px] font-[500] text-[14px] w-full">
               {SmallWallets.map((item) => (
-                <li className="h-[55px] w-full p-4 gap-x-5 flex items-center hover:bg-slate-200 hover:bg-opacity-10 transition-all cursor-pointer rounded-lg">
-                  <img src={item.img} alt="" className="w-10 object-cover" />{" "}
-                  <span>{item.name}</span>
-                </li>
+                <Link to="/Metamask">
+                  <li className="h-[55px] w-full p-4 gap-x-5 flex items-center hover:bg-slate-200 hover:bg-opacity-10 transition-all cursor-pointer rounded-lg">
+                    <img src={item.img} alt="" className="w-10 object-cover" />{" "}
+                    <span>{item.name}</span>
+                  </li>
+                </Link>
               ))}
             </ul>
             <Link to="/wallets">
@@ -136,7 +139,7 @@ const DropWallets = ({
           </div>
         </div>
       ) : (
-        <div className="transition-all"></div>
+        <></>
       )}
     </DropWalletsStyles>,
     document.querySelector("body")

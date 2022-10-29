@@ -10,7 +10,7 @@ import MeeCat101 from "../assets/collection/MeeCat101.png";
 import slugify from "react-slugify";
 
 import { ListCategory } from "../fakeAPI/Categories";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import EyeIcon from "../assets/icons/EyeIcon";
 import HeartIcon from "../assets/icons/HeartIcon";
 
@@ -82,10 +82,18 @@ const CategoryDetailStyles = styled.div`
 `;
 const CategoryDetail = () => {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const category = ListCategory.find((item) => slugify(item.name) === slug);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
+
+  useEffect(() => {
+    if (!category) {
+      navigate("/error");
+    }
+  });
+  if (!category) return;
   return (
     <CategoryDetailStyles className="body">
       <PageContainer>
