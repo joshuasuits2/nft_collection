@@ -12,21 +12,25 @@ const SmallWallets = [
     id: 1,
     name: "Metamask",
     img: Metamask,
+    url: "/metamask",
   },
   {
     id: 2,
     name: "Coinbase",
     img: Coinbase,
+    url: "/coinbase",
   },
   {
     id: 3,
     name: "WalletConnect",
     img: Wallet_Connect,
+    url: "/wallet-connect",
   },
   {
     id: 4,
     name: " Phantom",
     img: Phantom,
+    url: "/phantom",
   },
 ];
 
@@ -120,7 +124,7 @@ const DropWallets = ({
             </p>
             <ul className="flex flex-col mt-[18px] gap-y-[5px] font-[500] text-[14px] w-full">
               {SmallWallets.map((item) => (
-                <Link to="/Metamask">
+                <Link to="/Metamask" key={item.id}>
                   <li className="h-[55px] w-full p-4 gap-x-5 flex items-center hover:bg-slate-200 hover:bg-opacity-10 transition-all cursor-pointer rounded-lg">
                     <img src={item.img} alt="" className="w-10 object-cover" />{" "}
                     <span>{item.name}</span>

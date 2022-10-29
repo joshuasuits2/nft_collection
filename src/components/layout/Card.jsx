@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
+import slugify from "slugify";
 import styled from "styled-components";
-import slugify from "react-slugify";
 
 const CardStyles = styled.div`
   .before-layout {

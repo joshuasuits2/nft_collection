@@ -7,12 +7,12 @@ import CardList from "../components/layout/CardList";
 import verify from "../assets/outside/verify.png";
 import avatar from "../assets/avatar/Ellipse 378.png";
 import MeeCat101 from "../assets/collection/MeeCat101.png";
-import slugify from "react-slugify";
 
 import { ListCategory } from "../fakeAPI/Categories";
 import { useNavigate, useParams } from "react-router-dom";
 import EyeIcon from "../assets/icons/EyeIcon";
 import HeartIcon from "../assets/icons/HeartIcon";
+import slugify from "slugify";
 
 const CategoryDetailStyles = styled.div`
   .linear-property {
