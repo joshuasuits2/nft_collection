@@ -11,7 +11,7 @@ const scrollStyle = (
   padding: 0,
   position: "fixed",
   top: 70,
-  zIndex: "1001 ",
+  zIndex: "70",
   backgroundColor: `${bgColor}`,
   height: `${height}px`,
   width: `${width}`,

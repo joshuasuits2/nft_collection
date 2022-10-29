@@ -34,6 +34,7 @@ const ExplorePage = () => {
     }, 2000);
   }, []);
   document.body.style.overflowY = "hidden";
+  document.body.style.overflowX = "hidden";
   return (
     <ExplorePageStyles className="body">
       <LandingExplore pageRefs={pageRefs}></LandingExplore>

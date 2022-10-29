@@ -27,7 +27,6 @@ const HeaderStyles = styled.div`
   margin-bottom: 58px;
   #header {
     --transition-curve: cubic-bezier(0.05, 0, 0.2, 1);
-
     transition: top 0.5s var(--transition-curve),
       background-color 0.2s var(--transition-curve),
       box-shadow 0.2s var(--transition-curve),
@@ -36,13 +35,12 @@ const HeaderStyles = styled.div`
   .header-fixed {
     position: fixed;
     --transition-curve: cubic-bezier(0.05, 0, 0.2, 1);
-
     transition: top 0.5s var(--transition-curve),
       background-color 0.2s var(--transition-curve),
       box-shadow 0.2s var(--transition-curve),
       color 0.2s var(--transition-curve);
     top: 0;
-    z-index: 1000;
+    z-index: 50;
     background: linear-gradient(
       180deg,
       rgba(52, 51, 53, 0.5) 50%,
@@ -50,11 +48,7 @@ const HeaderStyles = styled.div`
     );
     backdrop-filter: blur(50px);
   }
-  span.connect {
-    background: linear-gradient(180deg, #ddb9ff 0%, #a749f8 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+
   a {
     display: inline-block;
     text-decoration: none;
@@ -71,19 +65,19 @@ const HeaderStyles = styled.div`
 `;
 
 const Header = () => {
-  const [toggleDropDown, setToggleDropDown] = useState(false);
+  const [show, setShow] = useState(false);
   const DropWalletsRef = useRef(null);
+  const [coords, setCoords] = useState({});
+
+  const handleClose = () => {
+    setCoords(DropWalletsRef.current.getBoundingClientRect());
+    setShow(!show);
+  };
 
   useEffect(() => {
-    document.addEventListener("click", (e) => {
-      if (
-        DropWalletsRef.current &&
-        !DropWalletsRef.current.contains(e.target)
-      ) {
-        setToggleDropDown(false);
-      }
-    });
-  });
+    const wallets = document.querySelector("show-wallets");
+    console.log(wallets);
+  }, [show]);
 
   useEffect(() => {
     const header = document.getElementById("header");
@@ -103,14 +97,13 @@ const Header = () => {
     };
   }, []);
 
-  const handleDropWallets = () => {
-    console.log(toggleDropDown);
-    setToggleDropDown(!toggleDropDown);
-  };
-
   return (
     <HeaderStyles>
-      <div className="w-full py-[7px]" id="header">
+      <div
+        className="w-full py-[7px]"
+        id="header"
+        // onClick={() => setShow(false)}
+      >
         <header className="grid grid-cols-2 gap-[100px] w-full max-w-[1240px] mx-auto">
           <div className="header-left flex items-center">
             <Link
@@ -153,15 +146,15 @@ const Header = () => {
               >
                 <UserIcon></UserIcon>
               </Link>
-              <div className="relative transition-all" ref={DropWalletsRef}>
-                <button
-                  className="flex items-center justify-center px-5 py-4 font-semibold tracking-[0.02em] border border-solid border-purple-400 rounded-lg h-[53px]"
-                  onClick={handleDropWallets}
-                >
-                  <span className="connect">Connect Wallet</span>
-                </button>
-
-                {toggleDropDown ? <DropWallets></DropWallets> : null}
+              <div
+                className="transition-all button h-[53px] w-[201px] px-5 py-4"
+                ref={DropWalletsRef}
+              >
+                <DropWallets
+                  open={show}
+                  handleClose={handleClose}
+                  coords={coords}
+                ></DropWallets>
               </div>
             </div>
           </div>

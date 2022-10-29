@@ -10,6 +10,9 @@
 @layer components {
 }
 
+html {
+  scroll-behavior: smooth;
+}
 body {
   background-color: #141118;
   letter-spacing: 0.32px;
@@ -19,7 +22,7 @@ body {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 5px;
 }
 
 /* Track */
@@ -30,9 +33,9 @@ body {
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background-image: linear-gradient(
-    135deg,
-    rgb(82, 116, 255),
-    rgb(197, 68, 248)
+    45deg,
+    rgb(157, 154, 254),
+    rgb(100, 60, 246)
   );
   border-radius: 50px;
 }
