@@ -24,8 +24,8 @@ const PageNotFoundStyles = styled.div`
     background: linear-gradient(
       93deg,
       rgba(235, 235, 235, 0) -6.21%,
-      rgba(235, 235, 235, 0.33) -6.2%,
-      rgba(219, 219, 219, 0.02) 118.18%
+      rgb(75, 162, 255, 0.55) -6.2%,
+      rgb(167, 157, 255, 0.5) 118.18%
     );
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))
       drop-shadow(0px 4px 4px rgba(26, 25, 25, 0.25));
@@ -79,9 +79,7 @@ const PageNotFound = () => {
         <span className="text-[180px] -mt-5 font-bold pointer-events-none">
           404
         </span>
-        <span className="text-[50px] -mt-10 font-['Kanit'] font-[500]">
-          PAGE NOT FOUND
-        </span>
+        <span className="text-[40px] -mt-10  font-[700]">PAGE NOT FOUND</span>
         <Link to="/">
           <button>
             <span className="text-white">Back to Home</span>

@@ -94,7 +94,7 @@ const DropWallets = ({
         onClick={handleClose}
       >
         <span className="connect duration-500">
-          {open === false ? "Connect Wallet" : "Close Option"}
+          {open === false ? "Connect Wallet" : "Close Options"}
         </span>
       </button>
       {open === true ? (
@@ -137,7 +137,7 @@ const DropWallets = ({
                 onClick={handleClose}
                 className="show-more px-7 py-4 text-[14px] font-[500] mt-3"
               >
-                Show more option
+                Show more options
               </button>
             </Link>
           </div>
