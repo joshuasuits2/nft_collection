@@ -99,11 +99,7 @@ const Header = () => {
 
   return (
     <HeaderStyles>
-      <div
-        className="w-full py-[7px]"
-        id="header"
-        // onClick={() => setShow(false)}
-      >
+      <div className="w-full py-[7px]" id="header">
         <header className="grid grid-cols-2 gap-[100px] w-full max-w-[1240px] mx-auto">
           <div className="header-left flex items-center">
             <Link
@@ -112,7 +108,7 @@ const Header = () => {
                 window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
               }}
             >
-              <img srcSet="./logo.png 2x" alt="" className="inline-block" />
+              <img srcSet="./logo.png" alt="" className="inline-block" />
             </Link>
             <Input
               className="ml-[85px]"

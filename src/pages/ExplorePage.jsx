@@ -36,7 +36,7 @@ const ExplorePage = () => {
   document.body.style.overflowY = "hidden";
   document.body.style.overflowX = "hidden";
   return (
-    <ExplorePageStyles className="body">
+    <ExplorePageStyles className="body-style">
       <LandingExplore pageRefs={pageRefs}></LandingExplore>
       <PageContainer>
         <Partner className="animate"></Partner>

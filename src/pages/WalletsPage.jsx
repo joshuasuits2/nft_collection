@@ -38,7 +38,7 @@ const WalletsPage = () => {
     window.scrollTo(0, 0);
   }, []);
   return (
-    <WalletsPageStyles className="body">
+    <WalletsPageStyles className="body-style">
       <PageContainer>
         <div className="flex flex-col">
           <span className="text-[16px] text-gradient ">Choose Wallet</span>

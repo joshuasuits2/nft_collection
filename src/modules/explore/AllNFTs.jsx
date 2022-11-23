@@ -1,6 +1,7 @@
 import React from "react";
 import CardList from "../../components/layout/CardList";
 import Heading from "../../components/layout/Heading";
+import { ListCategory } from "../../fakeAPI/Categories";
 
 const AllNFTs = ({ pageRefs }) => {
   return (
@@ -9,9 +10,9 @@ const AllNFTs = ({ pageRefs }) => {
       ref={(e) => (pageRefs.current = { ...pageRefs.current, allNFT: e })}
     >
       <Heading alignItems={"start"}>ALL NFTs</Heading>
-      <CardList></CardList>
-      <CardList></CardList>
-      <CardList></CardList>
+      <CardList data={ListCategory}></CardList>
+      <CardList data={ListCategory}></CardList>
+      <CardList data={ListCategory}></CardList>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import slugify from "slugify";
 import styled from "styled-components";
 
@@ -63,9 +63,11 @@ const Card = ({
                 <span className=" cursor-pointer leading-[20px] font-bold">
                   {name}
                 </span>
-                <span className=" cursor-pointer leading-[16px]">
-                  {creator}
-                </span>
+                <Link to="/collection/123">
+                  <span className=" cursor-pointer leading-[16px]">
+                    {creator}
+                  </span>
+                </Link>
               </div>
               <div className="top-right flex gap-[5px]  font-bold">
                 <img src={srcCoin} alt="" className="h-5" />

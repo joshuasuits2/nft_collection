@@ -9,7 +9,7 @@ const StatsPageStyles = styled.div``;
 const StatsPage = () => {
   window.scrollTo(0, 0);
   return (
-    <StatsPageStyles className="body">
+    <StatsPageStyles className="body-style">
       <PageContainer>
         <CollectionStats></CollectionStats>
         <Footer></Footer>

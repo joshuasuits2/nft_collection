@@ -95,7 +95,7 @@ const CategoryDetail = () => {
   });
   if (!category) return;
   return (
-    <CategoryDetailStyles className="body">
+    <CategoryDetailStyles className="body-style">
       <PageContainer>
         <div className="flex gap-x-[100px]">
           <div className="flex-[50%] flex flex-col">
@@ -333,7 +333,7 @@ const CategoryDetail = () => {
         <Heading className="mt-[70px]" alignItems="start">
           MORE FROM THE COLLECTION
         </Heading>
-        <CardList></CardList>
+        <CardList data={ListCategory}></CardList>
         <Footer></Footer>
       </PageContainer>
     </CategoryDetailStyles>

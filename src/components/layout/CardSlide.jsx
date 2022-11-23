@@ -20,7 +20,7 @@ const CardSlide = () => {
                 srcCoin={category.coin}
                 price={category.price}
                 remaining={"22d 12h 12m 12s"}
-              ></Card>
+              />
             </SplideSlide>
           ))}
         </SliderCustom>
