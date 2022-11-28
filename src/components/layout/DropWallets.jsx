@@ -106,7 +106,7 @@ const DropWallets = ({
           <div
             className="z-[100] absolute -top-[63px] w-full h-[100vh] opacity bg-black bg-opacity-60 cursor-pointer "
             onClick={handleClose}
-          ></div>
+          />
           <div
             className={`z-[2000] relative boxed flex items-center flex-col font-[700] w-[352px] h-[436px] p-5 ${
               open === true ? "show-wallets" : ""
@@ -124,7 +124,7 @@ const DropWallets = ({
             </p>
             <ul className="flex flex-col mt-[18px] gap-y-[5px] font-[500] text-[14px] w-full">
               {SmallWallets.map((item) => (
-                <Link to="/Metamask" key={item.id}>
+                <Link to="/login" key={item.id}>
                   <li className="h-[55px] w-full p-4 gap-x-5 flex items-center hover:bg-slate-200 hover:bg-opacity-10 transition-all cursor-pointer rounded-lg">
                     <img src={item.img} alt="" className="w-10 object-cover" />{" "}
                     <span>{item.name}</span>

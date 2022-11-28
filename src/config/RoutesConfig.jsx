@@ -8,6 +8,7 @@ import PageNotFound from "../pages/PageNotFound";
 import StatsPage from "../pages/StatsPage";
 import WalletsPage from "../pages/WalletsPage";
 import DetailCollection from "../pages/DetailCollection";
+import Login from "../pages/Login";
 
 const RoutesConfig = () => {
   return (
@@ -21,6 +22,7 @@ const RoutesConfig = () => {
         <Route path="/collection/:slug" element={<DetailCollection />} />
       </Route>
       <Route path="/error" element={<PageNotFound></PageNotFound>}></Route>
+      <Route path="/login" element={<Login></Login>}></Route>
       <Route path="/*" element={<PageNotFound></PageNotFound>}></Route>
     </Routes>
   );
