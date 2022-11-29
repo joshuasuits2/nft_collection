@@ -12,10 +12,10 @@ const schema = Yup.object({
     .required("Please enter your email address"),
   password: Yup.string()
     .min(8, "Your password must be at least 8 characters")
-    // .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, {
-    //   message: "Must have at least 1 letter, 1 number and 1 special character",
-    // })
     .required("Please enter your password"),
+  // .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, {
+  //   message: "Must have at least 1 letter, 1 number and 1 special character",
+  // })
 }).required();
 
 const LoginHookForm = ({ http, setToken, ...props }) => {
@@ -31,7 +31,7 @@ const LoginHookForm = ({ http, setToken, ...props }) => {
   });
 
   const onSubmitHandler = async (data) => {
-    // console.log(data);
+    console.log(data);
     http.post("/login", data).then((res) => {
       console.log(res);
       setToken(res.data.name, res.data.access_token);
@@ -79,6 +79,20 @@ const LoginHookForm = ({ http, setToken, ...props }) => {
             control={control}
             placeholder="Enter your password"
             id="password"
+          />
+          {errors?.password && (
+            <p className="text-sm text-red-500">{errors?.password?.message}</p>
+          )}
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label htmlFor="password_confirmation">Confirm Password</label>
+          <InputHook
+            type="password"
+            name="password_confirmation"
+            control={control}
+            placeholder="Enter your password"
+            id="password_confirmation"
           />
           {errors?.password && (
             <p className="text-sm text-red-500">{errors?.password?.message}</p>

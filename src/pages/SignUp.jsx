@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import SignUpHookForm from "../components/form/SignupHookForm";
 import PageContainer from "../components/layout/PageContainer";
-import AuthUser from "../config/AuthUser";
+import AuthCreate from "../config/AuthCreate";
 
 const SignUpStyles = styled.div`
   width: 100%;
@@ -21,11 +21,11 @@ const SignUpStyles = styled.div`
 `;
 
 const SignUp = () => {
-  const { http, setToken } = AuthUser();
+  const { http } = AuthCreate();
   return (
     <SignUpStyles className="body-style">
       <PageContainer>
-        <div className="mt-[60px] w-full max-w-[560px]  mx-auto rounded-2xl bg-[#2C2C35]   flex flex-col p-10 items-center">
+        <div className="mt-[60px] w-full max-w-[560px]  mx-auto rounded-2xl bg-[#2C2C35] zz flex flex-col p-10 items-center">
           <Link
             to="/"
             onClick={() => {
@@ -40,7 +40,7 @@ const SignUp = () => {
               />
             </div>
           </Link>
-          <SignUpHookForm http={http} setToken={setToken}></SignUpHookForm>
+          <SignUpHookForm http={http}></SignUpHookForm>
         </div>
       </PageContainer>
     </SignUpStyles>
