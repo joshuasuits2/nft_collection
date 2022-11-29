@@ -4,19 +4,22 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useEffect } from "react";
 import InputHook from "../input/InputForm";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const schema = Yup.object({
-  username: Yup.string().required("Please enter your username"),
+  email: Yup.string()
+    .email("Invalid email address")
+    .required("Please enter your email address"),
   password: Yup.string()
     .min(8, "Your password must be at least 8 characters")
-    .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, {
-      message: "Must have at least 1 letter, 1 number and 1 special character",
-    })
+    // .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, {
+    //   message: "Must have at least 1 letter, 1 number and 1 special character",
+    // })
     .required("Please enter your password"),
 }).required();
 
-const LoginHookForm = () => {
+const LoginHookForm = ({ http, setToken, ...props }) => {
+  const navigate = useNavigate();
   const {
     handleSubmit,
     control,
@@ -28,10 +31,15 @@ const LoginHookForm = () => {
   });
 
   const onSubmitHandler = async (data) => {
-    console.log(data);
+    // console.log(data);
+    http.post("/login", data).then((res) => {
+      console.log(res);
+      setToken(res.data.name, res.data.access_token);
+    });
     if (isValid) {
+      navigate("/login");
       reset({
-        username: "",
+        email: "",
         password: "",
       });
     }
@@ -48,15 +56,18 @@ const LoginHookForm = () => {
         className="flex flex-col gap-4"
       >
         <div className="flex flex-col gap-2">
-          <label htmlFor="username">Username</label>
+          <label htmlFor="email">Email address</label>
           <InputHook
-            name="username"
+            name="email"
+            type="email"
             control={control}
-            placeholder="Enter your user name"
-            id="username"
+            placeholder="Enter your email address"
+            id="email"
           />
-          {errors?.username && (
-            <p className="text-sm text-red-500">{errors?.username?.message}</p>
+          {errors?.email && (
+            <p className="text-sm font-[300] text-red-500">
+              {errors?.email?.message}
+            </p>
           )}
         </div>
 

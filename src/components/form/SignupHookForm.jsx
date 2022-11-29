@@ -7,7 +7,7 @@ import InputHook from "../input/InputForm";
 import { Link } from "react-router-dom";
 
 const schema = Yup.object({
-  username: Yup.string().required("Please enter your username"),
+  name: Yup.string().required("Please enter your username"),
   email: Yup.string()
     .email("Invalid email address")
     .required("Please enter your email address"),
@@ -17,9 +17,13 @@ const schema = Yup.object({
       message: "Must have at least 1 letter, 1 number and 1 special character",
     })
     .required("Please enter your password"),
+  password_confirmation: Yup.string().oneOf(
+    [Yup.ref("password"), null],
+    "Passwords must match"
+  ),
 }).required();
 
-const SignUpHookForm = () => {
+const SignUpHookForm = ({ http, setToken, ...props }) => {
   const {
     handleSubmit,
     control,
@@ -31,12 +35,17 @@ const SignUpHookForm = () => {
   });
 
   const onSubmit = async (data) => {
+    console.log(data);
+    http.post("/register", data).then((res) => {
+      setToken(res.data.name, res.data.remember_token);
+    });
     if (isValid) {
       console.log("Send data to backend");
       reset({
-        username: "",
+        name: "",
         email: "",
         password: "",
+        password_confirmation: "",
       });
     }
   };
@@ -54,10 +63,10 @@ const SignUpHookForm = () => {
         <div className="flex flex-col gap-2">
           <label htmlFor="username">Username</label>
           <InputHook
-            name="username"
+            name="name"
             control={control}
             placeholder="Enter your user name"
-            id="username"
+            id="name"
           />
           {errors?.username && (
             <p className="text-sm font-[300] text-red-500">
@@ -90,6 +99,21 @@ const SignUpHookForm = () => {
             control={control}
             placeholder="Enter your password"
             id="password"
+          />
+          {errors?.password && (
+            <p className="text-sm font-[300] text-red-500">
+              {errors?.password?.message}
+            </p>
+          )}
+        </div>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="password_confirmation">Confirm Password</label>
+          <InputHook
+            type="password"
+            name="password_confirmation"
+            control={control}
+            placeholder="Confirm your password"
+            id="password_confirmation"
           />
           {errors?.password && (
             <p className="text-sm font-[300] text-red-500">

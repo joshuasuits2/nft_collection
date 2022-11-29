@@ -2,7 +2,7 @@ import RoutesConfig from "./config/RoutesConfig";
 
 const App = () => {
   return (
-    <div>
+    <div className="App">
       <RoutesConfig></RoutesConfig>
     </div>
   );

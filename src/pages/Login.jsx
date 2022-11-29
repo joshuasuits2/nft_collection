@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import LoginHookForm from "../components/form/LoginHookForm";
-import SignUpHookForm from "../components/form/SignupHookForm";
 import PageContainer from "../components/layout/PageContainer";
+import AuthUser from "../config/AuthUser";
 
 const LoginStyles = styled.div`
   width: 100%;
@@ -21,6 +21,7 @@ const LoginStyles = styled.div`
 `;
 
 const Login = () => {
+  const { http, setToken } = AuthUser();
   return (
     <LoginStyles className="body-style">
       <PageContainer>
@@ -39,7 +40,7 @@ const Login = () => {
               />
             </div>
           </Link>
-          <LoginHookForm></LoginHookForm>
+          <LoginHookForm http={http} setToken={setToken}></LoginHookForm>
         </div>
       </PageContainer>
     </LoginStyles>

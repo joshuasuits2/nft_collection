@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import SignUpHookForm from "../components/form/SignupHookForm";
 import PageContainer from "../components/layout/PageContainer";
+import AuthUser from "../config/AuthUser";
 
 const SignUpStyles = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 110vh;
   position: relative;
   display: flex;
   align-items: center;
@@ -20,6 +21,7 @@ const SignUpStyles = styled.div`
 `;
 
 const SignUp = () => {
+  const { http, setToken } = AuthUser();
   return (
     <SignUpStyles className="body-style">
       <PageContainer>
@@ -38,7 +40,7 @@ const SignUp = () => {
               />
             </div>
           </Link>
-          <SignUpHookForm></SignUpHookForm>
+          <SignUpHookForm http={http} setToken={setToken}></SignUpHookForm>
         </div>
       </PageContainer>
     </SignUpStyles>
