@@ -9,6 +9,7 @@ import StatsPage from "../pages/StatsPage";
 import WalletsPage from "../pages/WalletsPage";
 import DetailCollection from "../pages/DetailCollection";
 import Login from "../pages/Login";
+import SignUp from "../pages/SignUp";
 
 const RoutesConfig = () => {
   return (
@@ -23,6 +24,7 @@ const RoutesConfig = () => {
       </Route>
       <Route path="/error" element={<PageNotFound></PageNotFound>}></Route>
       <Route path="/login" element={<Login></Login>}></Route>
+      <Route path="/signup" element={<SignUp></SignUp>}></Route>
       <Route path="/*" element={<PageNotFound></PageNotFound>}></Route>
     </Routes>
   );
