@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useEffect } from "react";
-import InputHook from "../input/InputForm";
+import InputHookForm from "../input/InputHookForm";
 import { Link } from "react-router-dom";
 
 const schema = Yup.object({
@@ -62,7 +62,7 @@ const SignUpHookForm = ({ http, setToken, ...props }) => {
       >
         <div className="flex flex-col gap-2">
           <label htmlFor="username">Username</label>
-          <InputHook
+          <InputHookForm
             name="name"
             control={control}
             placeholder="Enter your user name"
@@ -77,7 +77,7 @@ const SignUpHookForm = ({ http, setToken, ...props }) => {
 
         <div className="flex flex-col gap-2">
           <label htmlFor="email">Email address</label>
-          <InputHook
+          <InputHookForm
             name="email"
             type="email"
             control={control}
@@ -93,7 +93,7 @@ const SignUpHookForm = ({ http, setToken, ...props }) => {
 
         <div className="flex flex-col gap-2">
           <label htmlFor="password">Password</label>
-          <InputHook
+          <InputHookForm
             type="password"
             name="password"
             control={control}
@@ -108,7 +108,7 @@ const SignUpHookForm = ({ http, setToken, ...props }) => {
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="password_confirmation">Confirm Password</label>
-          <InputHook
+          <InputHookForm
             type="password"
             name="password_confirmation"
             control={control}

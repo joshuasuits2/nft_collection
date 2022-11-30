@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import LoginHookForm from "../components/form/LoginHookForm";
 import PageContainer from "../components/layout/PageContainer";
@@ -21,7 +21,11 @@ const LoginStyles = styled.div`
 `;
 
 const Login = () => {
-  const { http, setToken } = AuthUser();
+  const { http, setToken, token } = AuthUser();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (token) return navigate("/");
+  }, [navigate, token]);
   return (
     <LoginStyles className="body-style">
       <PageContainer>

@@ -3,7 +3,7 @@ import { useController, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useEffect } from "react";
-import InputHook from "../input/InputForm";
+import InputHookForm from "../input/InputHookForm";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
@@ -48,10 +48,6 @@ const LoginHookForm = ({ http, setToken, ...props }) => {
       });
     if (isValid) {
       setLoadingSpin(true);
-      // reset({
-      //   email: "",
-      //   password: "",
-      // });
     }
   };
   useEffect(() => {
@@ -67,7 +63,7 @@ const LoginHookForm = ({ http, setToken, ...props }) => {
       >
         <div className="flex flex-col gap-2">
           <label htmlFor="email">Email address</label>
-          <InputHook
+          <InputHookForm
             name="email"
             type="email"
             control={control}
@@ -83,7 +79,7 @@ const LoginHookForm = ({ http, setToken, ...props }) => {
 
         <div className="flex flex-col gap-2">
           <label htmlFor="password">Password</label>
-          <InputHook
+          <InputHookForm
             type="password"
             name="password"
             control={control}
@@ -94,18 +90,18 @@ const LoginHookForm = ({ http, setToken, ...props }) => {
             <p className="text-sm text-red-500">{errors?.password?.message}</p>
           )}
         </div>
-
+        {errorLogin === true && (
+          <div className="text-sm text-red-500 font-[400]">
+            Incorrect account or password
+          </div>
+        )}
         <p>
           Don't have an account?{" "}
           <Link to="/signup">
             <strong className="cursor-pointer text-[#c68afc]">Sign up</strong>
           </Link>
         </p>
-        {errorLogin === true && (
-          <div className="text-sm text-red-500 font-[400]">
-            Incorrect account or password
-          </div>
-        )}
+
         {!loadingSpin ? (
           <button
             type="submit"

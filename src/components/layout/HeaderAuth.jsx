@@ -126,7 +126,7 @@ const HeaderAuth = ({ handleSignout }) => {
             </ul>
             <div className="user flex items-center gap-[30px]">
               <Link
-                to="/wallets"
+                to="/profile"
                 onClick={() => {
                   window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
                 }}
