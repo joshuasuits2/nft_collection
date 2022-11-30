@@ -5,6 +5,9 @@ import * as Yup from "yup";
 import { useEffect } from "react";
 import InputHook from "../input/InputForm";
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const schema = Yup.object({
   email: Yup.string()
@@ -13,13 +16,12 @@ const schema = Yup.object({
   password: Yup.string()
     .min(8, "Your password must be at least 8 characters")
     .required("Please enter your password"),
-  // .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, {
-  //   message: "Must have at least 1 letter, 1 number and 1 special character",
-  // })
 }).required();
 
 const LoginHookForm = ({ http, setToken, ...props }) => {
-  const navigate = useNavigate();
+  const [loadingSpin, setLoadingSpin] = useState(false);
+  const [errorLogin, setErrorLogin] = useState(false);
+
   const {
     handleSubmit,
     control,
@@ -32,16 +34,24 @@ const LoginHookForm = ({ http, setToken, ...props }) => {
 
   const onSubmitHandler = async (data) => {
     console.log(data);
-    http.post("/login", data).then((res) => {
-      console.log(res);
-      setToken(res.data.name, res.data.access_token);
-    });
-    if (isValid) {
-      navigate("/login");
-      reset({
-        email: "",
-        password: "",
+    http
+      .post("/login", {
+        ...data,
+      })
+      .then((res) => {
+        console.log("res:", res);
+        setToken(res.data.token);
+      })
+      .catch((error) => {
+        setLoadingSpin(false);
+        setErrorLogin(true);
       });
+    if (isValid) {
+      setLoadingSpin(true);
+      // reset({
+      //   email: "",
+      //   password: "",
+      // });
     }
   };
   useEffect(() => {
@@ -85,31 +95,32 @@ const LoginHookForm = ({ http, setToken, ...props }) => {
           )}
         </div>
 
-        <div className="flex flex-col gap-2">
-          <label htmlFor="password_confirmation">Confirm Password</label>
-          <InputHook
-            type="password"
-            name="password_confirmation"
-            control={control}
-            placeholder="Enter your password"
-            id="password_confirmation"
-          />
-          {errors?.password && (
-            <p className="text-sm text-red-500">{errors?.password?.message}</p>
-          )}
-        </div>
         <p>
           Don't have an account?{" "}
           <Link to="/signup">
             <strong className="cursor-pointer text-[#c68afc]">Sign up</strong>
           </Link>
         </p>
-        <button
-          type="submit"
-          className="mt-6 w-full p-4 bg-[#c68afc] text-white font-semibold rounded-lg active:bg-opacity-90"
-        >
-          Sign In
-        </button>
+        {errorLogin === true && (
+          <div className="text-sm text-red-500 font-[400]">
+            Incorrect account or password
+          </div>
+        )}
+        {!loadingSpin ? (
+          <button
+            type="submit"
+            className="mt-6 flex items-center justify-center w-full p-4 bg-[#c68afc] text-white font-semibold rounded-lg active:bg-opacity-90"
+          >
+            Sign In
+          </button>
+        ) : (
+          <button
+            type="submit"
+            className="pointer-events-none mt-6 flex items-center justify-center w-full p-4 bg-[#CF99FF] text-white font-semibold rounded-lg active:bg-opacity-90"
+          >
+            <div className="w-5 h-5 rounded-full border-solid transition-all border-r-transparent animate-spin border-white border-[4px]"></div>
+          </button>
+        )}
       </form>
     </div>
   );

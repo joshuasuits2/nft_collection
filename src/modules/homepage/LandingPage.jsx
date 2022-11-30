@@ -20,7 +20,6 @@ const LandingPage = () => {
         </p>
         <div className="flex items-center gap-[75px] mt-[40px]">
           <Button url="/wallets">Connect Wallet</Button>
-
           <Link to="/explore">
             <div className="flex items-center gap-[18px]">
               <span className="cursor-pointer">

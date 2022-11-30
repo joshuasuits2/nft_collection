@@ -10,6 +10,7 @@ import WalletsPage from "../pages/WalletsPage";
 import DetailCollection from "../pages/DetailCollection";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
+import Create from "../pages/Create";
 
 const RoutesConfig = () => {
   return (
@@ -19,7 +20,8 @@ const RoutesConfig = () => {
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/stats" element={<StatsPage />} />
         <Route path="/wallets" element={<WalletsPage />} />
-        <Route path="/:slug" element={<CategoryDetail></CategoryDetail>} />
+        <Route path="/create" element={<Create />} />
+        <Route path="/:slug" element={<CategoryDetail />} />
         <Route path="/collection/:slug" element={<DetailCollection />} />
       </Route>
       <Route path="/error" element={<PageNotFound></PageNotFound>}></Route>

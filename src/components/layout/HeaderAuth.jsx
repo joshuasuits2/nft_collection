@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import UserIcon from "../../assets/icons/UserIcon";
 import Input from "../input/Input";
-import DropWallets from "./DropWallets";
+import avatar_default from "../../assets/avatar/avatar_default.png";
+import AuthUser from "../../config/AuthUser";
 
 const ListLink = [
   {
@@ -25,24 +25,6 @@ const ListLink = [
 
 const HeaderStyles = styled.div`
   margin-bottom: 58px;
-  .skeleton {
-    background-color: #eee;
-    background-image: linear-gradient(
-      110deg,
-      #ececec 8%,
-      #f5f5f5 18%,
-      #ececec 33%
-    );
-    border-radius: 5px;
-    background-size: 200% 100%;
-    animation: 1.5s shine linear infinite;
-  }
-
-  @keyframes shine {
-    to {
-      background-position-x: -200%;
-    }
-  }
   #header {
     --transition-curve: cubic-bezier(0.05, 0, 0.2, 1);
     transition: top 0.5s var(--transition-curve),
@@ -66,7 +48,11 @@ const HeaderStyles = styled.div`
     );
     backdrop-filter: blur(50px);
   }
-
+  span.connect {
+    background: linear-gradient(180deg, #ddb9ff 0%, #a749f8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
   a {
     display: inline-block;
     text-decoration: none;
@@ -82,16 +68,8 @@ const HeaderStyles = styled.div`
   }
 `;
 
-const Header = ({ loading }) => {
-  const [show, setShow] = useState(false);
-  const DropWalletsRef = useRef(null);
-  const [coords, setCoords] = useState({});
-
-  const handleClose = () => {
-    setCoords(DropWalletsRef.current.getBoundingClientRect());
-    setShow(!show);
-  };
-
+const HeaderAuth = ({ handleSignout }) => {
+  const navigate = useNavigate();
   useEffect(() => {
     const header = document.getElementById("header");
     const sticky = header.offsetTop;
@@ -153,19 +131,23 @@ const Header = ({ loading }) => {
                   window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
                 }}
               >
-                <UserIcon></UserIcon>
+                <img
+                  src={avatar_default}
+                  alt=""
+                  className="w-[35px] h-[35px] object-cover rounded-full"
+                />
               </Link>
-              {/* <div className="w-[35px] h-[35px] rounded-full skeleton"></div> */}
-              <div
-                className="transition-all button h-[53px] w-[201px] px-5 py-4"
-                ref={DropWalletsRef}
+              <button onClick={handleSignout}>
+                <span className="text-white font-[400] cursor-pointer">
+                  Sign out
+                </span>
+              </button>
+              <button
+                className="h-[53px]  px-5 py-4 flex items-center justify-center font-medium tracking-[0.02em] bg-purple-400 rounded-lg "
+                onClick={() => navigate("/create")}
               >
-                <DropWallets
-                  open={show}
-                  handleClose={handleClose}
-                  coords={coords}
-                ></DropWallets>
-              </div>
+                <span className="text-white">Create</span>
+              </button>
             </div>
           </div>
         </header>
@@ -174,4 +156,4 @@ const Header = ({ loading }) => {
   );
 };
 
-export default Header;
+export default HeaderAuth;

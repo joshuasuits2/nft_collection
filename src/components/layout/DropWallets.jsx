@@ -78,7 +78,6 @@ const DropWallets = ({
   className = "",
   handleClose = () => {},
 }) => {
-  console.log(coords);
   useEffect(() => {
     if (open === true) {
       document.body.style.overflowY = "hidden";
