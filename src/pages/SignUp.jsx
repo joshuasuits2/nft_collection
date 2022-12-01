@@ -32,7 +32,7 @@ const SignUp = () => {
               window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
             }}
           >
-            <div className="w-[200px] mb-10">
+            <div className="w-[200px]">
               <img
                 srcSet="./logo.png"
                 alt=""
@@ -43,6 +43,7 @@ const SignUp = () => {
           <SignUpHookForm http={http}></SignUpHookForm>
         </div>
       </PageContainer>
+      <div className="h-10"></div>
     </SignUpStyles>
   );
 };

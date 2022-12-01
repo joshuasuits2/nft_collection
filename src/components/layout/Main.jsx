@@ -6,25 +6,17 @@ import HeaderAuth from "./HeaderAuth";
 import AuthUser from "../../config/AuthUser";
 import { useState } from "react";
 import { useEffect } from "react";
+import useAuth from "../../hooks/useAuth";
 
 const Main = () => {
-  const { http } = AuthUser();
-  const [user, setUser] = useState();
+  const { user, setUser } = useAuth();
   const { logout, token } = AuthUser();
-
   const handleSignout = () => {
     if (token !== undefined) {
       logout();
       setUser(null);
     }
   };
-
-  useEffect(() => {
-    (async () => {
-      const res = await http.get("/user");
-      setUser(res.data);
-    })();
-  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);

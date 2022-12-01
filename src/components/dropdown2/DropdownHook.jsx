@@ -9,6 +9,7 @@ const DropdownHook = ({
   data,
   dropdownLabel,
   className,
+  width = "550px",
 }) => {
   const { show, setShow, nodeRef } = useClickOutSide();
   useWatch({
@@ -27,12 +28,14 @@ const DropdownHook = ({
     <div className="relative mb-2" ref={nodeRef}>
       <div
         onClick={() => setShow(!show)}
-        className={`p-5 rounded-lg w-[550px] h-[56px] bg-[#2c2c35] flex items-center cursor-pointer ${className}`}
+        className={`p-5 rounded-lg  h-[56px] bg-[#2c2c35] flex items-center cursor-pointer ${className}`}
+        style={{ width: width }}
       >
         <span className="text-[#9ca3af]">{label}</span>
       </div>
       <div
-        className={`absolute top-[110%] left-0 w-[550px] shadow-2xl rounded-lg bg-[#2c2c35] ${
+        style={{ width: width }}
+        className={`absolute top-[110%] left-0 shadow-2xl rounded-lg bg-[#2c2c35] ${
           show ? "" : "opacity-0 invisible"
         }`}
       >

@@ -8,22 +8,9 @@ import AuthUser from "../config/AuthUser";
 import PageNotFound from "./PageNotFound";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-const data = [
-  {
-    id: 1,
-    value: "John",
-    text: "John",
-  },
-  {
-    id: 2,
-    value: "Son",
-    text: "Son",
-  },
-];
 
 const Create = () => {
   const [collections, setCollections] = useState([]);
-
   const [cryptos, setCryptos] = useState([]);
   const [showCol, setShowCol] = useState(false);
   const {
@@ -78,7 +65,7 @@ const Create = () => {
             <div className="mt-[22px] flex flex-col gap-2">
               <label htmlFor="crypto">Crypto</label>
               <DropdownHook
-                className="w-[450px]"
+                width="420px"
                 control={control}
                 setValue={setValue}
                 name="crypto"
@@ -105,11 +92,11 @@ const Create = () => {
                 control={control}
                 setValue={setValue}
                 name="collection"
-                data={data}
+                data={collections}
                 dropdownLabel="Select name collection"
               ></DropdownHook>
             </div>
-            {data.length === 0 && (
+            {collections.length === 0 && (
               <span className="mt-4 text-sm text-[#c68afc]">
                 You must have at least one collection
               </span>
