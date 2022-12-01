@@ -26,8 +26,6 @@ const Main = () => {
     })();
   }, []);
 
-  console.log(user);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   });

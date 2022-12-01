@@ -12,6 +12,7 @@ import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 import Create from "../pages/Create";
 import Profile from "../pages/Profile";
+import CreateCollection from "../pages/CreateCollection";
 
 const RoutesConfig = () => {
   return (
@@ -22,6 +23,7 @@ const RoutesConfig = () => {
         <Route path="/stats" element={<StatsPage />} />
         <Route path="/wallets" element={<WalletsPage />} />
         <Route path="/create" element={<Create />} />
+        <Route path="/create-collection" element={<CreateCollection />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/:slug" element={<CategoryDetail />} />
         <Route path="/collection/:slug" element={<DetailCollection />} />

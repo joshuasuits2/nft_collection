@@ -13,7 +13,7 @@ const DropdownHook = ({
   const { show, setShow, nodeRef } = useClickOutSide();
   useWatch({
     control,
-    name: "job",
+    name: "",
     defaultValue: "",
   });
 
@@ -24,26 +24,26 @@ const DropdownHook = ({
   };
   const [label, setLabel] = useState(dropdownLabel);
   return (
-    <div className="relative mb-2 " ref={nodeRef}>
+    <div className="relative mb-2" ref={nodeRef}>
       <div
         onClick={() => setShow(!show)}
-        className={`p-5 rounded-lg  w-[550px] bg-[#2c2c35] flex items-center cursor-pointer ${className}`}
+        className={`p-5 rounded-lg w-[550px] h-[56px] bg-[#2c2c35] flex items-center cursor-pointer ${className}`}
       >
         <span className="text-[#9ca3af]">{label}</span>
       </div>
       <div
-        className={`absolute top-[110%] left-0 w-[550px] rounded-lg border bg-[#fff] ${
+        className={`absolute top-[110%] left-0 w-[550px] shadow-2xl rounded-lg bg-[#2c2c35] ${
           show ? "" : "opacity-0 invisible"
         }`}
       >
         {data.map((item) => (
           <div
             key={item.id}
-            className="p-5 cursor-pointer hover:bg-gray-200 hover:rounded-lg"
+            className="p-5 cursor-pointer h-[56px] hover:bg-gray-500 hover:rounded-lg"
             onClick={handleClickDropdownItem}
             data-value={item.value}
           >
-            <span className="text-[#141418]">{item.text}</span>
+            {item.text}
           </div>
         ))}
       </div>
