@@ -8,18 +8,23 @@ import { baseURL } from "../../config/getConfig";
 
 const ExploreCollection = () => {
   const [topics, setTopics] = useState([]);
+  const [loadingTopics, setLoadingTopics] = useState(true);
   useEffect(() => {
+    setLoadingTopics(true);
     (async () => {
       const res = await axios.get(`${baseURL}/api/topics`);
-      setTopics(res.data.topics);
-      console.log(res.data.topics);
+      setTopics(res?.data?.topics);
+      setLoadingTopics(false);
     })();
   }, []);
 
   return (
     <div className="mt-[140px]">
       <Heading alignItems="left">EXPLORE COLLECTION</Heading>
-      <TabCollection topics={topics}></TabCollection>
+      <TabCollection
+        topics={topics}
+        loadingTopics={loadingTopics}
+      ></TabCollection>
     </div>
   );
 };

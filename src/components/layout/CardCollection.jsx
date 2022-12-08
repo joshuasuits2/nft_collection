@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Clone_X from "../../assets/collection/Clone_X.png";
-import Clone_X_ava from "../../assets/collection/Clone_X_ava.png";
 import verify from "../../assets/outside/verify.png";
+import { baseURL, logoURL } from "../../config/getConfig";
 
 const CardCollectionStyles = styled.div`
   position: relative;
@@ -45,13 +44,17 @@ const CardCollection = ({ logo, banner, name }) => {
   return (
     <CardCollectionStyles>
       <div className="collection-image h-[310px] w-full absolute z-0">
-        <img src={banner} alt="" className="w-[inherit]  rounded-2xl" />
+        <img
+          src={`${baseURL}/${banner}`}
+          alt=""
+          className="w-full h-full object-cover rounded-xl"
+        />
       </div>
       <div className="overlay rounded-2xl h-[310px] w-full absolute top-0 left-0 z-[1]" />
       <div className="ml-5 mt-auto flex items-end w-full">
         <div className="avatar-image rounded-full h-[100px] w-[100px] flex items-end relative z-[2] cursor-pointer">
           <img
-            src={logo}
+            src={`${baseURL}/${logo}`}
             alt=""
             className="w-full h-full object-cover rounded-full"
           />

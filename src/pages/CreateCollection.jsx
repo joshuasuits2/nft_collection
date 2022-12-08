@@ -40,6 +40,7 @@ const CreateCollection = () => {
       const res = await http.get("/topics");
       setTopics(res.data.topics);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const {
@@ -73,7 +74,7 @@ const CreateCollection = () => {
         toast.success("Create Success!");
         setTimeout(() => {
           navigate("/create");
-        }, 3000);
+        }, 1500);
         if (!isValid) {
           setLogo(null);
           setBanner(null);
@@ -113,7 +114,7 @@ const CreateCollection = () => {
                   type="file"
                   className="hidden-input"
                   {...register("url_image_logo")}
-                  // accept="image/*"
+                  accept="image/*"
                   defaultValue=""
                   onChange={handleSelectLogo}
                 />
@@ -179,7 +180,7 @@ const CreateCollection = () => {
                   <input
                     type="file"
                     className="hidden-input"
-                    // accept="image/*"
+                    accept="image/*"
                     {...register("url_image_banner")}
                     onChange={handleSelectBanner}
                   />
@@ -236,7 +237,7 @@ const CreateCollection = () => {
         </form>
         <div className="h-[200px] w-full"></div>
       </PageContainer>
-      <ToastContainer autoClose={2000} />
+      <ToastContainer autoClose={800} />
     </div>
   );
 };

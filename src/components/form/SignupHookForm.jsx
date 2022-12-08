@@ -5,6 +5,8 @@ import * as Yup from "yup";
 import { useEffect } from "react";
 import InputHookForm from "../input/InputHookForm";
 import { Link, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const schema = Yup.object({
   name: Yup.string().required("Please enter your username"),
@@ -36,24 +38,29 @@ const SignUpHookForm = ({ http, setToken, ...props }) => {
   });
 
   const onSubmit = async (data) => {
+    console.log(data);
     http
       .post("/register", {
         ...data,
         type: 0,
       })
       .then((res) => {
-        setToken(res.data.name, res.data.remember_token);
-      });
-    if (isValid) {
-      console.log("Send data to backend");
-      reset({
-        name: "",
-        email: "",
-        password: "",
-        password_confirmation: "",
-      });
-      // navigate("/login");
-    }
+        toast.success("Create Success!");
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
+        setToken(res.data.remember_token);
+        if (isValid) {
+          console.log("Send data to backend");
+          reset({
+            name: "",
+            email: "",
+            password: "",
+            password_confirmation: "",
+          });
+        }
+      })
+      .catch((error) => console.log(error));
   };
   useEffect(() => {
     setFocus("username");
@@ -140,6 +147,7 @@ const SignUpHookForm = ({ http, setToken, ...props }) => {
           Sign Up
         </button>
       </form>
+      <ToastContainer autoClose={500} />
     </div>
   );
 };

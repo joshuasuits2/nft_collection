@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { baseURL } from "../config/getConfig";
 
 export default function AuthUser() {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ export default function AuthUser() {
   };
 
   const http = axios.create({
-    baseURL: "http://localhost:8000/api",
+    baseURL: `${baseURL}/api`,
     headers: {
       Accept: "application/json",
       "Content-Type": "multipart/form-data",
