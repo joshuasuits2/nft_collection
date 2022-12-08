@@ -4,8 +4,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useEffect } from "react";
 import InputHookForm from "../input/InputHookForm";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
+import LoadingSpin from "../loading/LoadingSpin";
 
 const schema = Yup.object({
   email: Yup.string()
@@ -111,7 +112,7 @@ const LoginHookForm = ({ http, setToken, ...props }) => {
             type="submit"
             className="pointer-events-none mt-6 flex items-center justify-center w-full p-4 bg-[#CF99FF] text-white font-semibold rounded-lg active:bg-opacity-90"
           >
-            <div className="w-5 h-5 rounded-full border-solid transition-all border-r-transparent animate-spin border-white border-[4px]"></div>
+            <LoadingSpin></LoadingSpin>
           </button>
         )}
       </form>

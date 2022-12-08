@@ -9,6 +9,9 @@ import { useEffect } from "react";
 import axios from "axios";
 import { baseURL } from "../../config/getConfig";
 import CardCollection from "../layout/CardCollection";
+import LoadingSkeleton from "../loading/LoadingSkeleton";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const TabCollectionStyles = styled.div`
   margin-top: 50px;
@@ -48,13 +51,16 @@ const TabCollectionStyles = styled.div`
 const TabCollection = ({ topics }) => {
   const [tabQuery, setTabQuery] = useState("");
   const [collections, setCollections] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
+      setLoading(true);
       const res = await axios.get(
         `${baseURL}/api/collections?name=${tabQuery}`
       );
       setCollections(res.data.collections);
+      setLoading(false);
     })();
   }, []);
 
@@ -64,6 +70,7 @@ const TabCollection = ({ topics }) => {
         <div className="flex justify-between">
           <Tab.List className="flex gap-x-5">
             {topics.length > 0 &&
+              !loading &&
               topics.map((item) => (
                 <Tab key={item.id}>
                   {({ selected }) => {
@@ -80,21 +87,45 @@ const TabCollection = ({ topics }) => {
                   }}
                 </Tab>
               ))}
+            {loading &&
+              Array(8)
+                .fill(0)
+                .map(() => (
+                  <SkeletonTheme baseColor="#202020" highlightColor="#444">
+                    <Skeleton width={100} height={40} />
+                  </SkeletonTheme>
+                ))}
           </Tab.List>
-          <Input width="200px" kind="search" placeholder="Search here ..." />
+          {!loading ? (
+            <Input width="200px" kind="search" placeholder="Search here ..." />
+          ) : (
+            <SkeletonTheme baseColor="#202020" highlightColor="#444">
+              <Skeleton width={200} height={40} />
+            </SkeletonTheme>
+          )}
         </div>
         <Tab.Panels className="mt-[80px]">
           <Tab.Panel>
-            <div className="grid grid-cols-3 grid-rows-3 gap-x-[40px] gap-y-[80px]">
+            <div className="grid grid-cols-3 gap-x-[40px] gap-y-[80px]">
               {collections.length > 0 &&
+                !loading &&
                 collections.map((item) => (
                   <CardCollection
                     key={item.id}
                     logo={item.url_image_logo}
                     banner={item.url_image_banner}
                     name={item.name}
-                  ></CardCollection>
+                  />
                 ))}
+
+              {loading &&
+                Array(6)
+                  .fill(0)
+                  .map((item) => (
+                    <SkeletonTheme baseColor="#202020" highlightColor="#444">
+                      <Skeleton style={{ borderRadius: "16px" }} height={310} />
+                    </SkeletonTheme>
+                  ))}
             </div>
           </Tab.Panel>
         </Tab.Panels>

@@ -120,7 +120,7 @@ const Create = () => {
                 name="collection"
                 data={collections}
                 dropdownLabel="Select name collection"
-              ></DropdownHook>
+              />
             </div>
             {collections.length === 0 && (
               <span className="mt-4 text-sm text-[#c68afc]">

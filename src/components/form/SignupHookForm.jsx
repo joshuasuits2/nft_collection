@@ -36,10 +36,14 @@ const SignUpHookForm = ({ http, setToken, ...props }) => {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
-    http.post("/register", data).then((res) => {
-      setToken(res.data.name, res.data.remember_token);
-    });
+    http
+      .post("/register", {
+        ...data,
+        type: 0,
+      })
+      .then((res) => {
+        setToken(res.data.name, res.data.remember_token);
+      });
     if (isValid) {
       console.log("Send data to backend");
       reset({
@@ -48,7 +52,7 @@ const SignUpHookForm = ({ http, setToken, ...props }) => {
         password: "",
         password_confirmation: "",
       });
-      navigate("/login");
+      // navigate("/login");
     }
   };
   useEffect(() => {
