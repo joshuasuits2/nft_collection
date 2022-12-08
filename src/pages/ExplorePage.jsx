@@ -40,7 +40,7 @@ const ExplorePage = () => {
       <LandingExplore pageRefs={pageRefs}></LandingExplore>
       <PageContainer>
         <Partner className="animate"></Partner>
-        <ExploreCollection></ExploreCollection>
+        <ExploreCollection />
         <AllNFTs pageRefs={pageRefs}></AllNFTs>
         <Footer></Footer>
       </PageContainer>

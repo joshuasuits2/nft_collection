@@ -5,27 +5,39 @@ import PageContainer from "../components/layout/PageContainer";
 import DropdownHook from "../components/dropdown2/DropdownHook";
 import { useState } from "react";
 import AuthUser from "../config/AuthUser";
-import PageNotFound from "./PageNotFound";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
+import useImagePreview from "../hooks/useImageUpload";
+
+const schema = Yup.object({
+  file: Yup.mixed().test("required", "Please select a file", (value) => {
+    return value && value.length;
+  }),
+  // name: Yup.string().required("Please enter your password"),
+}).required();
 
 const Create = () => {
   const [collections, setCollections] = useState([]);
   const [cryptos, setCryptos] = useState([]);
-  const [showCol, setShowCol] = useState(false);
   const {
     handleSubmit,
     control,
     reset,
+    watch,
     setValue,
     register,
-    setFocus,
-    formState: { errors, isValid },
-  } = useForm();
+    formState: { error },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const { image, onSelectImage } = useImagePreview();
 
   const onSubmit = (values) => {
     console.log(values);
   };
+
   const { token } = AuthUser();
   const navigate = useNavigate();
   if (!token) return navigate("/error");
@@ -45,22 +57,36 @@ const Create = () => {
             <label className="mt-5 cursor-pointer flex items-center justify-center border border-gray-300 bg-[#2c2c35] border-dashed w-[420px] min-h-[480px] rounded-lg relative overflow-hidden flex-col ">
               <input
                 type="file"
-                className="opacity-0 "
-                {...register("image")}
+                className="hidden-input"
+                {...register("file")}
+                accept="image/*"
+                onChange={onSelectImage}
               />
-              <p>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="40"
-                  height="40"
-                  fill="#c68afc"
-                  className="bi bi-cloud-arrow-up-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2zm2.354 5.146a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707L6.354 7.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2z" />
-                </svg>
-              </p>
-              <span className="mt-3">Select file to upload</span>
+              {!image ? (
+                <div className="flex flex-col items-center justify-center">
+                  <p>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="40"
+                      height="40"
+                      fill="#c68afc"
+                      className="bi bi-cloud-arrow-up-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2zm2.354 5.146a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707L6.354 7.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2z" />
+                    </svg>
+                  </p>
+                  <span className="mt-3">Select a image to upload</span>
+                </div>
+              ) : (
+                <div className="w-full h-full">
+                  <img
+                    src={image?.preview}
+                    alt=""
+                    className="w-full h-full object-cover rounded-lg"
+                  />
+                </div>
+              )}
             </label>
             <div className="mt-[22px] flex flex-col gap-2">
               <label htmlFor="crypto">Crypto</label>

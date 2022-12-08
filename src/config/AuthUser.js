@@ -27,7 +27,8 @@ export default function AuthUser() {
   const http = axios.create({
     baseURL: "http://localhost:8000/api",
     headers: {
-      "Content-Type": "application/json",
+      Accept: "application/json",
+      "Content-Type": "multipart/form-data",
       authorization: `Bearer ${token}`,
     },
   });

@@ -3,6 +3,12 @@ import { Tab } from "@headlessui/react";
 import styled from "styled-components";
 import Input from "../input/Input";
 import CardListCollection from "../layout/CardListCollection";
+import { ListTabs } from "../../fakeAPI/Tabs.js";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
+import { baseURL } from "../../config/getConfig";
+import CardCollection from "../layout/CardCollection";
 
 const TabCollectionStyles = styled.div`
   margin-top: 50px;
@@ -39,134 +45,57 @@ const TabCollectionStyles = styled.div`
   }
 `;
 
-const TabCollection = () => {
+const TabCollection = ({ topics }) => {
+  const [tabQuery, setTabQuery] = useState("");
+  const [collections, setCollections] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const res = await axios.get(
+        `${baseURL}/api/collections?name=${tabQuery}`
+      );
+      setCollections(res.data.collections);
+    })();
+  }, []);
+
   return (
     <TabCollectionStyles>
       <Tab.Group>
         <div className="flex justify-between">
           <Tab.List className="flex gap-x-5">
-            <Tab>
-              {({ selected }) => (
-                <div
-                  className={`w-[105px]  h-[49px] font-[500] cursor-pointer rounded-lg ${
-                    selected ? "on" : "off"
-                  }`}
-                >
-                  <span>Trending</span>
-                </div>
-              )}
-            </Tab>
-            <Tab>
-              {({ selected }) => (
-                <div
-                  className={`w-[105px] h-[49px] font-[500] cursor-pointer rounded-lg ${
-                    selected ? "on" : "off"
-                  }`}
-                >
-                  <span>Top</span>
-                </div>
-              )}
-            </Tab>
-            <Tab>
-              {({ selected }) => (
-                <div
-                  className={`px-5 py-3 font-[500] cursor-pointer rounded-lg ${
-                    selected ? "on" : "off"
-                  }`}
-                >
-                  <span>Music</span>
-                </div>
-              )}
-            </Tab>
-            <Tab>
-              {({ selected }) => (
-                <div
-                  className={`px-5 py-3 font-[500] cursor-pointer rounded-lg ${
-                    selected ? "on" : "off"
-                  }`}
-                >
-                  <span>Art</span>
-                </div>
-              )}
-            </Tab>
-            <Tab>
-              {({ selected }) => (
-                <div
-                  className={`px-5 py-3 font-[500] cursor-pointer rounded-lg ${
-                    selected ? "on" : "off"
-                  }`}
-                >
-                  <span>Photography</span>
-                </div>
-              )}
-            </Tab>
-            <Tab>
-              {({ selected }) => (
-                <div
-                  className={`px-5 py-3 font-[500] cursor-pointer rounded-lg ${
-                    selected ? "on" : "off"
-                  }`}
-                >
-                  <span>Sport</span>
-                </div>
-              )}
-            </Tab>
-            <Tab>
-              {({ selected }) => (
-                <div
-                  className={`px-5 py-3 font-[500] cursor-pointer rounded-lg ${
-                    selected ? "on" : "off"
-                  }`}
-                >
-                  <span>Virtual Worlds</span>
-                </div>
-              )}
-            </Tab>
-            <Tab>
-              {({ selected }) => (
-                <div
-                  className={`px-5 py-3 font-[500] cursor-pointer rounded-lg ${
-                    selected ? "on" : "off"
-                  }`}
-                >
-                  <span>More</span>
-                </div>
-              )}
-            </Tab>
+            {topics.length > 0 &&
+              topics.map((item) => (
+                <Tab key={item.id}>
+                  {({ selected }) => {
+                    setTabQuery(item.name);
+                    return (
+                      <div
+                        className={`px-5  h-[49px] font-[500] cursor-pointer rounded-lg ${
+                          selected ? "on" : "off"
+                        }`}
+                      >
+                        <span>{item.name}</span>
+                      </div>
+                    );
+                  }}
+                </Tab>
+              ))}
           </Tab.List>
-          <Input
-            width="200px"
-            kind="search"
-            placeholder="Search here ..."
-          ></Input>
+          <Input width="200px" kind="search" placeholder="Search here ..." />
         </div>
         <Tab.Panels className="mt-[80px]">
           <Tab.Panel>
-            <CardListCollection></CardListCollection>
-          </Tab.Panel>
-          <Tab.Panel>
-            <CardListCollection></CardListCollection>
-          </Tab.Panel>
-          <Tab.Panel>
-            <CardListCollection></CardListCollection>
-          </Tab.Panel>
-          <Tab.Panel>
-            <CardListCollection></CardListCollection>
-          </Tab.Panel>
-          <Tab.Panel>
-            <CardListCollection></CardListCollection>
-          </Tab.Panel>
-          <Tab.Panel>
-            <CardListCollection></CardListCollection>
-          </Tab.Panel>
-          <Tab.Panel>
-            <CardListCollection></CardListCollection>
-          </Tab.Panel>
-          <Tab.Panel>
-            <CardListCollection></CardListCollection>
-          </Tab.Panel>
-          <Tab.Panel>
-            <CardListCollection></CardListCollection>
+            <div className="grid grid-cols-3 grid-rows-3 gap-x-[40px] gap-y-[80px]">
+              {collections.length > 0 &&
+                collections.map((item) => (
+                  <CardCollection
+                    key={item.id}
+                    logo={item.url_image_logo}
+                    banner={item.url_image_banner}
+                    name={item.name}
+                  ></CardCollection>
+                ))}
+            </div>
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>

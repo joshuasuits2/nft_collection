@@ -6,8 +6,6 @@ import { useEffect } from "react";
 import InputHookForm from "../input/InputHookForm";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const schema = Yup.object({
   email: Yup.string()
@@ -33,16 +31,15 @@ const LoginHookForm = ({ http, setToken, ...props }) => {
   });
 
   const onSubmitHandler = async (data) => {
-    console.log(data);
     http
       .post("/login", {
         ...data,
       })
       .then((res) => {
-        console.log("res:", res);
         setToken(res.data.token);
       })
       .catch((error) => {
+        console.log(error);
         setLoadingSpin(false);
         setErrorLogin(true);
       });

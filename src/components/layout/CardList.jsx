@@ -1,6 +1,4 @@
 import Card from "./Card";
-// import { ListCategory } from "../../fakeAPI/Categories.js";
-
 const CardList = ({ className, data }) => {
   return (
     <div

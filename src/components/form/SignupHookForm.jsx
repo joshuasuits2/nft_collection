@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useEffect } from "react";
 import InputHookForm from "../input/InputHookForm";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const schema = Yup.object({
   name: Yup.string().required("Please enter your username"),
@@ -24,6 +24,7 @@ const schema = Yup.object({
 }).required();
 
 const SignUpHookForm = ({ http, setToken, ...props }) => {
+  const navigate = useNavigate();
   const {
     handleSubmit,
     control,
@@ -47,6 +48,7 @@ const SignUpHookForm = ({ http, setToken, ...props }) => {
         password: "",
         password_confirmation: "",
       });
+      navigate("/login");
     }
   };
   useEffect(() => {
