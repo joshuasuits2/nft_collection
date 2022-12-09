@@ -71,7 +71,7 @@ const CreateCollection = () => {
         price: 0,
       })
       .then((res) => {
-        toast.success("Create Success!");
+        toast.success("Create Successfully!");
         setTimeout(() => {
           navigate("/create");
         }, 1500);

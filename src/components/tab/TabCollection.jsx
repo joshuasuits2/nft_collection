@@ -2,7 +2,6 @@ import React from "react";
 import { Tab } from "@headlessui/react";
 import styled from "styled-components";
 import Input from "../input/Input";
-import CardListCollection from "../layout/CardListCollection";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
@@ -113,6 +112,7 @@ const TabCollection = ({ topics, loadingTopics, ...props }) => {
                     !loadingCollection &&
                     collections?.map((item) => (
                       <CardCollection
+                        loading={loadingCollection}
                         key={item.id}
                         logo={item.url_image_logo}
                         banner={item.url_image_banner}
@@ -123,16 +123,47 @@ const TabCollection = ({ topics, loadingTopics, ...props }) => {
                     Array(6)
                       .fill(0)
                       .map((item, index) => (
-                        <div key={index}>
-                          <SkeletonTheme
-                            baseColor="#202020"
-                            highlightColor="#444"
-                          >
-                            <Skeleton
-                              style={{ borderRadius: "16px" }}
-                              height={310}
-                            />
-                          </SkeletonTheme>
+                        <div
+                          key={index}
+                          style={{
+                            position: "relative",
+                            display: "flex",
+                            flexDirection: " column",
+                            height: "360px",
+                          }}
+                        >
+                          <div className="collection-image h-[310px] w-full z-0  absolute">
+                            <SkeletonTheme
+                              baseColor="#202020"
+                              highlightColor="#444"
+                            >
+                              <Skeleton
+                                width={"100%"}
+                                height={"100%"}
+                                style={{ borderRadius: "8px" }}
+                              />
+                            </SkeletonTheme>
+                          </div>
+                          <div className="ml-5 mt-auto flex items-end w-full">
+                            <div className="rounded-full h-[100px] w-[100px] flex items-end relative z-[2] cursor-pointer">
+                              <SkeletonTheme
+                                baseColor="#202020"
+                                highlightColor="#444"
+                              >
+                                <Skeleton width={100} height={100} circle />
+                              </SkeletonTheme>
+                            </div>
+                            <div className="relative z-[2] mb-2 ml-3 font-bold flex gap-x-[10px] items-center ">
+                              <span>
+                                <SkeletonTheme
+                                  baseColor="#202020"
+                                  highlightColor="#444"
+                                >
+                                  <Skeleton width={200} height={20} />
+                                </SkeletonTheme>
+                              </span>
+                            </div>
+                          </div>
                         </div>
                       ))}
                 </div>

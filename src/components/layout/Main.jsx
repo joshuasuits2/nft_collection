@@ -11,6 +11,7 @@ import useAuth from "../../hooks/useAuth";
 const Main = () => {
   const { user, setUser } = useAuth();
   const { logout, token } = AuthUser();
+  const { userId } = useAuth();
   const handleSignout = () => {
     if (token !== undefined) {
       logout();

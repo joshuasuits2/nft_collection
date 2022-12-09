@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import verify from "../../assets/outside/verify.png";
 import { baseURL, logoURL } from "../../config/getConfig";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const CardCollectionStyles = styled.div`
   position: relative;
@@ -34,8 +36,7 @@ const CardCollectionStyles = styled.div`
     }
   }
 `;
-
-const CardCollection = ({ logo, banner, name }) => {
+const CardCollection = ({ logo, banner, name, loading, ...props }) => {
   const [heart, setHeart] = useState(false);
   const handleReaction = () => {
     setHeart(!heart);
@@ -43,16 +44,16 @@ const CardCollection = ({ logo, banner, name }) => {
   };
   return (
     <CardCollectionStyles>
-      <div className="collection-image h-[310px] w-full absolute z-0">
+      <div className="collection-image h-[310px] w-full z-0 absolute">
         <img
           src={`${baseURL}/${banner}`}
           alt=""
           className="w-full h-full object-cover rounded-xl"
         />
       </div>
-      <div className="overlay rounded-2xl h-[310px] w-full absolute top-0 left-0 z-[1]" />
+      <div className="overlay rounded-[12px] h-[310px] w-full absolute top-0 left-0 z-[1]" />
       <div className="ml-5 mt-auto flex items-end w-full">
-        <div className="avatar-image rounded-full h-[100px] w-[100px] flex items-end relative z-[2] cursor-pointer">
+        <div className="rounded-full h-[100px] w-[100px] flex items-end relative z-[2] cursor-pointer">
           <img
             src={`${baseURL}/${logo}`}
             alt=""

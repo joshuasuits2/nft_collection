@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import InputHookForm from "../components/input/InputHookForm";
 import PageContainer from "../components/layout/PageContainer";
@@ -8,18 +8,19 @@ import AuthUser from "../config/AuthUser";
 import { Link, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import useImagePreview from "../hooks/useImageUpload";
-
-const schema = Yup.object({
-  file: Yup.mixed().test("required", "Please select a file", (value) => {
-    return value && value.length;
-  }),
-  // name: Yup.string().required("Please enter your password"),
-}).required();
+import useImageUpload from "../hooks/useImageUpload";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import useAuth from "../hooks/useAuth";
 
 const Create = () => {
-  const [collections, setCollections] = useState([]);
+  const [collectionUser, setCollectionUser] = useState([]);
   const [cryptos, setCryptos] = useState([]);
+  const { http, token } = AuthUser();
+  const navigate = useNavigate();
+  const { image, setImage, handleSelectImage } = useImageUpload();
+  const { userId } = useAuth();
+
   const {
     handleSubmit,
     control,
@@ -27,19 +28,57 @@ const Create = () => {
     watch,
     setValue,
     register,
-    formState: { error },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
+    formState: { error, isValid },
+  } = useForm();
 
-  const { image, onSelectImage } = useImagePreview();
+  useEffect(() => {
+    (async () => {
+      const res = await http.get("/cryptos");
+      console.log(res?.data?.cryptos);
+      setCryptos(res?.data?.cryptos);
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
+  useEffect(() => {
+    (async () => {
+      if (userId) {
+        const res = await http.get(`/collections?owner_id=${userId}`);
+        setCollectionUser(res?.data?.collections);
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
   const onSubmit = (values) => {
-    console.log(values);
+    console.log("Successfully!");
+    http
+      .post("/nfts", {
+        ...values,
+        url_image_nft: image,
+        owner_id: userId,
+        creator_id: userId,
+        reaction: "",
+        status: "",
+      })
+      .then((res) => {
+        toast.success("Create Successfully!");
+        if (!isValid) {
+          setImage(null);
+          reset({
+            name: "",
+            crypto_id: "",
+            description: "",
+            collection_id: "",
+            price: "",
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Please fill out all required fields");
+      });
   };
 
-  const { token } = AuthUser();
-  const navigate = useNavigate();
   if (!token) return navigate("/error");
   return (
     <div className="body-style">
@@ -58,9 +97,9 @@ const Create = () => {
               <input
                 type="file"
                 className="hidden-input"
-                {...register("file")}
+                {...register("url_image_nft")}
                 accept="image/*"
-                onChange={onSelectImage}
+                onChange={handleSelectImage}
               />
               {!image ? (
                 <div className="flex flex-col items-center justify-center">
@@ -93,10 +132,10 @@ const Create = () => {
               <DropdownHook
                 width="420px"
                 control={control}
-                setValue={setValue}
-                name="crypto"
+                name="crypto_id"
                 data={cryptos}
                 dropdownLabel="Select crypto"
+                setValue={setValue}
               ></DropdownHook>
             </div>
           </div>
@@ -117,12 +156,12 @@ const Create = () => {
               <DropdownHook
                 control={control}
                 setValue={setValue}
-                name="collection"
-                data={collections}
+                name="collection_id"
+                data={collectionUser}
                 dropdownLabel="Select name collection"
               />
             </div>
-            {collections.length === 0 && (
+            {collectionUser?.length === 0 && (
               <span className="mt-4 text-sm text-[#c68afc]">
                 You must have at least one collection
               </span>
@@ -168,15 +207,23 @@ const Create = () => {
               />
             </div>
             <div className="mt-10 flex items-center justify-start gap-x-10">
-              <button className="inline-flex items-center justify-center px-8 py-4 font-sans font-semibold tracking-wide text-[#151415] bg-white rounded-lg h-[53px]">
+              <button
+                // onClick={handleResetValue}
+                type="button"
+                className="inline-flex items-center justify-center px-8 py-4 font-medium  tracking-wide text-[#151415] bg-white rounded-lg h-[53px]"
+              >
                 Cancel
               </button>
-              <button className="inline-flex items-center justify-center px-8 py-4 font-sans font-semibold tracking-wide text-white bg-[#c68afc] rounded-lg h-[53px]">
-                Create Item
+              <button
+                type="submit"
+                className="inline-flex items-center justify-center px-8 py-4 font-medium tracking-wide text-white bg-[#c68afc] rounded-lg h-[53px]"
+              >
+                Create
               </button>
             </div>
           </div>
         </form>
+        <ToastContainer></ToastContainer>
       </PageContainer>
     </div>
   );
