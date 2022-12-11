@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Input from "../input/Input";
-import avatar_default from "../../assets/avatar/avatar_default.png";
-import AuthUser from "../../config/AuthUser";
+import avatar_default from "../../assets/avatar/avatar_default_1.png";
+import logo from "../../assets/logo.png";
 
 const ListLink = [
   {
@@ -99,7 +99,7 @@ const HeaderAuth = ({ handleSignout }) => {
                 window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
               }}
             >
-              <img srcSet="./logo.png" alt="" className="inline-block" />
+              <img src={logo} alt="" className="w-full h-full object-cover" />
             </Link>
             <Input
               className="ml-[85px]"

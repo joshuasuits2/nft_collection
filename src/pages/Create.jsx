@@ -56,20 +56,21 @@ const Create = () => {
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
+  if (!token) return navigate("/error");
   const onSubmit = (values) => {
     console.log("Successfully!");
     http
       .post("/nfts", {
         ...values,
         url_image_nft: image,
-        owner_id: userName,
-        creator_id: userName,
+        owner_id: userId,
+        creator_id: userId,
         reaction: 0,
         status: "Not bought yet",
       })
       .then((res) => {
         toast.success("Create Successfully!");
-        if (isValid) {
+        if (!isValid) {
           setImage(null);
           reset({
             name: "",
@@ -86,7 +87,6 @@ const Create = () => {
       });
   };
 
-  if (!token) return navigate("/error");
   return (
     <div className="body-style">
       <PageContainer>

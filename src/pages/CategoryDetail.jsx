@@ -71,8 +71,8 @@ const CategoryDetailStyles = styled.div`
   }
 `;
 const CategoryDetail = () => {
-  const { slug } = useParams();
   const [nft, setNft] = useState({ item: "", name: "" });
+  const { slug } = useParams();
   let params = new URLSearchParams(slug);
   let slugID = params.get("search");
 

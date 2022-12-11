@@ -4,6 +4,7 @@ import styled from "styled-components";
 import UserIcon from "../../assets/icons/UserIcon";
 import Input from "../input/Input";
 import DropWallets from "./DropWallets";
+import logo from "../../assets/logo.png";
 
 const ListLink = [
   {
@@ -109,7 +110,6 @@ const Header = ({ loading }) => {
       window.onscroll = null;
     };
   }, []);
-
   return (
     <HeaderStyles>
       <div className="w-full py-[7px]" id="header">
@@ -121,13 +121,13 @@ const Header = ({ loading }) => {
                 window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
               }}
             >
-              <img srcSet="./logo.png" alt="" className="inline-block" />
+              <img src={logo} alt="" className="w-full h-full object-cover" />
             </Link>
             <Input
               className="ml-[85px]"
               placeholder="Search item here..."
               kind="search"
-            ></Input>
+            />
           </div>
           <div className="header-right  flex items-center justify-between">
             <ul className="flex items-center gap-10">
@@ -155,7 +155,6 @@ const Header = ({ loading }) => {
               >
                 <UserIcon></UserIcon>
               </Link>
-              {/* <div className="w-[35px] h-[35px] rounded-full skeleton"></div> */}
               <div
                 className="transition-all button h-[53px] w-[201px] px-5 py-4"
                 ref={DropWalletsRef}

@@ -9,13 +9,15 @@ import { useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
 
 const Main = () => {
-  const { user, setUser } = useAuth();
+  const { user, userName, userId, setUser, setUserId, setUserName } = useAuth();
   const { logout, token } = AuthUser();
-  const { userId } = useAuth();
   const handleSignout = () => {
     if (token !== undefined) {
       logout();
       setUser(null);
+      setUserId(null);
+      setUserName(null);
+      sessionStorage.removeItem("user");
     }
   };
 

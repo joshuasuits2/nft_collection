@@ -83,6 +83,7 @@ const CreateCollection = () => {
             url_image_banner: "",
             name: "",
             topic_id: "",
+            description: "",
           });
         }
       })
@@ -99,10 +100,7 @@ const CreateCollection = () => {
   return (
     <div className="body-style">
       <PageContainer>
-        <form
-          className="flex pb-10 gap-x-[100px]"
-          onSubmit={handleSubmit(onSubmit)}
-        >
+        <form className="flex gap-x-[100px]" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-[40%] flex-col">
             <span className="text-[20px] font-semibold">
               Create a collection
@@ -140,36 +138,30 @@ const CreateCollection = () => {
                 <span className="mt-8 text-sm text-red-500 ">Please</span>
               )}
             </div>
-
-            <div className="mt-[150px] w-[470px]">
-              <div className="mt-4 flex flex-col gap-2">
-                <label htmlFor="name">Name Collection</label>
-                <InputHookForm
-                  className="bg-[#2c2c35]"
-                  style={{ color: "white" }}
-                  name="name"
-                  control={control}
-                  placeholder={`e. g. "Clone X"`}
-                  id="name"
-                />
-                {errors?.name && (
-                  <span className="mt-2 text-sm text-red-500 ">
-                    {errors?.name?.message}
-                  </span>
-                )}
-              </div>
+            <div className="mt-[146px] flex flex-col gap-2 ">
+              <label htmlFor="name">Name Collection</label>
+              <InputHookForm
+                className="bg-[#2c2c35]"
+                style={{ color: "white" }}
+                name="name"
+                control={control}
+                placeholder={`e. g. "Clone X"`}
+                id="name"
+              />
+              {errors?.name && (
+                <span className="mt-2 text-sm text-red-500 ">
+                  {errors?.name?.message}
+                </span>
+              )}
             </div>
-            <div className="mt-10 flex items-center justify-start gap-x-10">
-              <button
-                type="button"
-                onClick={handleResetValue}
-                className="inline-flex items-center justify-center px-8 py-4 font-medium  tracking-wide text-[#151415] bg-white rounded-lg h-[53px]"
-              >
-                Cancel
-              </button>
-              <button className="inline-flex items-center justify-center px-8 py-4 font-medium tracking-wide text-white bg-[#c68afc] rounded-lg h-[53px]">
-                Create
-              </button>
+            <div className="mt-8 flex flex-col gap-2">
+              <label htmlFor="description">Description</label>
+              <textarea
+                {...register("description")}
+                id="description"
+                placeholder={`e. g. "This is very limited item"`}
+                className="w-[550px] h-[200px] bg-[#2c2c35] p-4 mb-2 border border-soli text-white border-gray-200 rounded-lg transition-all resize-none"
+              ></textarea>
             </div>
           </div>
           <div className="flex flex-[60%] flex-col mt-[30px]">
@@ -216,7 +208,9 @@ const CreateCollection = () => {
                   </span>
                 )}
               </div>
-              <div className="mt-[70px] flex flex-col gap-2 ">
+            </div>
+            <div className="mt-[50px] w-[470px]">
+              <div className="flex flex-col gap-2">
                 <label htmlFor="topic">Topic</label>
                 <DropdownHook
                   className="w-[470px] h-[56px]"
@@ -232,6 +226,18 @@ const CreateCollection = () => {
                   </span>
                 )}
               </div>
+            </div>
+            <div className="mt-10 flex items-center justify-start gap-x-10">
+              <button
+                type="button"
+                onClick={handleResetValue}
+                className="inline-flex items-center justify-center px-8 py-4 font-medium  tracking-wide text-[#151415] bg-white rounded-lg h-[53px]"
+              >
+                Cancel
+              </button>
+              <button className="inline-flex items-center justify-center px-8 py-4 font-medium tracking-wide text-white bg-[#c68afc] rounded-lg h-[53px]">
+                Create
+              </button>
             </div>
           </div>
         </form>

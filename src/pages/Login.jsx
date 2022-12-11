@@ -4,6 +4,7 @@ import styled from "styled-components";
 import LoginHookForm from "../components/form/LoginHookForm";
 import PageContainer from "../components/layout/PageContainer";
 import AuthUser from "../config/AuthUser";
+import logo from "../assets/logo.png";
 
 const LoginStyles = styled.div`
   width: 100%;
@@ -37,11 +38,7 @@ const Login = () => {
             }}
           >
             <div className="w-[200px] mb-10">
-              <img
-                srcSet="./logo.png"
-                alt=""
-                className="w-full h-full object-cover"
-              />
+              <img src={logo} alt="" className="w-full h-full object-cover" />
             </div>
           </Link>
           <LoginHookForm http={http} setToken={setToken}></LoginHookForm>

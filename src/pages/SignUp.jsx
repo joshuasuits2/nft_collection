@@ -4,6 +4,7 @@ import styled from "styled-components";
 import SignUpHookForm from "../components/form/SignupHookForm";
 import PageContainer from "../components/layout/PageContainer";
 import AuthCreate from "../config/AuthCreate";
+import logo from "../assets/logo.png";
 
 const SignUpStyles = styled.div`
   width: 100%;
@@ -33,11 +34,7 @@ const SignUp = () => {
             }}
           >
             <div className="w-[200px]">
-              <img
-                srcSet="./logo.png"
-                alt=""
-                className="w-full h-full object-cover"
-              />
+              <img src={logo} alt="" className="w-full h-full object-cover" />
             </div>
           </Link>
           <SignUpHookForm http={http}></SignUpHookForm>

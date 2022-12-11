@@ -55,8 +55,7 @@ const TabCollection = ({ topics, loadingTopics, ...props }) => {
       const res = await axios.get(
         `${baseURL}/api/collections?topicName=${tabQuery}`
       );
-      setCollections(res?.data?.collections);
-      console.log(res?.data?.collections);
+      setCollections(res?.data.collections);
       setLoadingCollection(false);
     })();
   }, [tabQuery]);
@@ -105,18 +104,18 @@ const TabCollection = ({ topics, loadingTopics, ...props }) => {
 
         <Tab.Panels className="mt-[80px]">
           {topics?.length > 0 &&
-            topics?.map((item) => (
-              <Tab.Panel>
+            topics.map((item) => (
+              <Tab.Panel key={item.id}>
                 <div className="grid grid-cols-3 gap-x-[40px] gap-y-[80px]">
                   {collections?.length > 0 &&
                     !loadingCollection &&
-                    collections?.map((item) => (
+                    collections?.map((card) => (
                       <CardCollection
                         loading={loadingCollection}
-                        key={item.id}
-                        logo={item.url_image_logo}
-                        banner={item.url_image_banner}
-                        name={item.name}
+                        key={card.id}
+                        logo={card.url_image_logo}
+                        banner={card.url_image_banner}
+                        name={card.name}
                       />
                     ))}
                   {loadingCollection &&

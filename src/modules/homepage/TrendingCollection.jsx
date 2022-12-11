@@ -10,8 +10,7 @@ const TrendingCollection = () => {
   useEffect(() => {
     (async () => {
       const res = await axios.get(`${baseURL}/api/nfts?includeOwner=1`);
-      console.log(res.data.nfts);
-      setNfts(res.data.nfts);
+      setNfts(res?.data.nfts);
     })();
   }, []);
   return (

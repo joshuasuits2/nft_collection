@@ -6,41 +6,51 @@ import { SplideSlide } from "@splidejs/react-splide";
 import { baseURL } from "../../config/getConfig";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const CardSlide = ({ data, idOwner, ...props }) => {
-  const [nftOwner, setNftOwner] = useState([]);
-  useEffect(() => {
-    (async () => {
-      const res = await axios.get(
-        `${baseURL}/api/nfts?includeOwner=1&owner_id=${idOwner}`
-      );
-      console.log(res.data.nfts);
-      setNftOwner(res.data.nfts);
-    })();
-  }, [idOwner]);
   return (
     <>
       <div className="mt-[65px]">
         <SliderCustom>
-          {data
-            .sort(function (a, b) {
-              return b.price - a.price;
-            })
-            .filter((item, index) => index <= 4)
-            .map((category) => (
-              <SplideSlide key={category.id}>
-                <Card
-                  srcTop={`${baseURL}/${category.url_image_nft}`}
-                  name={category.name}
-                  owner={`by ${category.owner.name}`}
-                  srcCoin={category.coin}
-                  price={category.price}
-                  remaining={"22d 12h 12m 12s"}
-                  crypto={category.crypto_id}
-                  id={category.id}
-                />
-              </SplideSlide>
-            ))}
+          {data.length > 0 &&
+            data
+              .sort(function (a, b) {
+                return b.price - a.price;
+              })
+              .filter((item, index) => index <= 4)
+              .map((category) => (
+                <SplideSlide key={category.id}>
+                  <Card
+                    srcTop={`${baseURL}/${category.url_image_nft}`}
+                    name={category.name}
+                    owner={`by ${category.owner.name}`}
+                    srcCoin={category.coin}
+                    price={category.price}
+                    remaining={"22d 12h 12m 12s"}
+                    crypto={category.crypto_id}
+                    id={category.id}
+                  />
+                </SplideSlide>
+              ))}
+          {data.length === 0 && (
+            <div className="grid grid-cols-4 gap-x-[50px]">
+              {Array(4)
+                .fill(0)
+                .map((item, index) => (
+                  <div key={index}>
+                    <SkeletonTheme baseColor="#202020" highlightColor="#444">
+                      <Skeleton
+                        width={273}
+                        height={355}
+                        style={{ borderRadius: "8px" }}
+                      />
+                    </SkeletonTheme>
+                  </div>
+                ))}
+            </div>
+          )}
         </SliderCustom>
         <Button className="mt-[100px] mx-auto" width={"181px"}>
           See More

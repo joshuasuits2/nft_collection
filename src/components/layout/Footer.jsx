@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Button from "../button/Button";
 import Input from "../input/Input";
+import logo from "../../assets/logo.png";
 
 const FooterStyles = styled.div`
   margin-top: 150px;
@@ -23,7 +24,7 @@ const Footer = () => {
       <div className="line h-[1px] w-full bg-purple-500"></div>
       <div className="wrapper flex mt-[45px]">
         <div className="flex-[4]">
-          <img srcSet="./logo.png 2x" alt="" className="inline-block" />
+          <img src={logo} alt="" className="w-[185px] h-[59px] object-cover" />
           <p className="mt-[35px] font-[300] text-[15px] leading-[30px]">
             The digital marketplace for crypto collectibles and non- <br></br>
             fungible tokens (NFTs). Buy, sell, and discover exclusive <br></br>

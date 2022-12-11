@@ -29,5 +29,7 @@ export default function useAuth() {
     userName,
     userId,
     setUser,
+    setUserId,
+    setUserName,
   };
 }

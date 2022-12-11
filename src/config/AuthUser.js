@@ -21,8 +21,9 @@ export default function AuthUser() {
 
   const logout = () => {
     sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
     sessionStorage.clear();
-    navigate("/");
+    navigate("/login");
   };
 
   const http = axios.create({

@@ -2,13 +2,16 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import PageContainer from "../components/layout/PageContainer";
 import AuthUser from "../config/AuthUser";
-import bannerCollection from ".././assets/collection/bannerCollection.png";
-import avaCollection from ".././assets/collection/avatarcollection.png";
+import avatar_default_1 from ".././assets/avatar/avatar_default_1.png";
+import cover_default from ".././assets/avatar/cover_default.png";
 import { Tab } from "@headlessui/react";
 import styled from "styled-components";
 import CardList from "../components/layout/CardList";
 import { ListCategory } from "../fakeAPI/Categories";
 import Footer from "../components/layout/Footer";
+import useAuth from "../hooks/useAuth";
+import Deposit from "../components/modal/Deposit";
+import { useState } from "react";
 
 const ProfileStyles = styled.div`
   .text-gradient {
@@ -20,16 +23,22 @@ const ProfileStyles = styled.div`
   }
 `;
 
-const Profile = () => {
+const UserProfile = () => {
   const { token } = AuthUser();
+  const { userName } = useAuth();
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
   if (!token) return navigate("/error");
+  const displayTokenUser = `0x${token?.slice(0, 10).toLowerCase()}...${token
+    ?.slice(40, 44)
+    .toLowerCase()}`;
+
   return (
     <ProfileStyles className="body-style">
       <div className="relative">
         <div className="banner w-full h-[380px]">
           <img
-            src={bannerCollection}
+            src={cover_default}
             alt=""
             className="w-full h-full object-cover"
           />
@@ -37,14 +46,14 @@ const Profile = () => {
         <div className="relative -top-[60px] left-[100px] flex gap-x-10">
           <div className="logo w-[180px] h-[180px] ">
             <img
-              src={avaCollection}
+              src={avatar_default_1}
               alt=""
               className="w-full h-full object-cover rounded-full"
             />
           </div>
           <div className="mt-[80px] flex flex-col">
-            <span className="">0xc4c16a45...b21a</span>
-            <span className="text-[20px] font-bold">Takashi Murakami</span>
+            <span className="">{displayTokenUser}</span>
+            <span className="text-[20px] font-bold">{userName}</span>
             <div className="w-[559px]">
               <p className="text-[14px] font-[300] mt-2 leading-[21px]">
                 First Videogame that combines console and P&E🔥 Developed by AAA
@@ -65,8 +74,11 @@ const Profile = () => {
               </span>
               <span>0.0016 ETH</span>
             </div>
-            <button className="mt-4 inline-flex items-center justify-center px-8 py-4 font-sans font-semibold tracking-wide text-white bg-[#c68afc] rounded-lg h-[50px]">
-              Deposite
+            <button
+              onClick={() => setShowModal(true)}
+              className="mt-4 inline-flex items-center justify-center px-8 py-4 font-sans font-semibold tracking-wide text-white bg-[#c68afc] rounded-lg h-[50px]"
+            >
+              Add Money
             </button>
           </div>
         </div>
@@ -143,8 +155,12 @@ const Profile = () => {
         </div>
         <Footer></Footer>
       </PageContainer>
+      <Deposit
+        open={showModal}
+        handleClose={() => setShowModal(false)}
+      ></Deposit>
     </ProfileStyles>
   );
 };
 
-export default Profile;
+export default UserProfile;
