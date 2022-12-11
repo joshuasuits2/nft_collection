@@ -223,7 +223,7 @@ const CreateCollection = () => {
                   control={control}
                   name="topic_id"
                   data={topics}
-                  dropdownLabel="Select topic"
+                  dropdownLabel="Select a topic"
                   setValue={setValue}
                 />
                 {errors?.topic_id && (

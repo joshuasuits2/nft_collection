@@ -6,12 +6,14 @@ import { hashString } from "react-hash-string";
 export default function useAuth() {
   const { http } = AuthUser();
   const [userId, setUserId] = useState("");
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     (async () => {
       const res = await http?.get("/user");
       setUser(hashString(res?.data?.name));
       setUserId(res?.data?.id);
+      setUserName(res?.data?.name);
     })();
   }, []);
 
@@ -24,6 +26,7 @@ export default function useAuth() {
   sessionStorage.setItem("user", JSON.stringify(user));
   return {
     user,
+    userName,
     userId,
     setUser,
   };

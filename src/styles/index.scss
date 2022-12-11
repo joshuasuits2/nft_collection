@@ -78,3 +78,10 @@ body {
   width: 1px;
   white-space: nowrap;
 }
+
+.text-gradient {
+  background: linear-gradient(180deg, #ddb9ff 0%, #a749f8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

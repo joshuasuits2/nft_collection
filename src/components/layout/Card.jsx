@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import slugify from "slugify";
 import styled from "styled-components";
+import CategoryDetail from "../../pages/CategoryDetail";
 
 const CardStyles = styled.div`
   .before-layout {
@@ -33,30 +34,30 @@ const CardStyles = styled.div`
 const Card = ({
   srcTop,
   name,
-  creator,
+  owner,
   price,
   remaining,
-  srcCoin,
+  crypto,
+  id,
   ...props
 }) => {
   const navigate = useNavigate();
   const handleNavigation = () => {
-    const slug = slugify(name);
-    navigate(`/${slug}`);
+    navigate(`/${slugify(name)}&search=${id}`);
   };
+
   return (
     <CardStyles>
       <div className="card-item h-[355px] flex flex-col relative p-[14px]">
         <div className="w-full h-full before-layout absolute"></div>
         <div className="h-full after-layout absolute"></div>
-        <div className="content relative z-10">
+        <div className="content relative z-10 flex-col items-center ">
           <img
             src={srcTop}
             alt=""
-            className="h-[240px] object-cover rounded-lg cursor-pointer"
+            className="h-[240px] w-full object-cover rounded-lg cursor-pointer"
             onClick={handleNavigation}
           />
-
           <div className="px-1 text-[13px] flex-1 flex flex-col">
             <div className="top flex justify-between mt-[10px]">
               <div className="top-left flex flex-col">
@@ -65,13 +66,14 @@ const Card = ({
                 </span>
                 <Link to="/collection/123">
                   <span className=" cursor-pointer leading-[16px]">
-                    {creator}
+                    {owner}
                   </span>
                 </Link>
               </div>
               <div className="top-right flex gap-[5px]  font-bold">
-                <img src={srcCoin} alt="" className="h-5" />
+                {/* <img src={srcCoin} alt="" className="h-5" /> */}
                 <span>{price}</span>
+                <span>{crypto}</span>
               </div>
             </div>
             <div className="bottom mt-auto text-[#141118] font-[600] flex items-center justify-between">

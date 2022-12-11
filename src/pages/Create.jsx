@@ -13,13 +13,18 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useAuth from "../hooks/useAuth";
 
+const schema = Yup.object({
+  name: Yup.string().required("Please enter your name nft"),
+  crypto_id: Yup.string().required("Please select a crypto"),
+}).required();
+
 const Create = () => {
   const [collectionUser, setCollectionUser] = useState([]);
   const [cryptos, setCryptos] = useState([]);
   const { http, token } = AuthUser();
   const navigate = useNavigate();
   const { image, setImage, handleSelectImage } = useImageUpload();
-  const { userId } = useAuth();
+  const { userId, userName } = useAuth();
 
   const {
     handleSubmit,
@@ -29,7 +34,9 @@ const Create = () => {
     setValue,
     register,
     formState: { error, isValid },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   useEffect(() => {
     (async () => {
@@ -55,20 +62,20 @@ const Create = () => {
       .post("/nfts", {
         ...values,
         url_image_nft: image,
-        owner_id: userId,
-        creator_id: userId,
-        reaction: "",
-        status: "",
+        owner_id: userName,
+        creator_id: userName,
+        reaction: 0,
+        status: "Not bought yet",
       })
       .then((res) => {
         toast.success("Create Successfully!");
-        if (!isValid) {
+        if (isValid) {
           setImage(null);
           reset({
             name: "",
             crypto_id: "",
-            description: "",
             collection_id: "",
+            description: "",
             price: "",
           });
         }
@@ -134,7 +141,7 @@ const Create = () => {
                 control={control}
                 name="crypto_id"
                 data={cryptos}
-                dropdownLabel="Select crypto"
+                dropdownLabel="Select a crypto"
                 setValue={setValue}
               ></DropdownHook>
             </div>
@@ -158,7 +165,7 @@ const Create = () => {
                 setValue={setValue}
                 name="collection_id"
                 data={collectionUser}
-                dropdownLabel="Select name collection"
+                dropdownLabel="Select a collection"
               />
             </div>
             {collectionUser?.length === 0 && (
@@ -223,7 +230,7 @@ const Create = () => {
             </div>
           </div>
         </form>
-        <ToastContainer></ToastContainer>
+        <ToastContainer autoClose={800} />
       </PageContainer>
     </div>
   );

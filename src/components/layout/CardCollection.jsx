@@ -10,6 +10,7 @@ const CardCollectionStyles = styled.div`
   display: flex;
   flex-direction: column;
   height: 360px;
+  cursor: pointer;
   &:hover > .overlay {
     opacity: 0;
   }
