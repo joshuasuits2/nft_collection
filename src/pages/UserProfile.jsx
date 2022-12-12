@@ -12,6 +12,7 @@ import Footer from "../components/layout/Footer";
 import useAuth from "../hooks/useAuth";
 import Deposit from "../components/modal/Deposit";
 import { useState } from "react";
+import { useEffect } from "react";
 
 const ProfileStyles = styled.div`
   .text-gradient {
@@ -24,14 +25,31 @@ const ProfileStyles = styled.div`
 `;
 
 const UserProfile = () => {
-  const { token } = AuthUser();
-  const { userName } = useAuth();
+  const { token, http } = AuthUser();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
-  if (!token) return navigate("/error");
+  const { userId, userName } = useAuth();
+  const [accountBalance, setAccountBalance] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      if (userId) {
+        const res = await http.get(`/account_balances?user_id=${userId}`);
+        console.log(res.data.accountBalances[0]);
+        setAccountBalance(res.data.accountBalances[0]);
+      }
+    })();
+  }, [userId]);
+
   const displayTokenUser = `0x${token?.slice(0, 10).toLowerCase()}...${token
     ?.slice(40, 44)
     .toLowerCase()}`;
+  // useEffect(() => {
+  //   if (token) {
+  //     navigate(`/profile/${token}`);
+  //   }
+  // }, [token, navigate]);
+  if (!token) return navigate("/error");
 
   return (
     <ProfileStyles className="body-style">
@@ -72,7 +90,8 @@ const UserProfile = () => {
               <span className="text-[16px] font-[600] text-[#c68afc]">
                 Account balance:
               </span>
-              <span>0.0016 ETH</span>
+              <span>{accountBalance.balance}</span>
+              <span>ETH</span>
             </div>
             <button
               onClick={() => setShowModal(true)}
@@ -157,6 +176,7 @@ const UserProfile = () => {
       </PageContainer>
       <Deposit
         open={showModal}
+        accountBalance={accountBalance}
         handleClose={() => setShowModal(false)}
       ></Deposit>
     </ProfileStyles>

@@ -14,6 +14,8 @@ import Create from "../pages/Create";
 import CreateCollection from "../pages/CreateCollection";
 import SearchAllItem from "../pages/SearchAllItem";
 import UserProfile from "../pages/UserProfile";
+import { AuthProvider } from "./auth-context";
+import AuthenWrapper from "../components/layout/AuthenWrapper";
 
 const RoutesConfig = () => {
   return (
@@ -25,9 +27,13 @@ const RoutesConfig = () => {
         <Route path="/wallets" element={<WalletsPage />} />
         <Route path="/result/:slug" element={<SearchAllItem />} />
         <Route path="/create" element={<Create />} />
-        <Route path="/create-collection" element={<CreateCollection />} />
-        <Route path="/profile" element={<UserProfile />} />
-        <Route path="/:slug" element={<CategoryDetail />} />
+
+        <Route element={<AuthenWrapper />}>
+          <Route path="/create-collection" element={<CreateCollection />} />
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/:slug" element={<CategoryDetail />} />
+        </Route>
+
         <Route path="/collection/:slug" element={<DetailCollection />} />
       </Route>
       <Route path="/error" element={<PageNotFound></PageNotFound>}></Route>

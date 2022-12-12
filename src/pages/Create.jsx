@@ -41,7 +41,6 @@ const Create = () => {
   useEffect(() => {
     (async () => {
       const res = await http.get("/cryptos");
-      console.log(res?.data?.cryptos);
       setCryptos(res?.data?.cryptos);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps

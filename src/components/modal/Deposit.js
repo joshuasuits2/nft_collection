@@ -1,13 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import CurrencyInput from "react-currency-input-field";
 import { useState } from "react";
 import transfer from "../../assets/transfer.png";
+import AuthUser from "../../config/AuthUser";
+import { baseURL } from "../../config/getConfig";
+import useAuth from "../../hooks/useAuth";
 
 //createPortal
 
-const Deposit = ({ open = false, handleClose = () => {} }) => {
+const Deposit = ({
+  open = false,
+  id = "",
+  accountBalance,
+  handleClose = () => {},
+}) => {
   const [exchange, setExchange] = useState("");
+  const { http } = AuthUser();
+  const { userId } = useAuth();
+
+  const handleAddMoney = (e) => {
+    e.preventDefault();
+    (async () => {
+      try {
+        console.log(typeof accountBalance.balance);
+        console.log(accountBalance.balance);
+        console.log(`/account_balances/${accountBalance.id}`);
+        await http.put(`/account_balances/${accountBalance.id}`, {
+          balance: accountBalance.balance,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  };
   if (typeof document === "undefined") return <div className="modal"></div>;
   return ReactDOM.createPortal(
     <div
@@ -16,12 +42,12 @@ const Deposit = ({ open = false, handleClose = () => {} }) => {
       }`}
     >
       <div
-        className="overlay absolute inset-0 bg-gray-500 bg-opacity-80"
+        className="overlay absolute inset-0 bg-zinc-800 bg-opacity-80"
         onClick={handleClose}
       ></div>
       <div className="relative w-full max-w-[482px] bg-white z-10 p-10 rounded-lg shadow-2xl text-[#141418]">
         <span
-          className="absolute top-2 right-2 cursor-pointer"
+          className="absolute top-3 right-3 cursor-pointer"
           onClick={handleClose}
         >
           <svg
@@ -35,7 +61,7 @@ const Deposit = ({ open = false, handleClose = () => {} }) => {
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
           </svg>
         </span>
-        <div className="flex flex-col">
+        <form className="flex flex-col" onSubmit={handleAddMoney}>
           <span className="mt-4 font-bold text-[18px] tracking-normal">
             You are sending
           </span>
@@ -59,10 +85,13 @@ const Deposit = ({ open = false, handleClose = () => {} }) => {
             )}
             <span className="font-[500]">ETH</span>
           </div>
-          <button className="mt-8 inline-flex items-center justify-center px-8 py-4 font-sans font-semibold tracking-wide text-white bg-[#c084fc] rounded-lg h-[53px] active:bg-[#cc9dfb]">
+          <button
+            type="submit"
+            className="mt-8 inline-flex items-center justify-center px-8 py-4 font-sans font-semibold tracking-wide text-white bg-[#c084fc] rounded-lg h-[53px] active:bg-[#cc9dfb]"
+          >
             Add
           </button>
-        </div>
+        </form>
       </div>
     </div>,
     document.querySelector("body")

@@ -7,10 +7,12 @@ import AuthUser from "../../config/AuthUser";
 import { useState } from "react";
 import { useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
+import { baseURL } from "../../config/getConfig";
 
 const Main = () => {
-  const { user, userName, userId, setUser, setUserId, setUserName } = useAuth();
+  const { user, setUser, setUserId, setUserName } = useAuth();
   const { logout, token } = AuthUser();
+
   const handleSignout = () => {
     if (token !== undefined) {
       logout();
