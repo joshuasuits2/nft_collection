@@ -19,11 +19,11 @@ const CardSlide = ({ data, idOwner, ...props }) => {
               .sort(function (a, b) {
                 return b.price - a.price;
               })
-              .filter((item, index) => index <= 4)
+              .filter((item, index) => index <= 5)
               .map((category) => (
                 <SplideSlide key={category.id}>
                   <Card
-                    srcTop={`${baseURL}/${category.url_image_nft}`}
+                    srcTop={`${baseURL}/storage/nftImages/${category.url_image_nft}`}
                     name={category.name}
                     owner={`by ${category.owner.name}`}
                     srcCoin={category.coin}

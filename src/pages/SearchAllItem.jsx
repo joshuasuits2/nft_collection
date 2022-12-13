@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import Card from "../components/layout/Card";
 import PageContainer from "../components/layout/PageContainer";
 import { baseURL } from "../config/getConfig";
-
+import Banner from "../assets/Banner.png";
 const SearchAllItem = () => {
   const [allNfts, setAllNfts] = useState();
   const [query, setQuery] = useState("");
@@ -15,17 +15,14 @@ const SearchAllItem = () => {
   const { slug } = useParams();
   let params = new URLSearchParams(slug);
   let slugID = params.get("search_query");
-  console.log(slugID);
 
   useEffect(() => {
     (async () => {
       setLoading(true);
       try {
-        console.log("Successfully");
         const response = await axios.get(
           `${baseURL}/api/nfts?includeOwner=1&name=${slugID}`
         );
-        console.log(response?.data?.nfts);
         setAllNfts(response?.data?.nfts);
         setLoading(false);
       } catch (error) {
@@ -35,26 +32,39 @@ const SearchAllItem = () => {
     })();
   }, [slugID]);
   return (
-    <div>
+    <div className="mt-[50px] body-style">
       <PageContainer>
-        <div className="grid grid-cols-4 gap-x-[50px]">
-          {allNfts?.length > 0 &&
-            allNfts.map((category) => (
-              <Card
-                key={category.id}
-                srcTop={`${baseURL}/${category.url_image_nft}`}
-                name={category.name}
-                owner={`by ${category.owner.name}`}
-                srcCoin={category.coin}
-                price={category.price}
-                remaining={"22d 12h 12m 12s"}
-                crypto={category.crypto_id}
-                id={category.id}
-              ></Card>
-            ))}
-          {allNfts?.length === 0 && <span>No result was found!</span>}
+        <span className="text-[45px] font-bold capitalize tracking-wide">
+          Sell & Buy<br></br>
+          <span className="text-[60px] text-[#fbff2a]">NFT</span> Digital
+          Artwork
+        </span>
+
+        <div className="mt-[50px]">
+          <span className="font-[400]">+{allNfts?.length} results found</span>
         </div>
+
+        {allNfts?.length > 0 && (
+          <div className="mt-10 grid grid-cols-4 gap-[50px]">
+            {allNfts?.length > 0 &&
+              allNfts.map((category) => (
+                <Card
+                  key={category.id}
+                  srcTop={`${baseURL}/storage/nftImages/${category.url_image_nft}`}
+                  name={category.name}
+                  owner={`by ${category.owner.name}`}
+                  srcCoin={category.coin}
+                  price={category.price}
+                  remaining={"22d 12h 12m 12s"}
+                  crypto={category.crypto_id}
+                  id={category.id}
+                ></Card>
+              ))}
+            {allNfts?.length === 0 && <span>No result was found!</span>}
+          </div>
+        )}
       </PageContainer>
+      <div className="h-20 w-full"></div>
     </div>
   );
 };

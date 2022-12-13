@@ -3,14 +3,15 @@ import { useEffect } from "react";
 import { useState } from "react";
 import CardSlide from "../../components/layout/CardSlide";
 import Heading from "../../components/layout/Heading";
-import AuthUser from "../../config/AuthUser";
 import { baseURL } from "../../config/getConfig";
 const TrendingCollection = () => {
   const [nfts, setNfts] = useState([]);
   useEffect(() => {
     (async () => {
-      const res = await axios.get(`${baseURL}/api/nfts?includeOwner=1`);
-      setNfts(res?.data.nfts);
+      try {
+        const res = await axios.get(`${baseURL}/api/nfts?includeOwner=1`);
+        setNfts(res?.data?.nfts);
+      } catch (error) {}
     })();
   }, []);
   return (

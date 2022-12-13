@@ -7,15 +7,13 @@ import CardList from "../components/layout/CardList";
 import verify from "../assets/outside/verify.png";
 import avatar from "../assets/avatar/Ellipse 378.png";
 import MeeCat101 from "../assets/collection/MeeCat101.png";
-
 import { ListCategory } from "../fakeAPI/Categories";
 import { useParams } from "react-router-dom";
 import EyeIcon from "../assets/icons/EyeIcon";
 import HeartIcon from "../assets/icons/HeartIcon";
 import axios from "axios";
 import { baseURL } from "../config/getConfig";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import BuyNow from "../components/modal/BuyNow";
 
 const CategoryDetailStyles = styled.div`
   .linear-property {
@@ -75,6 +73,7 @@ const CategoryDetail = () => {
   const { slug } = useParams();
   let params = new URLSearchParams(slug);
   let slugID = params.get("search");
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -82,13 +81,14 @@ const CategoryDetail = () => {
         const res = await axios.get(`${baseURL}/api/nfts/${slugID}`);
         const info = await axios.get(`${baseURL}/api/nfts?includeOwner=1`);
         const list = info?.data.nfts;
-        console.log(list);
         const owner = list?.filter((item) => item.id === parseInt(slugID));
         setNft((prevState) => ({
           ...prevState,
           item: res?.data?.nft,
           name: owner[0]?.owner.name,
         }));
+        console.log(res?.data?.nft);
+        console.log(owner[0]?.owner.name);
       } catch (error) {
         console.log(error);
       }
@@ -98,19 +98,19 @@ const CategoryDetail = () => {
   if (!slugID) return <PageContainer>Not found!...</PageContainer>;
   return (
     <CategoryDetailStyles className="body-style">
-      <PageContainer>
-        {nft?.item?.url_image_nft ? (
+      <BuyNow open={showModal} handleClose={() => setShowModal(false)}></BuyNow>
+      {nft?.item?.url_image_nft ? (
+        <PageContainer>
           <div className="flex gap-x-[100px]">
             <div className="flex-[50%] flex flex-col">
               <div className="card-top relative z-10">
-                <div className="background-item-blur h-[500px] ">
+                <div className="background-item-blur h-[500px] containerImage">
                   <img
-                    src={`${baseURL}/${nft?.item?.url_image_nft}`}
+                    src={`${baseURL}/storage/nftImages/${nft?.item?.url_image_nft}`}
                     alt=""
-                    className="w-full h-full object-cover rounded-2xl"
+                    className="img-detail w-full h-full object-cover rounded-2xl cursor-pointer"
                   />
                 </div>
-                <div className="effect-blur absolute w-[300px] h-[300px] top-[80px]"></div>
               </div>
               <span className="mt-10">Details</span>
               <div className="details flex gap-x-[130px] mt-5">
@@ -143,11 +143,11 @@ const CategoryDetail = () => {
                   <img src={verify} alt="" className="w-4 h-4 object-cover" />
                 </div>
                 <span className="font-bold text-[20px] mt-[10px]">
-                  MeeCat #602
+                  {nft?.item.name}
                 </span>
                 <div className="flex font-bold text-[20px] mt-[25px] items-center justify-between">
-                  <div className="price w-[137px] h-[50px] rounded-full bg-[#FBFF2A] flex items-center justify-center text-[#000000] gap-x-2">
-                    <span>0.03</span>
+                  <div className="price px-3 h-[50px] rounded-full bg-[#FBFF2A] flex items-center justify-center text-[#000000] gap-x-2">
+                    <span>{nft?.item.price}</span>
                     <div className="w-[64px] flex  bg-[#E7DE06] rounded-full items-center justify-center h-9">
                       ETH
                     </div>
@@ -164,9 +164,7 @@ const CategoryDetail = () => {
                 </div>
                 <span className="font-bold mt-[30px]">Description</span>
                 <p className="mt-[30px] text-[15px] font-[300] leading-[35px]">
-                  A new metaverse experience! MeeCats living in Meetopia come to
-                  visit. The MeeCats team creates an accessible, gamified NFT
-                  experience.
+                  {nft?.item.description}
                 </p>
                 <div className="owner-and-collection flex items-center gap-x-[60px] mt-[50px]">
                   <div className="own flex gap-x-[10px] items-center">
@@ -233,7 +231,10 @@ const CategoryDetail = () => {
                     </div>
                   </div>
                   <div className="deal  flex flex-col gap-y-5">
-                    <button className="w-[150px] h-[55px] font-[500] bg-[#FBFF2A] rounded-lg text-[#141118]">
+                    <button
+                      onClick={() => setShowModal(true)}
+                      className="w-[150px] h-[55px] font-[500] bg-[#FBFF2A] rounded-lg text-[#141118]"
+                    >
                       Buy Now
                     </button>
                     <button className="w-[150px] h-[55px] font-[500] rounded-lg border border-solid border-white">
@@ -331,27 +332,20 @@ const CategoryDetail = () => {
               </div>
             </div>
           </div>
-        ) : (
-          <div className="flex gap-x-[100px]">
-            <div className="flex-[50%] flex flex-col">
-              <div className="card-top relative z-10">
-                <SkeletonTheme baseColor="#202020" highlightColor="#444">
-                  <Skeleton
-                    width={475}
-                    height={500}
-                    style={{ borderRadius: "16px" }}
-                  />
-                </SkeletonTheme>
-              </div>
-            </div>
+          <Heading className="mt-[70px]" alignItems="start">
+            MORE FROM THE COLLECTION
+          </Heading>
+          <CardList data={ListCategory}></CardList>
+          <Footer></Footer>
+        </PageContainer>
+      ) : (
+        <div className="fixed inset-0 flex items-center justify-center">
+          <div className="spinner">
+            <div className="double-bounce1"></div>
+            <div className="double-bounce2"></div>
           </div>
-        )}
-        <Heading className="mt-[70px]" alignItems="start">
-          MORE FROM THE COLLECTION
-        </Heading>
-        <CardList data={ListCategory}></CardList>
-        <Footer></Footer>
-      </PageContainer>
+        </div>
+      )}
     </CategoryDetailStyles>
   );
 };

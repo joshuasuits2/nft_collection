@@ -1,4 +1,5 @@
 import Card from "./Card";
+
 const CardList = ({ className, data }) => {
   return (
     <div

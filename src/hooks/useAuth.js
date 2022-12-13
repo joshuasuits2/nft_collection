@@ -10,10 +10,12 @@ export default function useAuth() {
 
   useEffect(() => {
     (async () => {
-      const res = await http?.get("/user");
-      setUser(hashString(res?.data?.name));
-      setUserId(res?.data?.id);
-      setUserName(res?.data?.name);
+      try {
+        const res = await http?.get("/user");
+        setUser(hashString(res?.data?.name));
+        setUserId(res?.data?.id);
+        setUserName(res?.data?.name);
+      } catch (error) {}
     })();
   }, []);
 

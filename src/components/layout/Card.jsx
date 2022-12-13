@@ -71,9 +71,9 @@ const Card = ({
                 </Link>
               </div>
               <div className="top-right flex gap-[5px]  font-bold">
-                {/* <img src={srcCoin} alt="" className="h-5" /> */}
                 <span>{price}</span>
-                <span>{crypto}</span>
+                {/* <span>{crypto}</span> */}
+                <span>ETH</span>
               </div>
             </div>
             <div className="bottom mt-auto text-[#141118] font-[600] flex items-center justify-between">

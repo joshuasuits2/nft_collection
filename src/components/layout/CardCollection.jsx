@@ -47,7 +47,7 @@ const CardCollection = ({ logo, banner, name, loading, ...props }) => {
     <CardCollectionStyles>
       <div className="collection-image h-[310px] w-full z-0 absolute">
         <img
-          src={`${baseURL}/${banner}`}
+          src={`${baseURL}/storage/bannerImages/${banner}`}
           alt=""
           className="w-full h-full object-cover rounded-xl"
         />
@@ -56,7 +56,7 @@ const CardCollection = ({ logo, banner, name, loading, ...props }) => {
       <div className="ml-5 mt-auto flex items-end w-full">
         <div className="rounded-full h-[100px] w-[100px] flex items-end relative z-[2] cursor-pointer">
           <img
-            src={`${baseURL}/${logo}`}
+            src={`${baseURL}/storage/logoImages/${logo}`}
             alt=""
             className="w-full h-full object-cover rounded-full"
           />

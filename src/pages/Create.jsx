@@ -69,7 +69,7 @@ const Create = () => {
       })
       .then((res) => {
         toast.success("Create Successfully!");
-        if (!isValid) {
+        if (isValid) {
           setImage(null);
           reset({
             name: "",
@@ -99,7 +99,7 @@ const Create = () => {
             <p className="mt-1 text-sm font-[300]">
               Drag or choose your file to upload
             </p>
-            <label className="mt-5 cursor-pointer flex items-center justify-center border border-gray-300 bg-[#2c2c35] border-dashed w-[420px] min-h-[480px] rounded-lg relative overflow-hidden flex-col ">
+            <label className="mt-5 cursor-pointer flex items-center justify-center border border-gray-300 bg-[#2c2c35] border-dashed w-[420px] h-[480px] rounded-lg relative overflow-hidden flex-col ">
               <input
                 type="file"
                 className="hidden-input"
