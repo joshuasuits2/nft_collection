@@ -7,7 +7,12 @@ import CloseIcon from "../../assets/icons/CloseIcon";
 import FormBuyNow from "../form/FormBuyNow";
 import FormSign from "../form/FormSign";
 
-const BuyNow = ({ open = false, nftInfoDetail, handleClose = () => {} }) => {
+const BuyNow = ({
+  token,
+  open = false,
+  nftInfoDetail,
+  handleClose = () => {},
+}) => {
   const [confirmBtn, setConfirmBtn] = useState(true);
 
   if (typeof document === "undefined") return <div className="buy-now"></div>;
@@ -36,6 +41,7 @@ const BuyNow = ({ open = false, nftInfoDetail, handleClose = () => {} }) => {
             <CloseIcon></CloseIcon>
           </span>
           <FormBuyNow
+            token={token}
             nftInfoDetail={nftInfoDetail}
             handleChangeState={() => setConfirmBtn(false)}
           ></FormBuyNow>
@@ -55,6 +61,7 @@ const BuyNow = ({ open = false, nftInfoDetail, handleClose = () => {} }) => {
             <CloseIcon></CloseIcon>
           </span>
           <FormSign
+            token={token}
             handleSetConfirmBtn={() => setConfirmBtn(true)}
             nftInfoDetail={nftInfoDetail}
           ></FormSign>

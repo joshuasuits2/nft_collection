@@ -42,7 +42,6 @@ const DropWalletsStyles = styled.div`
   .show-more {
     width: 199px;
     height: 51px;
-
     background: linear-gradient(
       88.5deg,
       rgba(235, 235, 235, 0.32) -9.43%,
@@ -57,18 +56,6 @@ const DropWalletsStyles = styled.div`
     background: linear-gradient(180deg, #ddb9ff 0%, #a749f8 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-  }
-  .boxed {
-    background: linear-gradient(
-      180deg,
-      rgba(52, 51, 53, 0.5) 0%,
-      rgba(64, 59, 69, 0.5) 100%
-    );
-
-    backdrop-filter: blur(50px);
-    border-radius: 8px;
-    transition: all 0.5s ease-in-out;
-    z-index: 100;
   }
 `;
 

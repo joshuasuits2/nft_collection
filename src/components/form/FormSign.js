@@ -6,21 +6,28 @@ import useAccountBalance from "../../hooks/useAccountBalance";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const FormSign = ({ nftInfoDetail, handleSetConfirmBtn = () => {} }) => {
+const FormSign = ({ token, nftInfoDetail, handleSetConfirmBtn = () => {} }) => {
   const [signBtn, setSignBtn] = useState(false);
-  const { token } = AuthUser;
-  const { accountBalance, setAccountBalance, userId } = useAccountBalance();
+  const { accountBalance, userId } = useAccountBalance();
   let remainBalance = (
     accountBalance?.balance - parseFloat(nftInfoDetail?.price)
   ).toFixed(4);
-  console.log(typeof parseFloat(remainBalance));
 
-  const handleComplete = async () => {
-    await axios
+  const handleComplete = (e) => {
+    e.preventDefault();
+    console.log("Clicked");
+    console.log("nftInfoDetail", nftInfoDetail);
+    console.log(nftInfoDetail?.price);
+    axios
       .post(
-        `${baseURL}/api/account_balances/${accountBalance.id}`,
+        `${baseURL}/api/transactions`,
         {
-          balance: parseFloat(remainBalance),
+          buyer_id: userId,
+          seller_id: nftInfoDetail.owner_id,
+          nft_id: nftInfoDetail.id,
+          date: new Date().toISOString().slice(0, 10),
+          crypto_id: nftInfoDetail.crypto_id,
+          price: parseFloat(nftInfoDetail.price),
         },
         {
           headers: {
@@ -31,10 +38,9 @@ const FormSign = ({ nftInfoDetail, handleSetConfirmBtn = () => {} }) => {
         }
       )
       .then((res) => {
-        console.log(res);
-        toast.success("Successfully!");
+        toast.success("Create Success!");
       })
-      .catch((err) => console.log(err));
+      .catch((error) => console.log(error));
   };
   return (
     <div>
@@ -80,7 +86,10 @@ const FormSign = ({ nftInfoDetail, handleSetConfirmBtn = () => {} }) => {
           </button>
         </div>
       ) : (
-        <div className="flex flex-col transition-all duration-500">
+        <form
+          className="flex flex-col transition-all duration-500"
+          onSubmit={handleComplete}
+        >
           <span
             className="top-5 left-5 absolute cursor-pointer"
             onClick={() => setSignBtn(false)}
@@ -133,15 +142,18 @@ const FormSign = ({ nftInfoDetail, handleSetConfirmBtn = () => {} }) => {
               <span className="text-end">{nftInfoDetail.price} ETH</span>
             </div>
           </div>
-          <span className="mt-5 text-end">{remainBalance} ETH</span>
+          <div className="mt-5 flex w-full justify-between">
+            <span className="text-end font-[500]">New balance</span>
+            <span className="text-end">{remainBalance} ETH</span>
+          </div>
 
           <button
-            onClick={handleComplete}
+            type="submit"
             className="mt-5 inline-flex items-center justify-center px-8 py-4 font-sans font-semibold tracking-wide text-white bg-[#c084fc] rounded-lg mx-auto w-[300px] [h-[53px] active:bg-purple-300"
           >
             Complete
           </button>
-        </div>
+        </form>
       )}
       <ToastContainer></ToastContainer>
     </div>

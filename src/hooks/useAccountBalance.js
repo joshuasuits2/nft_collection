@@ -12,7 +12,7 @@ export default function useAccountBalance() {
   handleFetchData.current = async () => {
     try {
       if (userId) {
-        const res = await http.get(`/account_balances?user_id=${userId}`);
+        const res = await http?.get(`/account_balances?user_id=${userId}`);
         setAccountBalance(res?.data?.accountBalances[0]);
       }
     } catch (error) {}

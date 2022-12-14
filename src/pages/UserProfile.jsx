@@ -80,7 +80,7 @@ const UserProfile = () => {
                   <span className="text-[16px] font-[600] text-[#c68afc]">
                     Account balance:
                   </span>
-                  <span>{accountBalance.balance}</span>
+                  <span>{accountBalance?.balance || 0}</span>
                   <span className="font-[500]">ETH</span>
                 </div>
                 <button

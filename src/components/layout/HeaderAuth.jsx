@@ -138,7 +138,7 @@ const HeaderAuth = ({ handleSignout }) => {
                   className="w-[35px] h-[35px] object-cover rounded-full cursor-pointer"
                 />
                 {show === true ? (
-                  <div className="transition-all duration-250 absolute top-[150%] rounded-lg right-0 w-[180px] p-3 bg-[#fff] text-[#141418]">
+                  <div className="transition-all duration-100 absolute top-[150%] rounded-lg right-0 w-[200px] p-3 shadow-lg bg-[#ffffff] text-[#141418]">
                     <NavLink
                       to="/profile"
                       onClick={() => {
@@ -148,15 +148,15 @@ const HeaderAuth = ({ handleSignout }) => {
                           behavior: "smooth",
                         });
                       }}
-                      className="cursor-pointer w-full px-3 py-4 rounded-md hover:bg-[#f1f1f1] font-[500]"
+                      className="w-full px-3 text-sm py-4 rounded-md hover:bg-slate-400 hover:bg-opacity-10 transition-all cursor-pointer font-[500] "
                     >
                       <div>My Profile</div>
                     </NavLink>
-                    <div className="cursor-pointer w-full px-3 py-4 rounded-md hover:bg-[#f1f1f1] font-[500]">
+                    <div className="hover:bg-slate-400 text-sm hover:bg-opacity-10 transition-all cursor-pointer w-full px-3 py-4 rounded-md font-[500] ">
                       Favorites
                     </div>
                     <div
-                      className="cursor-pointer w-full px-3 py-4 rounded-md hover:bg-[#f1f1f1] font-[500]"
+                      className="hover:bg-slate-400 text-sm hover:bg-opacity-10 transition-all cursor-pointer w-full px-3 py-4 rounded-md font-[500]"
                       onClick={handleSignout}
                     >
                       Sign Out
@@ -174,7 +174,7 @@ const HeaderAuth = ({ handleSignout }) => {
                   <img
                     src={bell}
                     alt=""
-                    className="w-[90%] h-[90%] object-cover rotate-[10deg]"
+                    className="w-[90%] h-[90%] object-cover"
                   />
                   <div className="grid place-items-center -top-1 -right-1 absolute w-[16px] h-[16px] bg-[#f54753] rounded-full">
                     <span className="font-bold text-[10px]"></span>

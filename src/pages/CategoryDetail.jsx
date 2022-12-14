@@ -17,6 +17,7 @@ import BuyNow from "../components/modal/BuyNow";
 import PropertiesNFT from "../components/layout/PropertiesNFT";
 import TimingNFT from "../components/layout/TimingNFT";
 import DetailInfoNFT from "../components/layout/DetailInfoNFT";
+import AuthUser from "../config/AuthUser";
 
 const CategoryDetailStyles = styled.div`
   .linear-property {
@@ -77,7 +78,7 @@ const CategoryDetail = () => {
   const { slug } = useParams();
   let params = new URLSearchParams(slug);
   let slugValue = params.get("query");
-
+  const { token } = AuthUser();
   useEffect(() => {
     (async () => {
       try {
@@ -195,6 +196,7 @@ const CategoryDetail = () => {
           <Footer></Footer>
           <BuyNow
             open={showModal}
+            token={token}
             nftInfoDetail={nft}
             handleClose={() => setShowModal(false)}
           ></BuyNow>

@@ -28,9 +28,9 @@ const Deposit = ({
     formState: { isValid },
   } = useForm();
 
-  const onSubmit = (values) => {
+  const onSubmit = async (values) => {
     setIsSubmit(true);
-    axios
+    await axios
       .put(
         `${baseURL}/api/account_balances/${accountBalance.id}`,
         {

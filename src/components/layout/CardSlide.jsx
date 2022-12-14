@@ -25,7 +25,7 @@ const CardSlide = ({ data, idOwner, ...props }) => {
                   <Card
                     srcTop={`${baseURL}/storage/nftImages/${category.url_image_nft}`}
                     name={category.name}
-                    owner={`by ${category.owner.name}`}
+                    owner={category.owner.name}
                     srcCoin={category.coin}
                     price={category.price}
                     remaining={"22d 12h 12m 12s"}
