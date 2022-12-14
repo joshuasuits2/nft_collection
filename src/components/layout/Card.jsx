@@ -43,7 +43,7 @@ const Card = ({
 }) => {
   const navigate = useNavigate();
   const handleNavigation = () => {
-    navigate(`/${slugify(name)}&search=${id}`);
+    navigate(`/${slugify(name)}&query=${id}`);
   };
 
   return (

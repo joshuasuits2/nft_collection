@@ -1,43 +1,14 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AuthUser from "../../config/AuthUser";
-import { baseURL } from "../../config/getConfig";
+import CloseIcon from "../../assets/icons/CloseIcon";
+import FormBuyNow from "../form/FormBuyNow";
+import FormSign from "../form/FormSign";
 
-const BuyNow = ({ open = false, handleClose = () => {} }) => {
-  const { token } = AuthUser();
-  const {
-    handleSubmit,
-    register,
-    reset,
-    formState: { error, isValid },
-  } = useForm();
-
-  const onSubmit = (values) => {
-    axios
-      .put(
-        `${baseURL}/api/account_balances/`,
-        {},
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res);
-        toast.success("Successfully!");
-        if (isValid) {
-          reset({});
-        }
-      })
-      .catch((err) => console.log(err));
-  };
+const BuyNow = ({ open = false, nftInfoDetail, handleClose = () => {} }) => {
+  const [confirmBtn, setConfirmBtn] = useState(true);
 
   if (typeof document === "undefined") return <div className="buy-now"></div>;
 
@@ -51,11 +22,43 @@ const BuyNow = ({ open = false, handleClose = () => {} }) => {
         className="overlay absolute inset-0 bg-zinc-800 bg-opacity-80"
         onClick={handleClose}
       ></div>
-      <div className="relative w-full max-w-[482px] bg-white z-10 p-10 rounded-lg shadow-2xl text-[#141418]">
-        <span
-          className="absolute top-3 right-3 cursor-pointer"
-          onClick={handleClose}
-        ></span>
+
+      <div className="relative w-[700px] rounded-lg bg-white flex flex-col items-center justify-center">
+        <div
+          className={`transition-all duration-500 w-full h-[370px] flex flex-col bg-white z-10 p-10 rounded-lg shadow-2xl text-[#141418] ${
+            confirmBtn === false ? "opacity-0 invisible" : ""
+          }`}
+        >
+          <span
+            className="absolute top-3 right-3 cursor-pointer"
+            onClick={handleClose}
+          >
+            <CloseIcon></CloseIcon>
+          </span>
+          <FormBuyNow
+            nftInfoDetail={nftInfoDetail}
+            handleChangeState={() => setConfirmBtn(false)}
+          ></FormBuyNow>
+        </div>
+
+        <div
+          className={`transition-all duration-500 absolute w-full h-[370px] flex flex-col bg-white z-10 p-10 rounded-lg shadow-2xl text-[#141418] ${
+            confirmBtn === false
+              ? "translate-x-0"
+              : "opacity-0 invisible translate-x-1/2"
+          }`}
+        >
+          <span
+            className="absolute top-3 right-3 cursor-pointer"
+            onClick={handleClose}
+          >
+            <CloseIcon></CloseIcon>
+          </span>
+          <FormSign
+            handleSetConfirmBtn={() => setConfirmBtn(true)}
+            nftInfoDetail={nftInfoDetail}
+          ></FormSign>
+        </div>
       </div>
       <ToastContainer autoClose={800} />
     </div>,

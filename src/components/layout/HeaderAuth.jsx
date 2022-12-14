@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, Navigate, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Input from "../input/Input";
 import avatar_default from "../../assets/avatar/avatar_default_1.png";
 import logo from "../../assets/logo.png";
+import bell from "../../assets/icons/bell.png";
+import useClickOutSide from "../../hooks/useClickOutSide";
 
 const ListLink = [
   {
@@ -70,6 +72,7 @@ const HeaderStyles = styled.div`
 
 const HeaderAuth = ({ handleSignout }) => {
   const navigate = useNavigate();
+  const { show, setShow, nodeRef: nodeRefUser } = useClickOutSide();
   useEffect(() => {
     const header = document.getElementById("header");
     const sticky = header.offsetTop;
@@ -124,26 +127,62 @@ const HeaderAuth = ({ handleSignout }) => {
                 </NavLink>
               ))}
             </ul>
-            <div className="user flex items-center gap-[30px]">
-              <Link
-                to="/profile"
-                onClick={() => {
-                  window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-                }}
-              >
+            <div
+              className="user relative flex items-center gap-[30px]"
+              ref={nodeRefUser}
+            >
+              <div className="relative z-[9]" onClick={() => setShow(!show)}>
                 <img
                   src={avatar_default}
                   alt=""
-                  className="w-[35px] h-[35px] object-cover rounded-full"
+                  className="w-[35px] h-[35px] object-cover rounded-full cursor-pointer"
                 />
-              </Link>
-              <button onClick={handleSignout}>
-                <span className="text-white font-[400] cursor-pointer">
+                {show === true ? (
+                  <div className="transition-all duration-250 absolute top-[150%] rounded-lg right-0 w-[180px] p-3 bg-[#fff] text-[#141418]">
+                    <NavLink
+                      to="/profile"
+                      onClick={() => {
+                        window.scrollTo({
+                          top: 0,
+                          left: 0,
+                          behavior: "smooth",
+                        });
+                      }}
+                      className="cursor-pointer w-full px-3 py-4 rounded-md hover:bg-[#f1f1f1] font-[500]"
+                    >
+                      <div>My Profile</div>
+                    </NavLink>
+                    <div className="cursor-pointer w-full px-3 py-4 rounded-md hover:bg-[#f1f1f1] font-[500]">
+                      Favorites
+                    </div>
+                    <div
+                      className="cursor-pointer w-full px-3 py-4 rounded-md hover:bg-[#f1f1f1] font-[500]"
+                      onClick={handleSignout}
+                    >
+                      Sign Out
+                    </div>
+                  </div>
+                ) : (
+                  <div className="absolute"></div>
+                )}
+              </div>
+              <button type="button">
+                {/* <span className="text-white font-[400] cursor-pointer">
                   Sign out
-                </span>
+                </span> */}
+                <div className="w-[35px] bg-white p-1 relative h-[35px] grid place-items-center rounded-full ">
+                  <img
+                    src={bell}
+                    alt=""
+                    className="w-[90%] h-[90%] object-cover rotate-[10deg]"
+                  />
+                  <div className="grid place-items-center -top-1 -right-1 absolute w-[16px] h-[16px] bg-[#f54753] rounded-full">
+                    <span className="font-bold text-[10px]"></span>
+                  </div>
+                </div>
               </button>
               <button
-                className="h-[53px]  px-5 py-4 flex items-center justify-center font-medium tracking-[0.02em] bg-purple-400 rounded-lg "
+                className="h-[53px]  px-5 py-4 flex items-center justify-center font-medium tracking-[0.02em] bg-purple-400 rounded-lg border border-solid border-purple-700"
                 onClick={() => navigate("/create")}
               >
                 <span className="text-white">Create</span>

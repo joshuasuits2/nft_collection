@@ -1,14 +1,9 @@
-import axios from "axios";
 import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
 import styled from "styled-components";
-import lodash from "lodash";
-import { baseURL } from "../../config/getConfig";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import lodash from "lodash";
 import slugify from "slugify";
-import { useForm } from "react-hook-form";
-import { useRef } from "react";
 
 const InputStyle = styled.div`
   position: relative;

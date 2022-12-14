@@ -26,24 +26,6 @@ const ListLink = [
 
 const HeaderStyles = styled.div`
   margin-bottom: 58px;
-  .skeleton {
-    background-color: #eee;
-    background-image: linear-gradient(
-      110deg,
-      #ececec 8%,
-      #f5f5f5 18%,
-      #ececec 33%
-    );
-    border-radius: 5px;
-    background-size: 200% 100%;
-    animation: 1.5s shine linear infinite;
-  }
-
-  @keyframes shine {
-    to {
-      background-position-x: -200%;
-    }
-  }
   #header {
     --transition-curve: cubic-bezier(0.05, 0, 0.2, 1);
     transition: top 0.5s var(--transition-curve),

@@ -14,6 +14,9 @@ import HeartIcon from "../assets/icons/HeartIcon";
 import axios from "axios";
 import { baseURL } from "../config/getConfig";
 import BuyNow from "../components/modal/BuyNow";
+import PropertiesNFT from "../components/layout/PropertiesNFT";
+import TimingNFT from "../components/layout/TimingNFT";
+import DetailInfoNFT from "../components/layout/DetailInfoNFT";
 
 const CategoryDetailStyles = styled.div`
   .linear-property {
@@ -69,87 +72,61 @@ const CategoryDetailStyles = styled.div`
   }
 `;
 const CategoryDetail = () => {
-  const [nft, setNft] = useState({ item: "", name: "" });
+  const [nft, setNft] = useState();
+  const [showModal, setShowModal] = useState(false);
   const { slug } = useParams();
   let params = new URLSearchParams(slug);
-  let slugID = params.get("search");
-  const [showModal, setShowModal] = useState(false);
+  let slugValue = params.get("query");
 
   useEffect(() => {
     (async () => {
       try {
-        const res = await axios.get(`${baseURL}/api/nfts/${slugID}`);
-        const info = await axios.get(`${baseURL}/api/nfts?includeOwner=1`);
-        const list = info?.data.nfts;
-        const owner = list?.filter((item) => item.id === parseInt(slugID));
-        setNft((prevState) => ({
-          ...prevState,
-          item: res?.data?.nft,
-          name: owner[0]?.owner.name,
-        }));
-        console.log(res?.data?.nft);
-        console.log(owner[0]?.owner.name);
+        const nftItem = await axios.get(`${baseURL}/api/nfts/${slugValue}`);
+        setNft(nftItem.data.nft);
       } catch (error) {
         console.log(error);
       }
     })();
-  }, [slugID]);
+  }, [slugValue]);
 
-  if (!slugID) return <PageContainer>Not found!...</PageContainer>;
+  if (!slugValue) return <PageContainer>Not found!...</PageContainer>;
   return (
     <CategoryDetailStyles className="body-style">
-      <BuyNow open={showModal} handleClose={() => setShowModal(false)}></BuyNow>
-      {nft?.item?.url_image_nft ? (
+      {nft?.url_image_nft ? (
         <PageContainer>
           <div className="flex gap-x-[100px]">
             <div className="flex-[50%] flex flex-col">
               <div className="card-top relative z-10">
                 <div className="background-item-blur h-[500px] containerImage">
                   <img
-                    src={`${baseURL}/storage/nftImages/${nft?.item?.url_image_nft}`}
+                    src={`${baseURL}/storage/nftImages/${nft?.url_image_nft}`}
                     alt=""
                     className="img-detail w-full h-full object-cover rounded-2xl cursor-pointer"
                   />
                 </div>
               </div>
               <span className="mt-10">Details</span>
-              <div className="details flex gap-x-[130px] mt-5">
-                <div>
-                  <ul className="flex flex-col gap-y-4">
-                    <li className="text-gradient">Contract Address</li>
-                    <li className="text-gradient">Token ID</li>
-                    <li className="text-gradient">Token Standard</li>
-                    <li className="text-gradient">Blockchain</li>
-                    <li className="text-gradient">Last Updated</li>
-                    <li className="text-gradient">Creator Earnings</li>
-                  </ul>
-                </div>
-                <div>
-                  <ul className="flex flex-col gap-y-4">
-                    <li className="text-[#FBFF2A]">0x1263...5df5</li>
-                    <li className="text-[#FBFF2A]">602</li>
-                    <li>ERC-721</li>
-                    <li className="text-[#FBFF2A]">Ethereum</li>
-                    <li>2 days ago</li>
-                    <li>10%</li>
-                  </ul>
-                </div>
-              </div>
+              <DetailInfoNFT></DetailInfoNFT>
             </div>
             <div className="flex-[70%]">
               <div className="desc flex flex-col">
                 <div className="creator flex items-center gap-x-2">
-                  <span className="name-linear font-[600]">{nft?.name}</span>
+                  <span className="name-linear font-[600]">
+                    {nft?.creator.name}
+                  </span>
                   <img src={verify} alt="" className="w-4 h-4 object-cover" />
                 </div>
                 <span className="font-bold text-[20px] mt-[10px]">
-                  {nft?.item.name}
+                  {nft?.name}
                 </span>
                 <div className="flex font-bold text-[20px] mt-[25px] items-center justify-between">
                   <div className="price px-3 h-[50px] rounded-full bg-[#FBFF2A] flex items-center justify-center text-[#000000] gap-x-2">
-                    <span>{nft?.item.price}</span>
+                    <span>{nft?.price}</span>
                     <div className="w-[64px] flex  bg-[#E7DE06] rounded-full items-center justify-center h-9">
-                      ETH
+                      {nft?.crypto.name.substring(
+                        0,
+                        nft?.crypto.name.indexOf(" ")
+                      )}
                     </div>
                   </div>
                   <span className="text-[16px] font-[500]">$ 4,429.87</span>
@@ -164,7 +141,7 @@ const CategoryDetail = () => {
                 </div>
                 <span className="font-bold mt-[30px]">Description</span>
                 <p className="mt-[30px] text-[15px] font-[300] leading-[35px]">
-                  {nft?.item.description}
+                  {nft?.description}
                 </p>
                 <div className="owner-and-collection flex items-center gap-x-[60px] mt-[50px]">
                   <div className="own flex gap-x-[10px] items-center">
@@ -175,7 +152,7 @@ const CategoryDetail = () => {
                     />
                     <div className="name flex flex-col">
                       <span className="font-[600]">Current Owner</span>
-                      <span>Jane Cooper</span>
+                      <span className="text-[15px]">{nft?.owner.name}</span>
                     </div>
                   </div>
                   <div className="collection flex gap-x-[10px] items-center">
@@ -186,50 +163,15 @@ const CategoryDetail = () => {
                     />
                     <div className="collection  flex flex-col">
                       <span className="font-[600]">Collection</span>
-                      <span>MeeCat101</span>
+                      <span className="text-[15px]">
+                        {nft?.collection.name}
+                      </span>
                     </div>
                   </div>
                 </div>
 
                 <div className="action flex gap-x-[180px] mt-[30px] justify-between">
-                  <div className="auction-ending">
-                    <span>Auction Ending in</span>
-                    <div className="timing mt-4 flex gap-x-5">
-                      <div className="days flex flex-col gap-y-3 items-center">
-                        <div className="number flex gap-x-[5px]">
-                          <div className="pri linear-timing flex items-center">
-                            <span>2</span>
-                          </div>
-                          <div className="sec linear-timing flex items-center">
-                            5
-                          </div>
-                        </div>
-                        <div className="text">Days</div>
-                      </div>
-                      <div className="hours flex flex-col gap-y-3 items-center">
-                        <div className="number flex gap-x-[5px]">
-                          <div className="pri linear-timing flex items-center">
-                            <span>1</span>
-                          </div>
-                          <div className="sec linear-timing flex items-center">
-                            6
-                          </div>
-                        </div>
-                        <div className="text">hour</div>
-                      </div>
-                      <div className="minutes flex flex-col gap-y-3 items-center">
-                        <div className="number flex gap-x-[5px]">
-                          <div className="pri linear-timing flex items-center">
-                            <span>3</span>
-                          </div>
-                          <div className="sec linear-timing flex items-center">
-                            3
-                          </div>
-                        </div>
-                        <div className="text">Days</div>
-                      </div>
-                    </div>
-                  </div>
+                  <TimingNFT></TimingNFT>
                   <div className="deal  flex flex-col gap-y-5">
                     <button
                       onClick={() => setShowModal(true)}
@@ -242,93 +184,7 @@ const CategoryDetail = () => {
                     </button>
                   </div>
                 </div>
-
-                <div className="properties mt-[80px]">
-                  <span className="">Properties</span>
-                  <div className="grid grid-cols-3 grid-rows-3 mt-5 gap-y-4">
-                    <div className="linear-property gap-y-[10px] py-5 px-2 w-[200px] flex flex-col justify-center items-center">
-                      <span className="text-gradient text-[14px] font-[500]">
-                        Background
-                      </span>
-                      <span className="text-[12px] font-[500]">
-                        Dark Green Gradient
-                      </span>
-                      <span className="text-[12px]">95% have this trait </span>
-                    </div>
-                    <div className="linear-property gap-y-[10px] py-5 px-2 w-[200px] flex flex-col justify-center items-center">
-                      <span className="text-gradient text-[14px] font-[500]">
-                        Background
-                      </span>
-                      <span className="text-[12px] font-[500]">
-                        Dark Green Gradient
-                      </span>
-                      <span className="text-[12px]">95% have this trait </span>
-                    </div>
-                    <div className="linear-property gap-y-[10px] py-5 px-2 w-[200px] flex flex-col justify-center items-center">
-                      <span className="text-gradient text-[14px] font-[500]">
-                        Background
-                      </span>
-                      <span className="text-[12px] font-[500]">
-                        Dark Green Gradient
-                      </span>
-                      <span className="text-[12px]">95% have this trait </span>
-                    </div>
-                    <div className="linear-property gap-y-[10px] py-5 px-2 w-[200px] flex flex-col justify-center items-center">
-                      <span className="text-gradient text-[14px] font-[500]">
-                        Background
-                      </span>
-                      <span className="text-[12px] font-[500]">
-                        Dark Green Gradient
-                      </span>
-                      <span className="text-[12px]">95% have this trait </span>
-                    </div>
-                    <div className="linear-property gap-y-[10px] py-5 px-2 w-[200px] flex flex-col justify-center items-center">
-                      <span className="text-gradient text-[14px] font-[500]">
-                        Background
-                      </span>
-                      <span className="text-[12px] font-[500]">
-                        Dark Green Gradient
-                      </span>
-                      <span className="text-[12px]">95% have this trait </span>
-                    </div>
-                    <div className="linear-property gap-y-[10px] py-5 px-2 w-[200px] flex flex-col justify-center items-center">
-                      <span className="text-gradient text-[14px] font-[500]">
-                        Background
-                      </span>
-                      <span className="text-[12px] font-[500]">
-                        Dark Green Gradient
-                      </span>
-                      <span className="text-[12px]">95% have this trait </span>
-                    </div>
-                    <div className="linear-property gap-y-[10px] py-5 px-2 w-[200px] flex flex-col justify-center items-center">
-                      <span className="text-gradient text-[14px] font-[500]">
-                        Background
-                      </span>
-                      <span className="text-[12px] font-[500]">
-                        Dark Green Gradient
-                      </span>
-                      <span className="text-[12px]">95% have this trait </span>
-                    </div>
-                    <div className="linear-property gap-y-[10px] py-5 px-2 w-[200px] flex flex-col justify-center items-center">
-                      <span className="text-gradient text-[14px] font-[500]">
-                        Background
-                      </span>
-                      <span className="text-[12px] font-[500]">
-                        Dark Green Gradient
-                      </span>
-                      <span className="text-[12px]">95% have this trait </span>
-                    </div>
-                    <div className="linear-property gap-y-[10px] py-5 px-2 w-[200px] flex flex-col justify-center items-center">
-                      <span className="text-gradient text-[14px] font-[500]">
-                        Background
-                      </span>
-                      <span className="text-[12px] font-[500]">
-                        Dark Green Gradient
-                      </span>
-                      <span className="text-[12px]">95% have this trait </span>
-                    </div>
-                  </div>
-                </div>
+                <PropertiesNFT></PropertiesNFT>
               </div>
             </div>
           </div>
@@ -337,6 +193,11 @@ const CategoryDetail = () => {
           </Heading>
           <CardList data={ListCategory}></CardList>
           <Footer></Footer>
+          <BuyNow
+            open={showModal}
+            nftInfoDetail={nft}
+            handleClose={() => setShowModal(false)}
+          ></BuyNow>
         </PageContainer>
       ) : (
         <div className="fixed inset-0 flex items-center justify-center">

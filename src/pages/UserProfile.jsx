@@ -1,20 +1,18 @@
-import React, { useCallback, useRef } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageContainer from "../components/layout/PageContainer";
 import AuthUser from "../config/AuthUser";
 import avatar_default_1 from ".././assets/avatar/avatar_default_1.png";
 import cover_default from ".././assets/avatar/cover_default.png";
 import { Tab } from "@headlessui/react";
+import { ListCategory } from "../fakeAPI/Categories";
+import { useAuthentication } from "../config/auth-context";
+import useAccountBalance from "../hooks/useAccountBalance";
 import styled from "styled-components";
 import CardList from "../components/layout/CardList";
-import { ListCategory } from "../fakeAPI/Categories";
 import Footer from "../components/layout/Footer";
-import useAuth from "../hooks/useAuth";
 import Deposit from "../components/modal/Deposit";
-import { useState } from "react";
-import { useEffect } from "react";
 import verify from "../assets/outside/verify.png";
-import { useAuthentication } from "../config/auth-context";
 
 const ProfileStyles = styled.div`
   .text-gradient {
@@ -27,38 +25,17 @@ const ProfileStyles = styled.div`
 `;
 
 const UserProfile = () => {
-  const { token, http } = AuthUser();
-  const { userId, userName } = useAuthentication();
+  const { token } = AuthUser();
+  const { userId, accountBalance, setAccountBalance } = useAccountBalance();
+  const { userName } = useAuthentication();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
-  const [accountBalance, setAccountBalance] = useState({});
-
-  const handleFetchData = useRef();
-
-  handleFetchData.current = async () => {
-    try {
-      if (userId) {
-        const res = await http.get(`/account_balances?user_id=${userId}`);
-        setAccountBalance(res?.data?.accountBalances[0]);
-        console.log(res?.data?.accountBalances[0]);
-      }
-    } catch (error) {}
-  };
-
-  const handleFindQuery = () => {
-    handleFetchData.current();
-  };
-
-  useEffect(() => {
-    handleFindQuery();
-  }, [userId]);
 
   const displayTokenUser = `0x${token?.slice(0, 10).toLowerCase()}...${token
     ?.slice(40, 44)
     .toLowerCase()}`;
 
   if (!token) return navigate("/error");
-
   return (
     <ProfileStyles className="body-style">
       {userId ? (
@@ -98,7 +75,7 @@ const UserProfile = () => {
                   <span>34 images</span>
                 </div>
               </div>
-              <div className="mt-[100px] ml-[200px] flex flex-col ">
+              <div className="mt-[100px] ml-[200px] flex flex-col items-start">
                 <div className="flex gap-x-4 items-center">
                   <span className="text-[16px] font-[600] text-[#c68afc]">
                     Account balance:
@@ -140,7 +117,7 @@ const UserProfile = () => {
                         Created 28.5k
                       </span>
                     )}
-                  </Tab>{" "}
+                  </Tab>
                   <Tab>
                     {({ selected }) => (
                       <span
@@ -151,7 +128,7 @@ const UserProfile = () => {
                         Favorited
                       </span>
                     )}
-                  </Tab>{" "}
+                  </Tab>
                   <Tab>
                     {({ selected }) => (
                       <span

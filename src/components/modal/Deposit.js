@@ -18,14 +18,14 @@ const Deposit = ({
   handleClose = () => {},
 }) => {
   const [exchange, setExchange] = useState("");
-  const { token, http } = AuthUser();
+  const { token } = AuthUser();
   const [isSubmit, setIsSubmit] = useState(false);
 
   const {
     handleSubmit,
     register,
     reset,
-    formState: { error, isValid },
+    formState: { isValid },
   } = useForm();
 
   const onSubmit = (values) => {
@@ -116,7 +116,7 @@ const Deposit = ({
               isSubmit ? "disabled:opacity-50" : ""
             }`}
           >
-            A
+            Add
           </button>
         </form>
       </div>

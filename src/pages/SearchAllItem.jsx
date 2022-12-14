@@ -4,13 +4,10 @@ import { useParams } from "react-router-dom";
 import Card from "../components/layout/Card";
 import PageContainer from "../components/layout/PageContainer";
 import { baseURL } from "../config/getConfig";
-import Banner from "../assets/Banner.png";
 const SearchAllItem = () => {
-  const [allNfts, setAllNfts] = useState();
-  const [query, setQuery] = useState("");
+  const [allNfts, setAllNfts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState();
-  const [url, setUrl] = useState("");
 
   const { slug } = useParams();
   let params = new URLSearchParams(slug);
@@ -20,10 +17,10 @@ const SearchAllItem = () => {
     (async () => {
       setLoading(true);
       try {
-        const response = await axios.get(
+        const responseOwner = await axios.get(
           `${baseURL}/api/nfts?includeOwner=1&name=${slugID}`
         );
-        setAllNfts(response?.data?.nfts);
+        setAllNfts(responseOwner?.data?.nfts);
         setLoading(false);
       } catch (error) {
         setLoading(false);
