@@ -16,10 +16,18 @@ import SearchAllItem from "../pages/SearchAllItem";
 import UserProfile from "../pages/UserProfile";
 import { AuthProvider } from "./auth-context";
 import AuthenWrapper from "../components/layout/AuthenWrapper";
+import Dashboard from "../components/admin/admin-page/Dashboard";
+import Project from "../components/admin/admin-page/Project";
 
 const RoutesConfig = () => {
   return (
     <Routes>
+      <Route path="/dashboard" element={<Dashboard></Dashboard>}>
+        <Route
+          path="/dashboard/management"
+          element={<Project></Project>}
+        ></Route>
+      </Route>
       <Route element={<Main />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/explore" element={<ExplorePage />} />
@@ -27,7 +35,6 @@ const RoutesConfig = () => {
         <Route path="/wallets" element={<WalletsPage />} />
         <Route path="/result/:slug" element={<SearchAllItem />} />
         <Route path="/create" element={<Create />} />
-
         <Route element={<AuthenWrapper />}>
           <Route path="/create-collection" element={<CreateCollection />} />
           <Route path="/profile" element={<UserProfile />} />

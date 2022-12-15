@@ -1,5 +1,4 @@
 import React from "react";
-import avatar_default from "../../assets/avatar/avatar_default.png";
 import { baseURL } from "../../config/getConfig";
 
 const FormBuyNow = ({

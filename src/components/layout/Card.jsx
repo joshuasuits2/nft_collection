@@ -78,7 +78,11 @@ const Card = ({
             </div>
             <div className="bottom mt-auto text-[#141118] font-[600] flex items-center justify-between">
               <div className="bottom-left ">
-                <span className=" cursor-pointer">{remaining}</span>
+                <span className="cursor-pointer">
+                  {parseInt(remaining?.slice(8, 10)) + 30}d{" "}
+                  {parseInt(remaining?.slice(11, 13))}h{" "}
+                  {parseInt(remaining?.slice(14, 16))}s
+                </span>
               </div>
               <div className="bottom-right">
                 <button

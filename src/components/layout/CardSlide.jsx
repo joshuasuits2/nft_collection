@@ -1,11 +1,8 @@
 import Card from "./Card";
-import styled from "styled-components";
 import Button from "../button/Button";
 import SliderCustom from "../slider/SliderCustom";
 import { SplideSlide } from "@splidejs/react-splide";
 import { baseURL } from "../../config/getConfig";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -26,11 +23,11 @@ const CardSlide = ({ data, idOwner, ...props }) => {
                     srcTop={`${baseURL}/storage/nftImages/${category.url_image_nft}`}
                     name={category.name}
                     owner={category.owner.name}
-                    srcCoin={category.coin}
                     price={category.price}
-                    remaining={"22d 12h 12m 12s"}
+                    remaining={category.updated_at}
                     crypto={category.crypto_id}
                     id={category.id}
+                    coin={category.crypto}
                   />
                 </SplideSlide>
               ))}

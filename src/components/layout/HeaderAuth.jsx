@@ -6,6 +6,7 @@ import avatar_default from "../../assets/avatar/avatar_default_1.png";
 import logo from "../../assets/logo.png";
 import bell from "../../assets/icons/bell.png";
 import useClickOutSide from "../../hooks/useClickOutSide";
+import { useAuthentication } from "../../config/auth-context";
 
 const ListLink = [
   {
@@ -73,6 +74,7 @@ const HeaderStyles = styled.div`
 const HeaderAuth = ({ handleSignout }) => {
   const navigate = useNavigate();
   const { show, setShow, nodeRef: nodeRefUser } = useClickOutSide();
+  const { userName } = useAuthentication();
   useEffect(() => {
     const header = document.getElementById("header");
     const sticky = header.offsetTop;
@@ -138,7 +140,10 @@ const HeaderAuth = ({ handleSignout }) => {
                   className="w-[35px] h-[35px] object-cover rounded-full cursor-pointer"
                 />
                 {show === true ? (
-                  <div className="transition-all duration-100 absolute top-[150%] rounded-lg right-0 w-[200px] p-3 shadow-lg bg-[#ffffff] text-[#141418]">
+                  <div className="transition-all duration-100 absolute top-[150%] rounded-lg right-0 min-w-[220px] p-3 shadow-lg bg-[#ffffff] text-[#141418]">
+                    <span className="px-3 font-bold">
+                      Hello {userName.split(" ")[0]}!
+                    </span>
                     <NavLink
                       to="/profile"
                       onClick={() => {
@@ -148,15 +153,15 @@ const HeaderAuth = ({ handleSignout }) => {
                           behavior: "smooth",
                         });
                       }}
-                      className="w-full px-3 text-sm py-4 rounded-md hover:bg-slate-400 hover:bg-opacity-10 transition-all cursor-pointer font-[500] "
+                      className="mt-3 w-full px-3 text-sm py-4 rounded-md hover:bg-slate-500 hover:bg-opacity-10 transition-all cursor-pointer font-[500] "
                     >
                       <div>My Profile</div>
                     </NavLink>
-                    <div className="hover:bg-slate-400 text-sm hover:bg-opacity-10 transition-all cursor-pointer w-full px-3 py-4 rounded-md font-[500] ">
+                    <div className="hover:bg-slate-500 text-sm hover:bg-opacity-10 transition-all cursor-pointer w-full px-3 py-4 rounded-md font-[500] ">
                       Favorites
                     </div>
                     <div
-                      className="hover:bg-slate-400 text-sm hover:bg-opacity-10 transition-all cursor-pointer w-full px-3 py-4 rounded-md font-[500]"
+                      className="hover:bg-slate-500 text-sm hover:bg-opacity-10 transition-all cursor-pointer w-full px-3 py-4 rounded-md font-[500]"
                       onClick={handleSignout}
                     >
                       Sign Out
@@ -167,18 +172,15 @@ const HeaderAuth = ({ handleSignout }) => {
                 )}
               </div>
               <button type="button">
-                {/* <span className="text-white font-[400] cursor-pointer">
-                  Sign out
-                </span> */}
-                <div className="w-[35px] bg-white p-1 relative h-[35px] grid place-items-center rounded-full ">
+                <div className="w-[35px] bg-white p-1 relative h-[35px] grid place-items-center rounded-full rotate-[-15deg] ">
                   <img
                     src={bell}
                     alt=""
-                    className="w-[90%] h-[90%] object-cover"
+                    className="w-[80%] h-[80%] object-cover"
                   />
-                  <div className="grid place-items-center -top-1 -right-1 absolute w-[16px] h-[16px] bg-[#f54753] rounded-full">
+                  {/* <div className="grid place-items-center -top-1 -right-1 absolute w-[16px] h-[16px] bg-[#f54753] rounded-full">
                     <span className="font-bold text-[10px]"></span>
-                  </div>
+                  </div> */}
                 </div>
               </button>
               <button

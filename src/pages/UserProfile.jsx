@@ -5,14 +5,31 @@ import AuthUser from "../config/AuthUser";
 import avatar_default_1 from ".././assets/avatar/avatar_default_1.png";
 import cover_default from ".././assets/avatar/cover_default.png";
 import { Tab } from "@headlessui/react";
-import { ListCategory } from "../fakeAPI/Categories";
 import { useAuthentication } from "../config/auth-context";
 import useAccountBalance from "../hooks/useAccountBalance";
 import styled from "styled-components";
-import CardList from "../components/layout/CardList";
 import Footer from "../components/layout/Footer";
 import Deposit from "../components/modal/Deposit";
 import verify from "../assets/outside/verify.png";
+import { useEffect } from "react";
+import axios from "axios";
+import { baseURL } from "../config/getConfig";
+import Card from "../components/layout/Card";
+
+const ListData = [
+  {
+    id: 1,
+    title: "Collected",
+  },
+  {
+    id: 2,
+    title: "Created",
+  },
+  {
+    id: 3,
+    title: "Liked",
+  },
+];
 
 const ProfileStyles = styled.div`
   .text-gradient {
@@ -30,12 +47,21 @@ const UserProfile = () => {
   const { userName } = useAuthentication();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+  const [nfts, setNfts] = useState([]);
 
   const displayTokenUser = `0x${token?.slice(0, 10).toLowerCase()}...${token
     ?.slice(40, 44)
     .toLowerCase()}`;
 
+  useEffect(() => {
+    (async () => {
+      const res = await axios.get(`${baseURL}/api/nfts?owner_id=${userId}`);
+      setNfts(res.data.nfts);
+    })();
+  }, [userId]);
+
   if (!token) return navigate("/error");
+
   return (
     <ProfileStyles className="body-style">
       {userId ? (
@@ -80,7 +106,7 @@ const UserProfile = () => {
                   <span className="text-[16px] font-[600] text-[#c68afc]">
                     Account balance:
                   </span>
-                  <span>{accountBalance?.balance || 0}</span>
+                  <span>{accountBalance.balance}</span>
                   <span className="font-[500]">ETH</span>
                 </div>
                 <button
@@ -96,69 +122,62 @@ const UserProfile = () => {
             <div className="">
               <Tab.Group>
                 <Tab.List className="flex gap-x-[30px]">
-                  <Tab>
-                    {({ selected }) => (
-                      <span
-                        className={`w-[105px] h-[49px] font-[500] cursor-pointer rounded-lg ${
-                          selected ? "text-gradient" : ""
-                        }`}
-                      >
-                        Colleted 3.6k
-                      </span>
-                    )}
-                  </Tab>
-                  <Tab>
-                    {({ selected }) => (
-                      <span
-                        className={`w-[105px] h-[49px] font-[500] cursor-pointer rounded-lg ${
-                          selected ? "text-gradient" : ""
-                        }`}
-                      >
-                        Created 28.5k
-                      </span>
-                    )}
-                  </Tab>
-                  <Tab>
-                    {({ selected }) => (
-                      <span
-                        className={`w-[105px] h-[49px] font-[500] cursor-pointer rounded-lg ${
-                          selected ? "text-gradient" : ""
-                        }`}
-                      >
-                        Favorited
-                      </span>
-                    )}
-                  </Tab>
-                  <Tab>
-                    {({ selected }) => (
-                      <span
-                        className={`w-[105px] h-[49px] font-[500] cursor-pointer rounded-lg ${
-                          selected ? "text-gradient" : ""
-                        }`}
-                      >
-                        Activity
-                      </span>
-                    )}
-                  </Tab>
+                  {ListData.length > 0 &&
+                    ListData.map((item) => (
+                      <Tab key={item.id}>
+                        {({ selected }) => (
+                          <span
+                            className={`w-[105px] h-[49px] font-[500] cursor-pointer rounded-lg ${
+                              selected ? "text-gradient" : ""
+                            }`}
+                          >
+                            {item.title}
+                          </span>
+                        )}
+                      </Tab>
+                    ))}
                 </Tab.List>
                 <div className="mt-4 mb-[70px] w-full h-[1px] bg-purple-500"></div>
                 <Tab.Panels>
                   <Tab.Panel>
-                    <CardList data={ListCategory}></CardList>
-                    <CardList data={ListCategory}></CardList>
+                    <div className="grid grid-cols-4 gap-x-[50px] gap-y-[70px]">
+                      {nfts?.length > 0 &&
+                        nfts
+                          .filter((item) => item.owner_id !== item.creator_id)
+                          .map((category) => (
+                            <Card
+                              key={category.id}
+                              srcTop={`${baseURL}/storage/nftImages/${category.url_image_nft}`}
+                              name={category.name}
+                              owner={userName}
+                              price={category?.price}
+                              remaining={category?.updated_at}
+                              crypto={category?.crypto_id}
+                              id={category?.id}
+                            />
+                          ))}
+                    </div>
                   </Tab.Panel>
                   <Tab.Panel>
-                    <CardList data={ListCategory}></CardList>
-                    <CardList data={ListCategory}></CardList>
+                    <div className="grid grid-cols-4 gap-x-[50px] gap-y-[70px]">
+                      {nfts?.length > 0 &&
+                        nfts
+                          .filter((item) => item.owner_id === item.creator_id)
+                          .map((category) => (
+                            <Card
+                              key={category.id}
+                              srcTop={`${baseURL}/storage/nftImages/${category.url_image_nft}`}
+                              name={category.name}
+                              owner={userName}
+                              price={category?.price}
+                              remaining={category?.updated_at}
+                              crypto={category?.crypto_id}
+                              id={category?.id}
+                            />
+                          ))}
+                    </div>
                   </Tab.Panel>
-                  <Tab.Panel>
-                    <CardList data={ListCategory}></CardList>
-                    <CardList data={ListCategory}></CardList>
-                  </Tab.Panel>
-                  <Tab.Panel>
-                    <CardList data={ListCategory}></CardList>
-                    <CardList data={ListCategory}></CardList>
-                  </Tab.Panel>
+                  <Tab.Panel></Tab.Panel>
                 </Tab.Panels>
               </Tab.Group>
             </div>

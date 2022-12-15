@@ -5,10 +5,10 @@ import Footer from "../components/layout/Footer";
 import Heading from "../components/layout/Heading";
 import CardList from "../components/layout/CardList";
 import verify from "../assets/outside/verify.png";
-import avatar from "../assets/avatar/Ellipse 378.png";
+import avatar_default_1 from "../assets/avatar/avatar_default_1.png";
 import MeeCat101 from "../assets/collection/MeeCat101.png";
 import { ListCategory } from "../fakeAPI/Categories";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import EyeIcon from "../assets/icons/EyeIcon";
 import HeartIcon from "../assets/icons/HeartIcon";
 import axios from "axios";
@@ -18,6 +18,7 @@ import PropertiesNFT from "../components/layout/PropertiesNFT";
 import TimingNFT from "../components/layout/TimingNFT";
 import DetailInfoNFT from "../components/layout/DetailInfoNFT";
 import AuthUser from "../config/AuthUser";
+import { useAuthentication } from "../config/auth-context";
 
 const CategoryDetailStyles = styled.div`
   .linear-property {
@@ -73,8 +74,9 @@ const CategoryDetailStyles = styled.div`
   }
 `;
 const CategoryDetail = () => {
+  const { userName } = useAuthentication();
   const [nft, setNft] = useState();
-  const [showModal, setShowModal] = useState(false);
+  const [showModalBuyNow, setShowModalBuyNow] = useState(false);
   const { slug } = useParams();
   let params = new URLSearchParams(slug);
   let slugValue = params.get("query");
@@ -93,7 +95,7 @@ const CategoryDetail = () => {
   if (!slugValue) return <PageContainer>Not found!...</PageContainer>;
   return (
     <CategoryDetailStyles className="body-style">
-      {nft?.url_image_nft ? (
+      {nft?.url_image_nft && userName ? (
         <PageContainer>
           <div className="flex gap-x-[100px]">
             <div className="flex-[50%] flex flex-col">
@@ -146,11 +148,22 @@ const CategoryDetail = () => {
                 </p>
                 <div className="owner-and-collection flex items-center gap-x-[60px] mt-[50px]">
                   <div className="own flex gap-x-[10px] items-center">
-                    <img
-                      src={avatar}
-                      alt=""
-                      className="w-[60px] h-[60px] object-cover"
-                    />
+                    <Link to="/profile">
+                      {nft?.owner?.avatar !==
+                      "/storage/app/public/userImages/user.jpg" ? (
+                        <img
+                          src={`${baseURL}/storage/nftImages/${nft?.owner?.avatar}`}
+                          alt=""
+                          className="w-[60px] h-[60px] object-cover"
+                        />
+                      ) : (
+                        <img
+                          src={avatar_default_1}
+                          alt=""
+                          className="w-[60px] h-[60px] object-cover rounded-full"
+                        />
+                      )}
+                    </Link>
                     <div className="name flex flex-col">
                       <span className="font-[600]">Current Owner</span>
                       <span className="text-[15px]">{nft?.owner.name}</span>
@@ -158,9 +171,9 @@ const CategoryDetail = () => {
                   </div>
                   <div className="collection flex gap-x-[10px] items-center">
                     <img
-                      src={MeeCat101}
+                      src={`${baseURL}/storage/logoImages/${nft?.collection?.url_image_logo}`}
                       alt=""
-                      className="w-[60px] h-[60px] object-cover"
+                      className="w-[60px] h-[60px] object-cover rounded-full"
                     />
                     <div className="collection  flex flex-col">
                       <span className="font-[600]">Collection</span>
@@ -172,18 +185,28 @@ const CategoryDetail = () => {
                 </div>
 
                 <div className="action flex gap-x-[180px] mt-[30px] justify-between">
-                  <TimingNFT></TimingNFT>
-                  <div className="deal  flex flex-col gap-y-5">
-                    <button
-                      onClick={() => setShowModal(true)}
-                      className="w-[150px] h-[55px] font-[500] bg-[#FBFF2A] rounded-lg text-[#141118]"
-                    >
-                      Buy Now
-                    </button>
-                    <button className="w-[150px] h-[55px] font-[500] rounded-lg border border-solid border-white">
-                      Make Offer
-                    </button>
-                  </div>
+                  {nft?.owner?.name !== userName ? (
+                    <>
+                      <TimingNFT></TimingNFT>
+                      <div className="deal  flex flex-col gap-y-5">
+                        <button
+                          onClick={() => setShowModalBuyNow(true)}
+                          className="w-[150px] h-[55px] font-[500]  bg-[#FBFF2A] rounded-lg text-[#141418]"
+                        >
+                          Buy Now
+                        </button>
+                        <button className="w-[150px] h-[55px] font-[500] rounded-lg border border-solid border-white">
+                          Make Offer
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="deal flex flex-col gap-y-5">
+                      <button className="translate-y-5 w-[150px] h-[55px] font-[500] bg-[#c084fc] rounded-lg text-[#fff]">
+                        Sell NFT
+                      </button>
+                    </div>
+                  )}
                 </div>
                 <PropertiesNFT></PropertiesNFT>
               </div>
@@ -195,10 +218,10 @@ const CategoryDetail = () => {
           <CardList data={ListCategory}></CardList>
           <Footer></Footer>
           <BuyNow
-            open={showModal}
+            open={showModalBuyNow}
             token={token}
             nftInfoDetail={nft}
-            handleClose={() => setShowModal(false)}
+            handleClose={() => setShowModalBuyNow(false)}
           ></BuyNow>
         </PageContainer>
       ) : (

@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useState } from "react";
-import AuthUser from "../../config/AuthUser";
 import { baseURL } from "../../config/getConfig";
 import useAccountBalance from "../../hooks/useAccountBalance";
 import { ToastContainer, toast } from "react-toastify";
@@ -155,7 +154,6 @@ const FormSign = ({ token, nftInfoDetail, handleSetConfirmBtn = () => {} }) => {
           </button>
         </form>
       )}
-      <ToastContainer></ToastContainer>
     </div>
   );
 };
