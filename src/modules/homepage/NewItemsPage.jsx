@@ -13,7 +13,6 @@ const NewItemsPage = () => {
       try {
         const res = await axios.get(`${baseURL}/api/nfts?includeOwner=1`);
         setNfts(res?.data?.nfts);
-        console.log(res?.data?.nfts);
       } catch (error) {}
     })();
   }, []);

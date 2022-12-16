@@ -4,16 +4,17 @@ import { Outlet } from "react-router-dom";
 import ProgressBar from "../progress-bar/ProgressBar";
 import HeaderAuth from "./HeaderAuth";
 import AuthUser from "../../config/AuthUser";
-import { useState } from "react";
 import { useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
-import { baseURL } from "../../config/getConfig";
+import { useAuthentication } from "../../config/auth-context";
 
 const Main = () => {
-  const { user, setUser, setUserId, setUserName } = useAuth();
-  const { logout, token } = AuthUser();
+  const { userImage, setUser, setUserId, setUserName, setUserImage } =
+    useAuthentication();
+  const { logout, token, setToken } = AuthUser();
+  const { user } = useAuth();
 
-  const handleSignout = () => {
+  const handleSignOut = () => {
     if (token !== undefined) {
       logout();
       setUser(null);
@@ -25,16 +26,29 @@ const Main = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
   return (
     <div>
       {user ? (
-        <HeaderAuth handleSignout={handleSignout}></HeaderAuth>
+        <>
+          <HeaderAuth
+            handleSignOut={handleSignOut}
+            userAvatar={userImage?.avatar}
+          />
+          <ProgressBar />
+          {userImage?.avatar ? (
+            <Outlet></Outlet>
+          ) : (
+            <div className="body-style"></div>
+          )}
+        </>
       ) : (
-        <Header></Header>
+        <>
+          <Header></Header>
+          <ProgressBar />
+          <Outlet></Outlet>
+        </>
       )}
-      <ProgressBar></ProgressBar>
-      <Outlet></Outlet>
     </div>
   );
 };

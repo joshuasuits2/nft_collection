@@ -5,9 +5,27 @@ import useAuth from "../hooks/useAuth";
 const AuthContext = createContext();
 
 function AuthProvider(props) {
-  const { user, userName, userId, setUser, setUserId, setUserName } = useAuth();
+  const {
+    user,
+    userName,
+    userId,
+    userImage,
+    setUser,
+    setUserId,
+    setUserName,
+    setUserImage,
+  } = useAuth();
 
-  const value = { user, userName, userId, setUser, setUserId, setUserName };
+  const value = {
+    user,
+    userName,
+    userId,
+    userImage,
+    setUser,
+    setUserId,
+    setUserName,
+    setUserImage,
+  };
   return <AuthContext.Provider value={value} {...props}></AuthContext.Provider>;
 }
 

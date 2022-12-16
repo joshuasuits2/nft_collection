@@ -7,6 +7,7 @@ export default function useAuth() {
   const { http } = AuthUser();
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
+  const [userImage, setUserImage] = useState({ avatar: "", cover: "" });
 
   useEffect(() => {
     (async () => {
@@ -15,6 +16,13 @@ export default function useAuth() {
         setUser(hashString(res?.data?.name));
         setUserId(res?.data?.id);
         setUserName(res?.data?.name);
+        setUserImage((prev) => {
+          return {
+            ...prev,
+            avatar: res?.data?.avatar,
+            cover: res?.data?.cover,
+          };
+        });
       } catch (error) {}
     })();
   }, []);
@@ -29,9 +37,11 @@ export default function useAuth() {
   return {
     user,
     userName,
+    userImage,
     userId,
     setUser,
     setUserId,
     setUserName,
+    setUserImage,
   };
 }

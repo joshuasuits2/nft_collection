@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const FormSign = ({ token, nftInfoDetail, handleSetConfirmBtn = () => {} }) => {
   const [signBtn, setSignBtn] = useState(false);
+  const [disableBtn, setDisableBtn] = useState(false);
   const { accountBalance, userId } = useAccountBalance();
   let remainBalance = (
     accountBalance?.balance - parseFloat(nftInfoDetail?.price)
@@ -40,6 +41,9 @@ const FormSign = ({ token, nftInfoDetail, handleSetConfirmBtn = () => {} }) => {
         toast.success("Create Success!");
       })
       .catch((error) => console.log(error));
+  };
+  const handleDisableBtn = () => {
+    setDisableBtn(true);
   };
   return (
     <div>
@@ -148,7 +152,10 @@ const FormSign = ({ token, nftInfoDetail, handleSetConfirmBtn = () => {} }) => {
 
           <button
             type="submit"
-            className="mt-5 inline-flex items-center justify-center px-8 py-4 font-sans font-semibold tracking-wide text-white bg-[#c084fc] rounded-lg mx-auto w-[300px] [h-[53px] active:bg-purple-300"
+            onClick={handleDisableBtn}
+            className={`mt-5 inline-flex items-center justify-center px-8 py-4 font-sans font-semibold tracking-wide text-white bg-[#c084fc] rounded-lg mx-auto w-[300px] [h-[53px] active:bg-purple-300 ${
+              disableBtn === true ? "disabled:bg-purple-300" : ""
+            }`}
           >
             Complete
           </button>

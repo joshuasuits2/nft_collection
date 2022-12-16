@@ -1,7 +1,8 @@
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import slugify from "slugify";
 import styled from "styled-components";
-import CategoryDetail from "../../pages/CategoryDetail";
+import Ethereum from "../../assets/outside/ethereum.png";
 
 const CardStyles = styled.div`
   .before-layout {
@@ -46,6 +47,10 @@ const Card = ({
     navigate(`/${slugify(name)}&query=${id}`);
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <CardStyles>
       <div className="card-item h-[355px] flex flex-col relative p-[14px]">
@@ -71,9 +76,16 @@ const Card = ({
                 </Link>
               </div>
               <div className="top-right flex gap-[5px]  font-bold">
-                <span>{price}</span>
-                {/* <span>{crypto}</span> */}
-                <span>ETH</span>
+                {crypto === 1 && (
+                  <img
+                    src={Ethereum}
+                    alt=""
+                    className="w-[18px] h-[18px] object-cover"
+                  />
+                )}
+                <span>
+                  {parseFloat(price).toFixed(3).replace(/\.0+$/, "")} ETH
+                </span>
               </div>
             </div>
             <div className="bottom mt-auto text-[#141118] font-[600] flex items-center justify-between">

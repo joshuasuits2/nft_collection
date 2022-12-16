@@ -5,7 +5,6 @@ import Footer from "../components/layout/Footer";
 import Heading from "../components/layout/Heading";
 import CardList from "../components/layout/CardList";
 import verify from "../assets/outside/verify.png";
-import avatar_default_1 from "../assets/avatar/avatar_default_1.png";
 import { ListCategory } from "../fakeAPI/Categories";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import EyeIcon from "../assets/icons/EyeIcon";
@@ -18,7 +17,6 @@ import TimingNFT from "../components/layout/TimingNFT";
 import DetailInfoNFT from "../components/layout/DetailInfoNFT";
 import AuthUser from "../config/AuthUser";
 import { useAuthentication } from "../config/auth-context";
-import Login from "./Login";
 
 const CategoryDetailStyles = styled.div`
   .linear-property {
@@ -92,6 +90,9 @@ const CategoryDetail = () => {
       }
     })();
   }, [slugValue]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (!token) return navigate("/login");
   return (
@@ -151,20 +152,11 @@ const CategoryDetail = () => {
                 <div className="owner-and-collection flex items-center gap-x-[60px] mt-[50px]">
                   <div className="own flex gap-x-[10px] items-center">
                     <Link to="/profile">
-                      {nft?.owner?.avatar !==
-                      "/storage/app/public/userImages/user.jpg" ? (
-                        <img
-                          src={`${baseURL}/storage/nftImages/${nft?.owner?.avatar}`}
-                          alt=""
-                          className="w-[60px] h-[60px] object-cover"
-                        />
-                      ) : (
-                        <img
-                          src={avatar_default_1}
-                          alt=""
-                          className="w-[60px] h-[60px] object-cover rounded-full"
-                        />
-                      )}
+                      <img
+                        src={nft?.owner?.avatar}
+                        alt=""
+                        className="w-[60px] h-[60px] object-cover rounded-full"
+                      />
                     </Link>
                     <div className="name flex flex-col">
                       <span className="font-[600]">Current Owner</span>

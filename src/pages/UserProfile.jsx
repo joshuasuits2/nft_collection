@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageContainer from "../components/layout/PageContainer";
 import AuthUser from "../config/AuthUser";
-import avatar_default_1 from ".././assets/avatar/avatar_default_1.png";
-import cover_default from ".././assets/avatar/cover_default.png";
 import { Tab } from "@headlessui/react";
 import { useAuthentication } from "../config/auth-context";
 import useAccountBalance from "../hooks/useAccountBalance";
@@ -44,7 +42,8 @@ const ProfileStyles = styled.div`
 const UserProfile = () => {
   const { token } = AuthUser();
   const { userId, accountBalance, setAccountBalance } = useAccountBalance();
-  const { userName } = useAuthentication();
+
+  const { userImage, userName } = useAuthentication();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [nfts, setNfts] = useState([]);
@@ -55,11 +54,15 @@ const UserProfile = () => {
 
   useEffect(() => {
     (async () => {
-      const res = await axios.get(`${baseURL}/api/nfts?owner_id=${userId}`);
-      setNfts(res.data.nfts);
-      console.log(res.data.nfts);
+      const res = await axios.get(`${baseURL}/api/nfts?includeOwner=1`);
+      setNfts(res?.data?.nfts);
+      console.log(res?.data?.nfts);
     })();
   }, [userId]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (!token) return navigate("/error");
 
@@ -68,9 +71,9 @@ const UserProfile = () => {
       {userId ? (
         <div>
           <div className="relative">
-            <div className="banner w-full h-[380px]">
+            <div className="cover w-full h-[380px]">
               <img
-                src={cover_default}
+                src={userImage?.cover}
                 alt=""
                 className="w-full h-full object-cover"
               />
@@ -78,7 +81,7 @@ const UserProfile = () => {
             <div className="relative -top-[60px] left-[100px] flex gap-x-10">
               <div className="logo w-[180px] h-[180px] ">
                 <img
-                  src={avatar_default_1}
+                  src={userImage?.avatar}
                   alt=""
                   className="w-full h-full object-cover rounded-full"
                 />
@@ -144,13 +147,17 @@ const UserProfile = () => {
                     <div className="grid grid-cols-4 gap-x-[50px] gap-y-[70px]">
                       {nfts?.length > 0 &&
                         nfts
-                          .filter((item) => item.owner_id !== item.creator_id)
+                          .filter(
+                            (item) =>
+                              item.owner_id === userId &&
+                              item.owner_id !== item.creator_id
+                          )
                           .map((category) => (
                             <Card
                               key={category.id}
                               srcTop={`${baseURL}/storage/nftImages/${category.url_image_nft}`}
                               name={category.name}
-                              owner={userName}
+                              owner={category.owner.name}
                               price={category?.price}
                               remaining={category?.updated_at}
                               crypto={category?.crypto_id}
@@ -163,13 +170,13 @@ const UserProfile = () => {
                     <div className="grid grid-cols-4 gap-x-[50px] gap-y-[70px]">
                       {nfts?.length > 0 &&
                         nfts
-                          .filter((item) => item.owner_id === item.creator_id)
+                          .filter((item) => userId === item.creator_id)
                           .map((category) => (
                             <Card
                               key={category.id}
                               srcTop={`${baseURL}/storage/nftImages/${category.url_image_nft}`}
                               name={category.name}
-                              owner={userName}
+                              owner={category.owner.name}
                               price={category?.price}
                               remaining={category?.updated_at}
                               crypto={category?.crypto_id}
@@ -188,7 +195,7 @@ const UserProfile = () => {
                               key={category.id}
                               srcTop={`${baseURL}/storage/nftImages/${category.url_image_nft}`}
                               name={category.name}
-                              owner={userName}
+                              owner={category.owner.name}
                               price={category?.price}
                               remaining={category?.updated_at}
                               crypto={category?.crypto_id}

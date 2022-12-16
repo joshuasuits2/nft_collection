@@ -65,7 +65,7 @@ const Create = () => {
         owner_id: userId,
         creator_id: userId,
         reaction: 0,
-        status: "Not bought yet",
+        status: 1,
       })
       .then((res) => {
         toast.success("Create Successfully!");

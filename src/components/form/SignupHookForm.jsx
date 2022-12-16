@@ -7,6 +7,7 @@ import InputHookForm from "../input/InputHookForm";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { baseURL } from "../../config/getConfig";
 
 const schema = Yup.object({
   name: Yup.string().required("Please enter your username"),
@@ -42,6 +43,8 @@ const SignUpHookForm = ({ http, setToken, ...props }) => {
     http
       .post("/register", {
         ...data,
+        avatar: `${baseURL}/storage/userImages/user.jpg`,
+        cover: `${baseURL}/storage/userImages/cover.jpg`,
         type: 0,
       })
       .then((res) => {

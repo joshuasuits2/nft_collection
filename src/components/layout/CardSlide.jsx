@@ -5,7 +5,9 @@ import { SplideSlide } from "@splidejs/react-splide";
 import { baseURL } from "../../config/getConfig";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-
+// .sort(function (a, b) {
+//   return b.price - a.price;
+// })
 const CardSlide = ({ data, idOwner, ...props }) => {
   return (
     <>
@@ -13,21 +15,18 @@ const CardSlide = ({ data, idOwner, ...props }) => {
         <SliderCustom>
           {data.length > 0 &&
             data
-              .sort(function (a, b) {
-                return b.price - a.price;
-              })
               .filter((item, index) => index <= 5)
               .map((category) => (
                 <SplideSlide key={category.id}>
                   <Card
                     srcTop={`${baseURL}/storage/nftImages/${category.url_image_nft}`}
-                    name={category.name}
-                    owner={category.owner.name}
-                    price={category.price}
-                    remaining={category.updated_at}
-                    crypto={category.crypto_id}
-                    id={category.id}
-                    coin={category.crypto}
+                    name={category?.name}
+                    owner={category?.owner?.name}
+                    price={category?.price}
+                    remaining={category?.updated_at}
+                    crypto={category?.crypto_id}
+                    id={category?.id}
+                    coin={category?.crypto}
                   />
                 </SplideSlide>
               ))}
