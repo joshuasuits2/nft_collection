@@ -87,7 +87,7 @@ const TabCollection = ({ topics, loadingTopics, ...props }) => {
                 .fill(0)
                 .map((item, index) => (
                   <div key={index}>
-                    <SkeletonTheme baseColor="#202020" highlightColor="#444">
+                    <SkeletonTheme baseColor="#28282E" highlightColor="#383844">
                       <Skeleton width={100} height={40} />
                     </SkeletonTheme>
                   </div>
@@ -96,7 +96,7 @@ const TabCollection = ({ topics, loadingTopics, ...props }) => {
           {!loadingTopics ? (
             <Input width="200px" kind="search" placeholder="Search here ..." />
           ) : (
-            <SkeletonTheme baseColor="#202020" highlightColor="#444">
+            <SkeletonTheme baseColor="#28282E" highlightColor="#383844">
               <Skeleton width={200} height={40} />
             </SkeletonTheme>
           )}

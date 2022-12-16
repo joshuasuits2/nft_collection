@@ -6,9 +6,8 @@ import Heading from "../components/layout/Heading";
 import CardList from "../components/layout/CardList";
 import verify from "../assets/outside/verify.png";
 import avatar_default_1 from "../assets/avatar/avatar_default_1.png";
-import MeeCat101 from "../assets/collection/MeeCat101.png";
 import { ListCategory } from "../fakeAPI/Categories";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import EyeIcon from "../assets/icons/EyeIcon";
 import HeartIcon from "../assets/icons/HeartIcon";
 import axios from "axios";
@@ -19,6 +18,7 @@ import TimingNFT from "../components/layout/TimingNFT";
 import DetailInfoNFT from "../components/layout/DetailInfoNFT";
 import AuthUser from "../config/AuthUser";
 import { useAuthentication } from "../config/auth-context";
+import Login from "./Login";
 
 const CategoryDetailStyles = styled.div`
   .linear-property {
@@ -75,6 +75,7 @@ const CategoryDetailStyles = styled.div`
 `;
 const CategoryDetail = () => {
   const { userName } = useAuthentication();
+  const navigate = useNavigate();
   const [nft, setNft] = useState();
   const [showModalBuyNow, setShowModalBuyNow] = useState(false);
   const { slug } = useParams();
@@ -92,7 +93,7 @@ const CategoryDetail = () => {
     })();
   }, [slugValue]);
 
-  if (!slugValue) return <PageContainer>Not found!...</PageContainer>;
+  if (!token) return navigate("/login");
   return (
     <CategoryDetailStyles className="body-style">
       {nft?.url_image_nft && userName ? (
@@ -114,6 +115,7 @@ const CategoryDetail = () => {
             <div className="flex-[70%]">
               <div className="desc flex flex-col">
                 <div className="creator flex items-center gap-x-2">
+                  <span className="text-[14px]">Created by</span>
                   <span className="name-linear font-[600]">
                     {nft?.creator.name}
                   </span>

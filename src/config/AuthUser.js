@@ -32,6 +32,7 @@ export default function AuthUser() {
       Accept: "application/json",
       "Content-Type": "multipart/form-data",
       // "Content-Type": "application/json",
+
       authorization: `Bearer ${token}`,
     },
   });

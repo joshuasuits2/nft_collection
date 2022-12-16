@@ -37,7 +37,7 @@ const CardSlide = ({ data, idOwner, ...props }) => {
                 .fill(0)
                 .map((item, index) => (
                   <div key={index}>
-                    <SkeletonTheme baseColor="#202020" highlightColor="#444">
+                    <SkeletonTheme baseColor="#28282E" highlightColor="#383844">
                       <Skeleton
                         width={273}
                         height={355}

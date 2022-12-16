@@ -14,19 +14,24 @@ import Create from "../pages/Create";
 import CreateCollection from "../pages/CreateCollection";
 import SearchAllItem from "../pages/SearchAllItem";
 import UserProfile from "../pages/UserProfile";
-import { AuthProvider } from "./auth-context";
 import AuthenWrapper from "../components/layout/AuthenWrapper";
 import Dashboard from "../components/admin/admin-page/Dashboard";
-import Project from "../components/admin/admin-page/Project";
+import Topics from "../components/admin/admin-page/Topics";
+import Collections from "../components/admin/admin-page/Collections";
+import Cryptos from "../components/admin/admin-page/Cryptos";
+import NFTs from "../components/admin/admin-page/NFTs";
 
 const RoutesConfig = () => {
   return (
     <Routes>
       <Route path="/dashboard" element={<Dashboard></Dashboard>}>
+        <Route path="/dashboard/topics" element={<Topics></Topics>}></Route>
+        <Route path="/dashboard/cryptos" element={<Cryptos></Cryptos>}></Route>
         <Route
-          path="/dashboard/management"
-          element={<Project></Project>}
-        ></Route>
+          path="/dashboard/collections"
+          element={<Collections></Collections>}
+        />
+        <Route path="/dashboard/nfts" element={<NFTs></NFTs>}></Route>
       </Route>
       <Route element={<Main />}>
         <Route path="/" element={<HomePage />} />

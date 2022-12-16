@@ -27,7 +27,7 @@ const ListData = [
   },
   {
     id: 3,
-    title: "Liked",
+    title: "My Collection",
   },
 ];
 
@@ -57,6 +57,7 @@ const UserProfile = () => {
     (async () => {
       const res = await axios.get(`${baseURL}/api/nfts?owner_id=${userId}`);
       setNfts(res.data.nfts);
+      console.log(res.data.nfts);
     })();
   }, [userId]);
 
@@ -177,7 +178,25 @@ const UserProfile = () => {
                           ))}
                     </div>
                   </Tab.Panel>
-                  <Tab.Panel></Tab.Panel>
+                  <Tab.Panel>
+                    <div className="grid grid-cols-4 gap-x-[50px] gap-y-[70px]">
+                      {nfts?.length > 0 &&
+                        nfts
+                          .filter((item) => item.owner_id !== item.creator_id)
+                          .map((category) => (
+                            <Card
+                              key={category.id}
+                              srcTop={`${baseURL}/storage/nftImages/${category.url_image_nft}`}
+                              name={category.name}
+                              owner={userName}
+                              price={category?.price}
+                              remaining={category?.updated_at}
+                              crypto={category?.crypto_id}
+                              id={category?.id}
+                            />
+                          ))}
+                    </div>
+                  </Tab.Panel>
                 </Tab.Panels>
               </Tab.Group>
             </div>

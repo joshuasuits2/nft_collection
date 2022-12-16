@@ -1,11 +1,10 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import Card from "../../components/layout/Card";
-import CardList from "../../components/layout/CardList";
 import Heading from "../../components/layout/Heading";
 import { baseURL } from "../../config/getConfig";
-import { ListCategory } from "../../fakeAPI/Categories";
 
 const NewItemsPage = () => {
   const [nfts, setNfts] = useState([]);
@@ -14,6 +13,7 @@ const NewItemsPage = () => {
       try {
         const res = await axios.get(`${baseURL}/api/nfts?includeOwner=1`);
         setNfts(res?.data?.nfts);
+        console.log(res?.data?.nfts);
       } catch (error) {}
     })();
   }, []);
@@ -45,8 +45,23 @@ const NewItemsPage = () => {
               />
             ))}
       </div>
-      {/* <CardList data={ListCategory} />
-      <CardList data={ListCategory} className="mt-[70px]" /> */}
+      {nfts.length === 0 && (
+        <div className="grid grid-cols-4 gap-x-[50px]">
+          {Array(4)
+            .fill(0)
+            .map((item, index) => (
+              <div key={index}>
+                <SkeletonTheme baseColor="#28282E" highlightColor="#383844">
+                  <Skeleton
+                    width={273}
+                    height={355}
+                    style={{ borderRadius: "8px" }}
+                  />
+                </SkeletonTheme>
+              </div>
+            ))}
+        </div>
+      )}
     </div>
   );
 };

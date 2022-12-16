@@ -20,6 +20,7 @@
     "react-hash-string": "^1.0.0",
     "react-helmet": "^6.1.0",
     "react-hook-form": "^7.39.7",
+    "react-icons": "^4.7.1",
     "react-image-magnifiers": "^1.4.0",
     "react-loading-skeleton": "^3.1.0",
     "react-paginate": "^8.1.3",
