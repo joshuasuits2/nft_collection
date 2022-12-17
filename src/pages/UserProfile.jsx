@@ -13,6 +13,10 @@ import { useEffect } from "react";
 import axios from "axios";
 import { baseURL } from "../config/getConfig";
 import Card from "../components/layout/Card";
+import { useForm } from "react-hook-form";
+import useImageUpload from "../hooks/useImageUpload";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ListData = [
   {
@@ -42,11 +46,19 @@ const ProfileStyles = styled.div`
 const UserProfile = () => {
   const { token } = AuthUser();
   const { userId, accountBalance, setAccountBalance } = useAccountBalance();
+  const [statusBtn, setStatusBtn] = useState(true);
+
+  const { handleSubmit, register } = useForm({});
 
   const { userImage, userName } = useAuthentication();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [nfts, setNfts] = useState([]);
+
+  const { image: cover, handleSelectImage: handleSelectCover } =
+    useImageUpload();
+  const { image: avatar, handleSelectImage: handleSelectAvatar } =
+    useImageUpload();
 
   const displayTokenUser = `0x${token?.slice(0, 10).toLowerCase()}...${token
     ?.slice(40, 44)
@@ -60,6 +72,35 @@ const UserProfile = () => {
     })();
   }, [userId]);
 
+  const onSubmit = async (values) => {
+    console.log(values);
+    console.log(avatar);
+    console.log(cover);
+    console.log(`${baseURL}/api/users/${userId}?_method=PUT`);
+    await axios
+      .post(
+        `${baseURL}/api/users/${userId}?_method=PUT`,
+        {
+          avatar: avatar,
+          cover: cover,
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "multipart/form-data",
+            authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        toast.success("Update Successfully!");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -70,21 +111,71 @@ const UserProfile = () => {
     <ProfileStyles className="body-style">
       {userId ? (
         <div>
-          <div className="relative">
+          <form className="relative" onSubmit={handleSubmit(onSubmit)}>
             <div className="cover w-full h-[380px]">
-              <img
-                src={userImage?.cover}
-                alt=""
-                className="w-full h-full object-cover"
-              />
+              <div
+                className={`w-full h-[380px] absolute z-[10] ${
+                  statusBtn === true ? "" : "hidden"
+                }`}
+              ></div>
+              <label className="mt-5 cursor-pointer flex items-center justify-center bg-[#2c2c35] w-full h-[380px] relative overflow-hidden flex-col ">
+                <input
+                  type="file"
+                  className="hidden-input"
+                  {...register("cover")}
+                  accept="image/*"
+                  onChange={handleSelectCover}
+                />
+                {!cover ? (
+                  <img
+                    src={`${baseURL}/storage/coverImages/${userImage.cover}`}
+                    alt=""
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full">
+                    <img
+                      src={cover.preview}
+                      alt=""
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+              </label>
             </div>
             <div className="relative -top-[60px] left-[100px] flex gap-x-10">
-              <div className="logo w-[180px] h-[180px] ">
-                <img
-                  src={userImage?.avatar}
-                  alt=""
-                  className="w-full h-full object-cover rounded-full"
-                />
+              <div className="logo w-[180px] h-[180px">
+                <div
+                  className={`w-[180px] h-[180px] absolute top-[20px] rounded-full left-0 z-[10] ${
+                    statusBtn === true ? "" : "hidden"
+                  }`}
+                ></div>
+                <label className="mt-5 cursor-pointer flex items-center justify-center  bg-[#2c2c35] w-[180px] h-[180px] rounded-full relative">
+                  <input
+                    type="file"
+                    className="hidden-input"
+                    {...register("avatar")}
+                    accept="image/*"
+                    onChange={handleSelectAvatar}
+                  />
+                  {!avatar ? (
+                    <div className="flex flex-col items-center justify-center">
+                      <img
+                        src={`${baseURL}/storage/avatarImages/${userImage?.avatar}`}
+                        alt=""
+                        className="object-cover w-[180px] h-[180px] rounded-full"
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-[180px] h-[180px] ">
+                      <img
+                        src={avatar?.preview}
+                        alt=""
+                        className="w-full h-full object-cover rounded-full"
+                      />
+                    </div>
+                  )}
+                </label>
               </div>
               <div className="mt-[80px] flex flex-col">
                 <span className="">{displayTokenUser}</span>
@@ -121,7 +212,18 @@ const UserProfile = () => {
                 </button>
               </div>
             </div>
-          </div>
+            <button
+              type={`${statusBtn === false ? "button" : "submit"}`}
+              onClick={() => setStatusBtn(!statusBtn)}
+              className={`absolute left-[100px] bottom-[50px] inline-flex items-center justify-center text-[14px] py-2 font-[600]  ${
+                statusBtn === false
+                  ? "bg-[#fbff2a] text-[#141418]"
+                  : "bg-[#565656] text-white"
+              } rounded-lg h-[50px] w-[180px]`}
+            >
+              {statusBtn === false ? "Choose & save" : "Edit images"}
+            </button>
+          </form>
           <PageContainer>
             <div className="">
               <Tab.Group>
@@ -232,6 +334,7 @@ const UserProfile = () => {
           </div>
         </div>
       )}
+      <ToastContainer autoClose={800} />
     </ProfileStyles>
   );
 };

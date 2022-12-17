@@ -74,7 +74,9 @@ const HeaderStyles = styled.div`
   }
 `;
 
-const HeaderAuth = ({ handleSignOut, userAvatar, ...props }) => {
+const HeaderAuth = ({ handleSignOut, ...props }) => {
+  const { userImage } = useAuth();
+
   const navigate = useNavigate();
   const { userName } = useAuth();
   const { show, setShow, nodeRef: nodeRefUser } = useClickOutSide();
@@ -112,7 +114,7 @@ const HeaderAuth = ({ handleSignOut, userAvatar, ...props }) => {
                 <img src={logo} alt="" className="w-full h-full object-cover" />
               </div>
             </Link>
-            {userAvatar ? (
+            {userImage ? (
               <Input
                 className="ml-[85px]"
                 placeholder="Search item here..."
@@ -122,121 +124,94 @@ const HeaderAuth = ({ handleSignOut, userAvatar, ...props }) => {
               <div className="ml=[85px] w-[300px] h-[53px]">{""}</div>
             )}
           </div>
-          {userAvatar ? (
-            <div className="header-right  flex items-center justify-between">
-              <ul className="flex items-center gap-10">
-                {ListLink.map((item) => (
-                  <NavLink
-                    key={item.id}
-                    to={item.to}
-                    className={({ isActive }) =>
-                      isActive ? "menu-item" : "text-white"
-                    }
-                    onClick={() => {
-                      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-                    }}
-                  >
-                    {item.title}
-                  </NavLink>
-                ))}
-              </ul>
-              <div
-                className="user relative flex items-center gap-[30px]"
-                ref={nodeRefUser}
-              >
-                <div className="relative z-[9]" onClick={() => setShow(!show)}>
+
+          <div className="header-right  flex items-center justify-between">
+            <ul className="flex items-center gap-10">
+              {ListLink.map((item) => (
+                <NavLink
+                  key={item.id}
+                  to={item.to}
+                  className={({ isActive }) =>
+                    isActive ? "menu-item" : "text-white"
+                  }
+                  onClick={() => {
+                    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+                  }}
+                >
+                  {item.title}
+                </NavLink>
+              ))}
+            </ul>
+            <div
+              className="user relative flex items-center gap-[30px]"
+              ref={nodeRefUser}
+            >
+              <div className="relative z-[9]" onClick={() => setShow(!show)}>
+                {userImage.avatar ? (
                   <img
-                    src={userAvatar}
+                    src={`${baseURL}/storage/avatarImages/${userImage?.avatar}`}
                     alt=""
                     className="w-[35px] h-[35px] object-cover rounded-full cursor-pointer"
                   />
-                  {show === true ? (
-                    <div className="transition-all duration-100 absolute top-[150%] rounded-lg right-0 min-w-[220px] p-3 shadow-lg bg-[#ffffff] text-[#141418]">
-                      <span className="px-3 font-bold">
-                        Hello {userName.split(" ")[0]}!
-                      </span>
-                      <NavLink
-                        to="/profile"
-                        onClick={() => {
-                          window.scrollTo({
-                            top: 0,
-                            left: 0,
-                            behavior: "smooth",
-                          });
-                        }}
-                        className="mt-3 w-full px-3 text-sm py-4 rounded-md hover:bg-slate-500 hover:bg-opacity-10 transition-all cursor-pointer font-[500] "
-                      >
-                        <div>My Profile</div>
-                      </NavLink>
-                      <div className="hover:bg-slate-500 text-sm hover:bg-opacity-10 transition-all cursor-pointer w-full px-3 py-4 rounded-md font-[500] ">
-                        Favorites
-                      </div>
-                      <div
-                        className="hover:bg-slate-500 text-sm hover:bg-opacity-10 transition-all cursor-pointer w-full px-3 py-4 rounded-md font-[500]"
-                        onClick={handleSignOut}
-                      >
-                        Sign Out
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="absolute"></div>
-                  )}
-                </div>
-                <button type="button">
-                  <div className="w-[35px] bg-white p-1 relative h-[35px] grid place-items-center rounded-full rotate-[-15deg] ">
-                    <img
-                      src={bell}
-                      alt=""
-                      className="w-[80%] h-[80%] object-cover"
-                    />
-                    {/* <div className="grid place-items-center -top-1 -right-1 absolute w-[16px] h-[16px] bg-[#f54753] rounded-full">
-                    <span className="font-bold text-[10px]"></span>
-                  </div> */}
-                  </div>
-                </button>
-                <button
-                  className="h-[53px]  px-5 py-4 flex items-center justify-center font-medium tracking-[0.02em] bg-purple-400 rounded-lg border border-solid border-purple-700"
-                  onClick={() => navigate("/create")}
-                >
-                  <span className="text-white">Create</span>
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className="header-right  flex items-center justify-between">
-              <ul className="flex items-center gap-10">
-                {ListLink.map((item) => (
-                  <NavLink
-                    key={item.id}
-                    to={item.to}
-                    className={({ isActive }) =>
-                      isActive ? "menu-item" : "text-white"
-                    }
+                ) : (
+                  <div
+                    className="relative z-[9]"
+                    onClick={() => setShow(!show)}
                   >
-                    {""}
-                  </NavLink>
-                ))}
-              </ul>
-              <div
-                className="user relative flex items-center gap-[30px]"
-                ref={nodeRefUser}
-              >
-                <div className="relative z-[9]" onClick={() => setShow(!show)}>
-                  <SkeletonTheme baseColor="#28282E" highlightColor="#383844">
-                    <Skeleton width={35} height={35} circle />
-                  </SkeletonTheme>
-                </div>
-
-                <SkeletonTheme baseColor="#28282E" highlightColor="#383844">
-                  <Skeleton width={35} height={35} circle />
-                </SkeletonTheme>
-
-                <SkeletonTheme baseColor="#28282E" highlightColor="#383844">
-                  <Skeleton width={99} height={53} className="rounded-lg" />
-                </SkeletonTheme>
+                    <SkeletonTheme baseColor="#28282E" highlightColor="#383844">
+                      <Skeleton width={35} height={35} circle />
+                    </SkeletonTheme>
+                  </div>
+                )}
+                {show === true ? (
+                  <div className="transition-all duration-100 absolute top-[150%] rounded-lg right-0 min-w-[220px] p-3 shadow-lg bg-[#ffffff] text-[#141418]">
+                    <span className="px-3 font-bold">
+                      Hello {userName.split(" ")[0]}!
+                    </span>
+                    <NavLink
+                      to="/profile"
+                      onClick={() => {
+                        window.scrollTo({
+                          top: 0,
+                          left: 0,
+                          behavior: "smooth",
+                        });
+                      }}
+                      className="mt-3 w-full px-3 text-sm py-4 rounded-md hover:bg-slate-500 hover:bg-opacity-10 transition-all cursor-pointer font-[500] "
+                    >
+                      <div>My Profile</div>
+                    </NavLink>
+                    <div className="hover:bg-slate-500 text-sm hover:bg-opacity-10 transition-all cursor-pointer w-full px-3 py-4 rounded-md font-[500] ">
+                      Favorites
+                    </div>
+                    <div
+                      className="hover:bg-slate-500 text-sm hover:bg-opacity-10 transition-all cursor-pointer w-full px-3 py-4 rounded-md font-[500]"
+                      onClick={handleSignOut}
+                    >
+                      Sign Out
+                    </div>
+                  </div>
+                ) : (
+                  <div className="absolute"></div>
+                )}
               </div>
+              <button type="button">
+                <div className="w-[35px] bg-white p-1 relative h-[35px] grid place-items-center rounded-full rotate-[-15deg] ">
+                  <img
+                    src={bell}
+                    alt=""
+                    className="w-[80%] h-[80%] object-cover"
+                  />
+                </div>
+              </button>
+              <button
+                className="h-[53px]  px-5 py-4 flex items-center justify-center font-medium tracking-[0.02em] bg-purple-400 rounded-lg border border-solid border-purple-700"
+                onClick={() => navigate("/create")}
+              >
+                <span className="text-white">Create</span>
+              </button>
             </div>
-          )}
+          </div>
         </header>
       </div>
     </HeaderStyles>

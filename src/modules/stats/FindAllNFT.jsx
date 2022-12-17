@@ -1,10 +1,12 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
+import styled from "styled-components";
 import Card from "../../components/layout/Card";
 import Heading from "../../components/layout/Heading";
 import { baseURL } from "../../config/getConfig";
 import usePagination from "../../hooks/usePagination";
-import styled from "styled-components";
 
 const PaginationStyles = styled.div`
   .active-btn {
@@ -18,8 +20,7 @@ const PaginationStyles = styled.div`
     cursor: not-allowed;
   }
 `;
-
-const AllNFTs = ({ pageRefs }) => {
+const FindAllNFT = () => {
   const [nfts, setNfts] = useState([]);
   const { buildPagination, page, pages } = usePagination(5, 10);
   const [pQuery, setQuery] = useState("");
@@ -28,7 +29,7 @@ const AllNFTs = ({ pageRefs }) => {
     (async () => {
       try {
         const res = await axios.get(
-          `${baseURL}/api/nfts?limit=12&page=${pQuery + 1}`
+          `${baseURL}/api/nfts?limit=4&page=${pQuery + 1}`
         );
         setNfts(res?.data?.nfts);
       } catch (error) {
@@ -36,12 +37,9 @@ const AllNFTs = ({ pageRefs }) => {
       }
     })();
   }, [pQuery]);
-
+  useEffect(() => {});
   return (
-    <div
-      className="mt-[90px]"
-      ref={(e) => (pageRefs.current = { ...pageRefs.current, allNFT: e })}
-    >
+    <div className="mt-[90px]">
       <Heading alignItems={"start"}>ALL NFTs</Heading>
       <div className="grid grid-cols-4 gap-x-[50px] gap-y-[70px]">
         {nfts.length > 0 &&
@@ -95,4 +93,4 @@ const AllNFTs = ({ pageRefs }) => {
   );
 };
 
-export default AllNFTs;
+export default FindAllNFT;

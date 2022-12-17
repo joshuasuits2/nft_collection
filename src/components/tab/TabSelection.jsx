@@ -59,7 +59,6 @@ const TabSelection = () => {
     (async () => {
       const res = await axios.get(`${baseURL}/api/collections/top`);
       setCollections(res?.data.collections);
-      console.log(res?.data.collections);
     })();
   }, []);
   return (

@@ -111,11 +111,12 @@ const TabCollection = ({ topics, loadingTopics, ...props }) => {
                     !loadingCollection &&
                     collections?.map((card) => (
                       <CardCollection
+                        id={card?.id}
                         loading={loadingCollection}
-                        key={card.id}
-                        logo={card.url_image_logo}
-                        banner={card.url_image_banner}
-                        name={card.name}
+                        key={card?.id}
+                        logo={card?.url_image_logo}
+                        banner={card?.url_image_banner}
+                        name={card?.name}
                       />
                     ))}
                   {loadingCollection &&

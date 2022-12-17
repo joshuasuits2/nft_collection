@@ -59,6 +59,7 @@ const CreateCollection = () => {
   if (!token) return navigate("/error");
 
   const onSubmit = (values) => {
+    console.log("values: ", values);
     http
       .post("/collections", {
         ...values,
@@ -67,7 +68,7 @@ const CreateCollection = () => {
         creator_id: userId,
         owner_id: userId,
         reaction: 0,
-        status: "Not bought yet",
+        status: 1,
         price: 0,
       })
       .then((res) => {

@@ -11,7 +11,7 @@ const InputStyle = styled.div`
     width: ${(props) => props.width || "300px"};
   }
   /* input:focus + span stop {
-    stop-color: #d285ff;
+    stopColor: #d285ff;
   } */
 `;
 
@@ -94,47 +94,29 @@ focus:border-purple-400 transition-all
                 </svg>
               </span>
             ) : (
-              <span className="transition-all">
+              <span className="transition-all" onClick={handleClick}>
                 <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 14 14"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  onClick={handleClick}
                 >
                   <path
-                    d="M11.0564 10.3536L13.2929 12.59L12.59 13.2929L10.3536 11.0564L10 10.7029L9.64645 11.0564L7.41 13.2929L6.70711 12.59L8.94355 10.3536L9.29711 10L8.94355 9.64645L6.70711 7.41L7.41 6.70711L9.64645 8.94355L10 9.29711L10.3536 8.94355L12.59 6.70711L13.2929 7.41L11.0564 9.64645L10.7029 10L11.0564 10.3536ZM1.5 10C1.5 14.6861 5.31386 18.5 10 18.5C14.6861 18.5 18.5 14.6861 18.5 10C18.5 5.31386 14.6861 1.5 10 1.5C5.31386 1.5 1.5 5.31386 1.5 10ZM0.5 10C0.5 4.74614 4.74614 0.5 10 0.5C15.2539 0.5 19.5 4.74614 19.5 10C19.5 15.2539 15.2539 19.5 10 19.5C4.74614 19.5 0.5 15.2539 0.5 10Z"
-                    fill="url(#paint0_linear_1269_5746)"
-                    stroke="url(#paint1_linear_1269_5746)"
+                    d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z"
+                    fill="url(#paint0_linear_1308_5748)"
                   />
                   <defs>
                     <linearGradient
-                      id="paint0_linear_1269_5746"
-                      x1="-1.43959"
-                      y1="2.14286"
-                      x2="22.3131"
-                      y2="2.57123"
+                      id="paint0_linear_1308_5748"
+                      x1="-1.00771"
+                      y1="1.50001"
+                      x2="15.6192"
+                      y2="1.79986"
                       gradientUnits="userSpaceOnUse"
                     >
                       <stop stopColor="white" />
                       <stop offset="1" stopColor="white" stopOpacity="0.72" />
-                    </linearGradient>
-                    <linearGradient
-                      id="paint1_linear_1269_5746"
-                      x1="9.99997"
-                      y1="-1.35132"
-                      x2="21.929"
-                      y2="9.25085"
-                      gradientUnits="userSpaceOnUse"
-                    >
-                      <stop stopColor="#EBEBEB" stopOpacity="0.5" />
-                      <stop
-                        offset="0.0001"
-                        stopColor="#EBEBEB"
-                        stopOpacity="0.52"
-                      />
-                      <stop offset="1" stopColor="#DBDBDB" stopOpacity="0.18" />
                     </linearGradient>
                   </defs>
                 </svg>

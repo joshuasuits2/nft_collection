@@ -47,10 +47,6 @@ const Card = ({
     navigate(`/${slugify(name)}&query=${id}`);
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <CardStyles>
       <div className="card-item h-[355px] flex flex-col relative p-[14px]">

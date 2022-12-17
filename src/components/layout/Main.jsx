@@ -31,16 +31,9 @@ const Main = () => {
     <div>
       {user ? (
         <>
-          <HeaderAuth
-            handleSignOut={handleSignOut}
-            userAvatar={userImage?.avatar}
-          />
+          <HeaderAuth handleSignOut={handleSignOut} />
           <ProgressBar />
-          {userImage?.avatar ? (
-            <Outlet></Outlet>
-          ) : (
-            <div className="body-style"></div>
-          )}
+          <Outlet></Outlet>
         </>
       ) : (
         <>

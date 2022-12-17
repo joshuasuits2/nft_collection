@@ -57,7 +57,7 @@ const Create = () => {
   }, [userId]);
   if (!token) return navigate("/error");
   const onSubmit = (values) => {
-    console.log("Successfully!");
+    console.log(values);
     http
       .post("/nfts", {
         ...values,
@@ -68,6 +68,7 @@ const Create = () => {
         status: 1,
       })
       .then((res) => {
+        console.log("res: ", res);
         toast.success("Create Successfully!");
         if (isValid) {
           setImage(null);

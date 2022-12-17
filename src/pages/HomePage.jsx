@@ -8,6 +8,7 @@ import TopCollectionPage from "../modules/homepage/TopCollectionPage";
 import CreateAndSell from "../modules/homepage/CreateAndSell";
 import Footer from "../components/layout/Footer";
 import PageContainer from "../components/layout/PageContainer";
+import AllNFTs from "../modules/explore/AllNFTs";
 
 const HomePage = () => {
   return (

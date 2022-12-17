@@ -15,8 +15,13 @@ import share from "../assets/collection-images/share.png";
 import ethereum from "../assets/outside/ethereum.png";
 import { Fragment } from "react";
 import CardList from "../components/layout/CardList";
-import PaginationCustom from "../components/pagination/PaginationCustom";
 import Footer from "../components/layout/Footer";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
+import AuthUser from "../config/AuthUser";
+import { baseURL } from "../config/getConfig";
+import WalletsPage from "./WalletsPage";
 
 const DetailCollectionStyles = styled.div`
   .text-gradient {
@@ -28,33 +33,58 @@ const DetailCollectionStyles = styled.div`
 `;
 
 const DetailCollection = () => {
+  const { slug } = useParams();
+  const [collection, setCollection] = useState();
+  let params = new URLSearchParams(slug);
+  let slugValue = params.get("query");
+  const { token } = AuthUser();
+  useEffect(() => {
+    (async () => {
+      try {
+        const collectionItem = await axios.get(
+          `${baseURL}/api/collections?includeCreator=1`
+        );
+        const list = collectionItem?.data.collections;
+        const item = list.find((item) => item.id === parseInt(slugValue));
+        setCollection(item);
+        console.log(item);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [slugValue]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  if (!token) return <WalletsPage></WalletsPage>;
   return (
     <DetailCollectionStyles className="body-style">
-      <img src={coverImage} alt="" className="w-full" />
+      <img
+        src={`${baseURL}/storage/bannerImages/${collection?.url_image_banner}`}
+        alt=""
+        className="w-full h-[380px] object-cover"
+      />
       <PageContainer>
         <div className="flex justify-between">
           <div className="flex-[8] flex gap-10">
             <img
-              src={avatar}
+              src={`${baseURL}/storage/logoImages/${collection?.url_image_logo}`}
               alt=""
               className="w-[180px] h-[180px] rounded-full translate-y-[-52px]"
             />
             <div>
               <div className="flex items-center gap-3 mt-4 mb-3">
-                <span>Clone - X</span>
+                <span>{collection?.name}</span>
                 <img src={verify} alt="" className="w-4 h-4 object-cover" />
               </div>
               <span className="text-[14px] font-normal mt-4">
                 <strong className="text-[14px] font-bold">By {""}</strong>
-                Takashi Murakami
+                {collection?.creator.name}
               </span>
               <p className="mt-3 leading-6 font-normal text-[14px] tracking-[0.02rem]">
-                Clone X Forging 2022 features exclusive apparel designed for
-                Clone X holders. This collection contains pre-forged NFTs that
-                can be redeemed for physicals at no extra cost via www.rtfkt.com
+                {collection?.description}
               </p>
               <div className="mt-5 text-4 font-bold flex gap-x-[25px]">
                 <div className="flex items-center">
@@ -108,7 +138,6 @@ const DetailCollection = () => {
               </Tab.Panel>
             </Tab.Panels>
           </Tab.Group>
-          <PaginationCustom></PaginationCustom>
         </div>
         <Footer></Footer>
       </PageContainer>

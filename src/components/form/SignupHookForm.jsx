@@ -43,8 +43,6 @@ const SignUpHookForm = ({ http, setToken, ...props }) => {
     http
       .post("/register", {
         ...data,
-        avatar: `${baseURL}/storage/userImages/user.jpg`,
-        cover: `${baseURL}/storage/userImages/cover.jpg`,
         type: 0,
       })
       .then((res) => {

@@ -1,8 +1,7 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import PAP from "../../assets/top-collection/PAP.png";
 import Ethereum from "../../assets/outside/ethereum.png";
-import { baseURL } from "../../config/getConfig";
 
 const CollectionStyles = styled.div`
   .cell {
@@ -14,6 +13,7 @@ const CollectionStyles = styled.div`
       content: "";
       position: absolute;
       inset: 0;
+      z-index: -1;
       border: 1px solid transparent;
       border-radius: 12px;
       background: linear-gradient(
@@ -32,21 +32,24 @@ const CollectionStyles = styled.div`
 `;
 
 const Collection = ({ name, url_image_logo, volume, logo, ...props }) => {
+  const navigate = useNavigate();
+  const handleNavigation = () => {};
   return (
     <CollectionStyles>
-      <div className="cell flex justify-between  text-[14px]">
-        <div className="cell-left flex  gap-[6px]">
+      <div className="cell flex justify-between text-[14px]">
+        <div className="cell-left flex gap-[6px]">
           <img
             src={logo}
             alt=""
-            className="rounded-full w-[60px] h-[60px] object-cover"
+            className="rounded-full w-[60px] h-[60px] object-cover cursor-pointer"
+            onClick={handleNavigation}
           />
           <div className="title flex flex-col py-[5px]">
             <span className="font-bold">{name}</span>
             <div className="mt-auto flex gap-[5px] items-center">
               <span>Floor price:</span>
               <img src={Ethereum} alt="" className="h-[20px]" />
-              <span>15.10</span>
+              <span>15.1123120</span>
             </div>
           </div>
         </div>

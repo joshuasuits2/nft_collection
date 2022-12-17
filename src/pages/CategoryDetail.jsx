@@ -17,6 +17,7 @@ import TimingNFT from "../components/layout/TimingNFT";
 import DetailInfoNFT from "../components/layout/DetailInfoNFT";
 import AuthUser from "../config/AuthUser";
 import { useAuthentication } from "../config/auth-context";
+import WalletsPage from "./WalletsPage";
 
 const CategoryDetailStyles = styled.div`
   .linear-property {
@@ -73,7 +74,6 @@ const CategoryDetailStyles = styled.div`
 `;
 const CategoryDetail = () => {
   const { userName } = useAuthentication();
-  const navigate = useNavigate();
   const [nft, setNft] = useState();
   const [showModalBuyNow, setShowModalBuyNow] = useState(false);
   const { slug } = useParams();
@@ -94,7 +94,7 @@ const CategoryDetail = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  if (!token) return navigate("/login");
+  if (!token) return <WalletsPage></WalletsPage>;
   return (
     <CategoryDetailStyles className="body-style">
       {nft?.url_image_nft && userName ? (
@@ -153,7 +153,7 @@ const CategoryDetail = () => {
                   <div className="own flex gap-x-[10px] items-center">
                     <Link to="/profile">
                       <img
-                        src={nft?.owner?.avatar}
+                        src={`${baseURL}/storage/avatarImages/${nft?.owner.avatar}`}
                         alt=""
                         className="w-[60px] h-[60px] object-cover rounded-full"
                       />

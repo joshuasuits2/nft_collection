@@ -21,10 +21,7 @@ const ExploreCollection = () => {
   return (
     <div className="mt-[140px]">
       <Heading alignItems="left">EXPLORE COLLECTION</Heading>
-      <TabCollection
-        topics={topics}
-        loadingTopics={loadingTopics}
-      ></TabCollection>
+      <TabCollection topics={topics} loadingTopics={loadingTopics} />
     </div>
   );
 };
