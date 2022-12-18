@@ -93,7 +93,16 @@ const UserProfile = () => {
       )
       .then((res) => {
         console.log(res);
-        toast.success("Update Successfully!");
+        toast.success("Update Successfully!", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -279,6 +288,7 @@ const UserProfile = () => {
                               key={category.id}
                               srcTop={`${baseURL}/storage/nftImages/${category.url_image_nft}`}
                               name={category.name}
+                              status={category?.status}
                               owner={category.owner.name}
                               price={category?.price}
                               remaining={category?.updated_at}
@@ -297,6 +307,7 @@ const UserProfile = () => {
                             <Card
                               key={category.id}
                               srcTop={`${baseURL}/storage/nftImages/${category.url_image_nft}`}
+                              status={category?.status}
                               name={category.name}
                               owner={category.owner.name}
                               price={category?.price}
@@ -322,6 +333,7 @@ const UserProfile = () => {
                               remaining={category?.updated_at}
                               crypto={category?.crypto_id}
                               id={category?.id}
+                              status={category?.status}
                             />
                           ))}
                     </div>
@@ -354,7 +366,18 @@ const UserProfile = () => {
           </div>
         </div>
       )}
-      <ToastContainer autoClose={800} />
+      <ToastContainer
+        position="top-center"
+        autoClose={800}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </ProfileStyles>
   );
 };

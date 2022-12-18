@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -67,7 +66,18 @@ const BuyNow = ({
           ></FormSign>
         </div>
       </div>
-      <ToastContainer autoClose={800} />
+      <ToastContainer
+        position="bottom-center"
+        autoClose={800}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>,
     document.querySelector("body")
   );

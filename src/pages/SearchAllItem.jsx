@@ -55,6 +55,7 @@ const SearchAllItem = () => {
                   remaining={"22d 12h 12m 12s"}
                   crypto={category.crypto_id}
                   id={category.id}
+                  status={category.status}
                 ></Card>
               ))}
             {allNfts?.length === 0 && <span>No result was found!</span>}

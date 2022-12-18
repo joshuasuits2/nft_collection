@@ -2,12 +2,15 @@ import axios from "axios";
 import React, { useState } from "react";
 import { baseURL } from "../../config/getConfig";
 import useAccountBalance from "../../hooks/useAccountBalance";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const FormSign = ({ token, nftInfoDetail, handleSetConfirmBtn = () => {} }) => {
   const [signBtn, setSignBtn] = useState(false);
   const [disableBtn, setDisableBtn] = useState(false);
   const { accountBalance, userId } = useAccountBalance();
+  const navigate = useNavigate();
   let remainBalance = (
     accountBalance?.balance - parseFloat(nftInfoDetail?.price)
   ).toFixed(4);
@@ -33,7 +36,21 @@ const FormSign = ({ token, nftInfoDetail, handleSetConfirmBtn = () => {} }) => {
           },
         }
       )
-      .then((res) => {})
+      .then((res) => {
+        toast("🦄 Successful transaction!", {
+          position: "bottom-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setTimeout(() => {
+          navigate("/profile");
+        }, 2000);
+      })
       .catch((error) => console.log(error));
   };
   const handleDisableBtn = () => {

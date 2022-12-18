@@ -56,6 +56,7 @@ const AllNFTs = ({ pageRefs }) => {
               crypto={category?.crypto_id}
               id={category?.id}
               coin={category?.crypto}
+              status={category.status}
             />
           ))}
       </div>

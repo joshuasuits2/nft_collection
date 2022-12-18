@@ -39,6 +39,7 @@ const Card = ({
   price,
   remaining,
   crypto,
+  status,
   id,
   ...props
 }) => {
@@ -97,7 +98,8 @@ const Card = ({
                   className="w-[90px] h-[34px] rounded-lg bg-[#FBFF2A]"
                   onClick={handleNavigation}
                 >
-                  Buy Now
+                  {status === 1 && "Buy Now"}
+                  {status === 0 && "Make Offer"}
                 </button>
               </div>
             </div>

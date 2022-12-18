@@ -4,6 +4,7 @@ import TimingNFT from "./TimingNFT";
 import { baseURL } from "../../config/getConfig";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const HandleBtnNft = ({
   nft,
@@ -14,6 +15,7 @@ const HandleBtnNft = ({
   ...props
 }) => {
   const [statusListing, setStatusListing] = useState(false);
+  const navigate = useNavigate();
   const handleCancel = async () => {
     try {
       await axios.put(
@@ -51,7 +53,7 @@ const HandleBtnNft = ({
           name: nft.name,
           description: nft.description,
           reaction: nft.reaction,
-          price: nft.price,
+          price: parseFloat(nft.price) + 0.01,
           crypto_id: nft.crypto_id,
           owner_id: nft.owner.id,
           creator_id: nft.creator.id,
@@ -71,6 +73,26 @@ const HandleBtnNft = ({
       console.log(error);
     }
   };
+
+  const handleDelete = async () => {
+    try {
+      await axios.post(`${baseURL}/api/nfts/${nft?.id}?_method=DELETE`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          // "Content-Type": "multipart/form-data",
+          authorization: `Bearer ${token}`,
+        },
+      });
+      toast.success("Deleted!");
+      setTimeout(() => {
+        navigate("/profile");
+      }, 1000);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       {nft?.owner?.id === userId && (
@@ -121,7 +143,10 @@ const HandleBtnNft = ({
             </button>
           )}
 
-          <button className="translate-y-5 w-[150px] h-[55px] font-[500] bg-[#d6454c] rounded-lg text-[#fff]">
+          <button
+            onClick={handleDelete}
+            className="translate-y-5 w-[150px] h-[55px] font-[500] bg-[#d6454c] rounded-lg text-[#fff]"
+          >
             Delete
           </button>
         </div>

@@ -40,6 +40,7 @@ const NewItemsPage = () => {
                 remaining={category.updated_at}
                 crypto={category.crypto_id}
                 id={category.id}
+                status={category.status}
                 coin={category.crypto}
               />
             ))}

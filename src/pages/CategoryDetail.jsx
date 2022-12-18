@@ -87,7 +87,6 @@ const CategoryDetail = () => {
       try {
         const nftItem = await axios.get(`${baseURL}/api/nfts/${slugValue}`);
         setNft(nftItem.data.nft);
-        console.log(nftItem.data.nft);
       } catch (error) {
         navigate("/error");
         console.log(error);
