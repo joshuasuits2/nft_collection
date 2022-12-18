@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PageContainer from "../components/layout/PageContainer";
 import AuthUser from "../config/AuthUser";
@@ -9,7 +9,6 @@ import styled from "styled-components";
 import Footer from "../components/layout/Footer";
 import Deposit from "../components/modal/Deposit";
 import verify from "../assets/outside/verify.png";
-import { useEffect } from "react";
 import axios from "axios";
 import { baseURL } from "../config/getConfig";
 import Card from "../components/layout/Card";
@@ -17,6 +16,8 @@ import { useForm } from "react-hook-form";
 import useImageUpload from "../hooks/useImageUpload";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import avatarUserImage from "../assets/userImages/user.jpg";
+import coverUserImage from "../assets/userImages/cover.jpg";
 
 const ListData = [
   {
@@ -44,14 +45,12 @@ const ProfileStyles = styled.div`
 `;
 
 const UserProfile = () => {
+  const { handleSubmit, register } = useForm({});
+  const navigate = useNavigate();
   const { token } = AuthUser();
   const { userId, accountBalance, setAccountBalance } = useAccountBalance();
   const [statusBtn, setStatusBtn] = useState(true);
-
-  const { handleSubmit, register } = useForm({});
-
   const { userImage, userName } = useAuthentication();
-  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [nfts, setNfts] = useState([]);
 
@@ -111,119 +110,140 @@ const UserProfile = () => {
     <ProfileStyles className="body-style">
       {userId ? (
         <div>
-          <form className="relative" onSubmit={handleSubmit(onSubmit)}>
-            <div className="cover w-full h-[380px]">
-              <div
-                className={`w-full h-[380px] absolute z-[10] ${
-                  statusBtn === true ? "" : "hidden"
-                }`}
-              ></div>
-              <label className="mt-5 cursor-pointer flex items-center justify-center bg-[#2c2c35] w-full h-[380px] relative overflow-hidden flex-col ">
-                <input
-                  type="file"
-                  className="hidden-input"
-                  {...register("cover")}
-                  accept="image/*"
-                  onChange={handleSelectCover}
-                />
-                {!cover ? (
-                  <img
-                    src={`${baseURL}/storage/coverImages/${userImage.cover}`}
-                    alt=""
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full">
-                    <img
-                      src={cover.preview}
-                      alt=""
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                )}
-              </label>
-            </div>
-            <div className="relative -top-[60px] left-[100px] flex gap-x-10">
-              <div className="logo w-[180px] h-[180px">
+          <div className="relative">
+            <form className="relative" onSubmit={handleSubmit(onSubmit)}>
+              <div className="cover w-full h-[380px]">
                 <div
-                  className={`w-[180px] h-[180px] absolute top-[20px] rounded-full left-0 z-[10] ${
+                  className={`w-full h-[380px] absolute z-[10] ${
                     statusBtn === true ? "" : "hidden"
                   }`}
                 ></div>
-                <label className="mt-5 cursor-pointer flex items-center justify-center  bg-[#2c2c35] w-[180px] h-[180px] rounded-full relative">
+                <label className="mt-5 cursor-pointer flex items-center justify-center bg-[#2c2c35] w-full h-[380px] relative overflow-hidden flex-col ">
                   <input
                     type="file"
                     className="hidden-input"
-                    {...register("avatar")}
+                    {...register("cover")}
                     accept="image/*"
-                    onChange={handleSelectAvatar}
+                    onChange={handleSelectCover}
                   />
-                  {!avatar ? (
-                    <div className="flex flex-col items-center justify-center">
-                      <img
-                        src={`${baseURL}/storage/avatarImages/${userImage?.avatar}`}
-                        alt=""
-                        className="object-cover w-[180px] h-[180px] rounded-full"
-                      />
-                    </div>
+                  {!cover ? (
+                    <>
+                      {userImage.cover === "cover.jpg" ? (
+                        <img
+                          src={coverUserImage}
+                          alt=""
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <img
+                          src={`${baseURL}/storage/coverImages/${userImage.cover}`}
+                          alt=""
+                          className="w-full h-full object-cover"
+                        />
+                      )}
+                    </>
                   ) : (
-                    <div className="w-[180px] h-[180px] ">
+                    <div className="w-full h-full">
                       <img
-                        src={avatar?.preview}
+                        src={cover.preview}
                         alt=""
-                        className="w-full h-full object-cover rounded-full"
+                        className="w-full h-full object-cover"
                       />
                     </div>
                   )}
                 </label>
               </div>
-              <div className="mt-[80px] flex flex-col">
-                <span className="">{displayTokenUser}</span>
-                <div className="flex mt-2 gap-x-2 items-center">
-                  <span className="text-[20px] font-bold">{userName}</span>
-                  <img src={verify} alt="" className="w-4 h-4 object-cover" />
+              <div className="relative -top-[60px] left-[100px] flex gap-x-10">
+                <div className="logo w-[180px] h-[180px">
+                  <div
+                    className={`w-[180px] h-[180px] absolute top-[20px] rounded-full left-0 z-[10] ${
+                      statusBtn === true ? "" : "hidden"
+                    }`}
+                  ></div>
+                  <label className="mt-5 cursor-pointer flex items-center justify-center  bg-[#2c2c35] w-[180px] h-[180px] rounded-full relative">
+                    <input
+                      type="file"
+                      className="hidden-input"
+                      {...register("avatar")}
+                      accept="image/*"
+                      onChange={handleSelectAvatar}
+                    />
+                    {!avatar ? (
+                      <>
+                        {userImage.avatar === "user.jpg" ? (
+                          <img
+                            src={avatarUserImage}
+                            alt=""
+                            className="w-[180px] h-[180px] object-cover rounded-full"
+                          />
+                        ) : (
+                          <img
+                            src={`${baseURL}/storage/avatarImages/${userImage.avatar}`}
+                            alt=""
+                            className="w-[180px] h-[180px] object-cover rounded-full"
+                          />
+                        )}
+                      </>
+                    ) : (
+                      <div className="w-[180px] h-[180px] ">
+                        <img
+                          src={avatar?.preview}
+                          alt=""
+                          className="w-full h-full object-cover rounded-full"
+                        />
+                      </div>
+                    )}
+                  </label>
                 </div>
-                <div className="w-[559px]">
-                  <p className="text-[14px] font-[300] mt-2 leading-[24px]">
-                    First Videogame that combines console and P&E🔥 Developed by
-                    AAA gaming Vets 🎮 Seen on Playstation, XBOX, IGN and Steam.
-                    Incubated by @SeedifyFund🚀
-                  </p>
-                </div>
-                <div className="flex mt-5 gap-x-[30px]">
-                  <span>10,5k followers</span>
-                  <span>150 following</span>
-                  <span>34 images</span>
+                <div className="mt-[80px] flex flex-col">
+                  <span className="">{displayTokenUser}</span>
+                  <div className="flex mt-2 gap-x-2 items-center">
+                    <span className="text-[20px] font-bold">{userName}</span>
+                    <img src={verify} alt="" className="w-4 h-4 object-cover" />
+                  </div>
+                  <div className="w-[559px]">
+                    <p className="text-[14px] font-[300] mt-2 leading-[24px]">
+                      First Videogame that combines console and P&E🔥 Developed
+                      by AAA gaming Vets 🎮 Seen on Playstation, XBOX, IGN and
+                      Steam. Incubated by @SeedifyFund🚀
+                    </p>
+                  </div>
+                  <div className="flex mt-5 gap-x-[30px]">
+                    <span>10,5k followers</span>
+                    <span>150 following</span>
+                    <span>34 images</span>
+                  </div>
                 </div>
               </div>
-              <div className="mt-[100px] ml-[200px] flex flex-col items-start">
-                <div className="flex gap-x-4 items-center">
-                  <span className="text-[16px] font-[600] text-[#c68afc]">
-                    Account balance:
-                  </span>
-                  <span>{accountBalance.balance}</span>
-                  <span className="font-[500]">ETH</span>
-                </div>
-                <button
-                  onClick={() => setShowModal(true)}
-                  className="mt-4 inline-flex items-center justify-center px-8 py-4 font-sans font-semibold tracking-wide text-white bg-[#c68afc] rounded-lg h-[50px]"
-                >
-                  Add Money
-                </button>
+              <button
+                type={`${statusBtn === false ? "button" : "submit"}`}
+                onClick={() => setStatusBtn(!statusBtn)}
+                className={`absolute left-[100px] bottom-[50px] inline-flex items-center justify-center text-[14px] py-2 font-[600] w-[180px]  ${
+                  statusBtn === false
+                    ? "bg-[#fbff2a] text-[#141418]"
+                    : "bg-[#565656] text-white"
+                } rounded-lg h-[50px] w-[180px]`}
+              >
+                {statusBtn === false ? "Choose & save" : "Edit images"}
+              </button>
+            </form>
+            <div className="absolute right-[100px] bottom-[150px] mt-[100px] ml-[200px] flex flex-col items-start">
+              <div className="flex gap-x-4 items-center">
+                <span className="text-[16px] font-[600] text-[#c68afc]">
+                  Account balance:
+                </span>
+                <span>{accountBalance.balance}</span>
+                <span className="font-[500]">ETH</span>
               </div>
+              <button
+                onClick={() => setShowModal(true)}
+                type="button"
+                className="mt-4 inline-flex items-center justify-center px-8 py-4 font-sans font-semibold tracking-wide text-white bg-[#c68afc] rounded-lg h-[50px]"
+              >
+                Add Money
+              </button>
             </div>
-            <button
-              type={`${statusBtn === false ? "button" : "submit"}`}
-              onClick={() => setStatusBtn(!statusBtn)}
-              className={`absolute left-[100px] bottom-[50px] inline-flex items-center justify-center text-[14px] py-2 font-[600]  ${
-                statusBtn === false
-                  ? "bg-[#fbff2a] text-[#141418]"
-                  : "bg-[#565656] text-white"
-              } rounded-lg h-[50px] w-[180px]`}
-            >
-              {statusBtn === false ? "Choose & save" : "Edit images"}
-            </button>
-          </form>
+          </div>
           <PageContainer>
             <div className="">
               <Tab.Group>

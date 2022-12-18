@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useState } from "react";
 import { baseURL } from "../../config/getConfig";
 import useAccountBalance from "../../hooks/useAccountBalance";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const FormSign = ({ token, nftInfoDetail, handleSetConfirmBtn = () => {} }) => {
@@ -15,9 +14,6 @@ const FormSign = ({ token, nftInfoDetail, handleSetConfirmBtn = () => {} }) => {
 
   const handleComplete = (e) => {
     e.preventDefault();
-    console.log("Clicked");
-    console.log("nftInfoDetail", nftInfoDetail);
-    console.log(nftInfoDetail?.price);
     axios
       .post(
         `${baseURL}/api/transactions`,
@@ -37,9 +33,7 @@ const FormSign = ({ token, nftInfoDetail, handleSetConfirmBtn = () => {} }) => {
           },
         }
       )
-      .then((res) => {
-        toast.success("Create Success!");
-      })
+      .then((res) => {})
       .catch((error) => console.log(error));
   };
   const handleDisableBtn = () => {
@@ -145,8 +139,13 @@ const FormSign = ({ token, nftInfoDetail, handleSetConfirmBtn = () => {} }) => {
               <span className="text-end">{nftInfoDetail.price} ETH</span>
             </div>
           </div>
-          <div className="mt-5 flex w-full justify-between">
-            <span className="text-end font-[500]">New balance</span>
+          <div className="mt-5 flex w-full justify-between items-center">
+            <span className="font-[500]">New balance</span>
+            {remainBalance < 0 && (
+              <span className="font-[400] text-[14px] text-red-500">
+                Can not buy!
+              </span>
+            )}
             <span className="text-end">{remainBalance} ETH</span>
           </div>
 
@@ -154,7 +153,9 @@ const FormSign = ({ token, nftInfoDetail, handleSetConfirmBtn = () => {} }) => {
             type="submit"
             onClick={handleDisableBtn}
             className={`mt-5 inline-flex items-center justify-center px-8 py-4 font-sans font-semibold tracking-wide text-white bg-[#c084fc] rounded-lg mx-auto w-[300px] [h-[53px] active:bg-purple-300 ${
-              disableBtn === true ? "disabled:bg-purple-300" : ""
+              disableBtn === true || parseFloat(remainBalance) < 0
+                ? "pointer-events-none bg-purple-300"
+                : ""
             }`}
           >
             Complete

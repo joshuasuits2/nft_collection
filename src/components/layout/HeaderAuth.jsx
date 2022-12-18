@@ -5,7 +5,7 @@ import Input from "../input/Input";
 import logo from "../../assets/logo.png";
 import bell from "../../assets/icons/bell.png";
 import useClickOutSide from "../../hooks/useClickOutSide";
-import { useAuthentication } from "../../config/auth-context";
+import avatarUserImage from "../../assets/userImages/user.jpg";
 import { baseURL } from "../../config/getConfig";
 import AuthUser from "../../config/AuthUser";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
@@ -148,11 +148,21 @@ const HeaderAuth = ({ handleSignOut, ...props }) => {
             >
               <div className="relative z-[9]" onClick={() => setShow(!show)}>
                 {userImage.avatar ? (
-                  <img
-                    src={`${baseURL}/storage/avatarImages/${userImage?.avatar}`}
-                    alt=""
-                    className="w-[35px] h-[35px] object-cover rounded-full cursor-pointer"
-                  />
+                  <>
+                    {userImage.avatar === "user.jpg" ? (
+                      <img
+                        src={avatarUserImage}
+                        alt=""
+                        className="w-[35px] h-[35px] object-cover rounded-full"
+                      />
+                    ) : (
+                      <img
+                        src={`${baseURL}/storage/avatarImages/${userImage.avatar}`}
+                        alt=""
+                        className="w-[35px] h-[35px] object-cover rounded-full"
+                      />
+                    )}
+                  </>
                 ) : (
                   <div
                     className="relative z-[9]"

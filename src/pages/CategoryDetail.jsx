@@ -13,11 +13,11 @@ import axios from "axios";
 import { baseURL } from "../config/getConfig";
 import BuyNow from "../components/modal/BuyNow";
 import PropertiesNFT from "../components/layout/PropertiesNFT";
-import TimingNFT from "../components/layout/TimingNFT";
 import DetailInfoNFT from "../components/layout/DetailInfoNFT";
 import AuthUser from "../config/AuthUser";
 import { useAuthentication } from "../config/auth-context";
 import WalletsPage from "./WalletsPage";
+import HandleBtnNft from "../components/layout/HandleBtnNft";
 
 const CategoryDetailStyles = styled.div`
   .linear-property {
@@ -73,23 +73,28 @@ const CategoryDetailStyles = styled.div`
   }
 `;
 const CategoryDetail = () => {
-  const { userName } = useAuthentication();
+  const { userId, userName } = useAuthentication();
   const [nft, setNft] = useState();
   const [showModalBuyNow, setShowModalBuyNow] = useState(false);
   const { slug } = useParams();
+  const navigate = useNavigate();
   let params = new URLSearchParams(slug);
   let slugValue = params.get("query");
   const { token } = AuthUser();
+
   useEffect(() => {
     (async () => {
       try {
         const nftItem = await axios.get(`${baseURL}/api/nfts/${slugValue}`);
         setNft(nftItem.data.nft);
+        console.log(nftItem.data.nft);
       } catch (error) {
+        navigate("/error");
         console.log(error);
       }
     })();
-  }, [slugValue]);
+  }, [navigate, slugValue]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -111,7 +116,7 @@ const CategoryDetail = () => {
                 </div>
               </div>
               <span className="mt-10">Details</span>
-              <DetailInfoNFT></DetailInfoNFT>
+              <DetailInfoNFT CTA="" tokenID="" />
             </div>
             <div className="flex-[70%]">
               <div className="desc flex flex-col">
@@ -177,32 +182,14 @@ const CategoryDetail = () => {
                     </div>
                   </div>
                 </div>
-
-                <div className="action flex gap-x-[180px] mt-[30px] justify-between">
-                  {nft?.owner?.name !== userName ? (
-                    <>
-                      <TimingNFT></TimingNFT>
-                      <div className="deal  flex flex-col gap-y-5">
-                        <button
-                          onClick={() => setShowModalBuyNow(true)}
-                          className="w-[150px] h-[55px] font-[500]  bg-[#FBFF2A] rounded-lg text-[#141418]"
-                        >
-                          Buy Now
-                        </button>
-                        <button className="w-[150px] h-[55px] font-[500] rounded-lg border border-solid border-white">
-                          Make Offer
-                        </button>
-                      </div>
-                    </>
-                  ) : (
-                    <div className="deal flex flex-col gap-y-5">
-                      <button className="translate-y-5 w-[150px] h-[55px] font-[500] bg-[#c084fc] rounded-lg text-[#fff]">
-                        Sell NFT
-                      </button>
-                    </div>
-                  )}
-                </div>
-                <PropertiesNFT></PropertiesNFT>
+                <HandleBtnNft
+                  nft={nft}
+                  token={token}
+                  userId={userId}
+                  userName={userName}
+                  handleShowBuyNow={() => setShowModalBuyNow(true)}
+                />
+                <PropertiesNFT />
               </div>
             </div>
           </div>

@@ -21,12 +21,12 @@ const PageNotFoundStyles = styled.div`
     width: 200px;
     outline: none;
     border: none;
-    background: linear-gradient(
-      93deg,
-      rgba(235, 235, 235, 0) -6.21%,
-      rgb(75, 162, 255, 0.55) -6.2%,
-      rgb(167, 157, 255, 0.5) 118.18%
+    background-image: linear-gradient(
+      135deg,
+      rgb(83, 152, 249),
+      rgb(70, 248, 251)
     );
+
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))
       drop-shadow(0px 4px 4px rgba(26, 25, 25, 0.25));
     backdrop-filter: blur(25px);

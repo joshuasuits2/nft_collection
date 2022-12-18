@@ -23,7 +23,6 @@ export default function useAuth() {
             cover: res?.data?.cover,
           };
         });
-        console.log("avatar", res?.data?.avatar);
       } catch (error) {}
     })();
   }, []);

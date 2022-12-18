@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import verify from "../../assets/outside/verify.png";
 import { baseURL, logoURL } from "../../config/getConfig";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useNavigate } from "react-router-dom";
 import slugify from "slugify";
@@ -42,13 +41,14 @@ const CardCollectionStyles = styled.div`
 const CardCollection = ({ id, logo, banner, name, loading, ...props }) => {
   const [heart, setHeart] = useState(false);
   const navigate = useNavigate();
+  const handleNavigation = () => {
+    navigate(`/collection/${slugify(name)}&query=${id}`);
+  };
   const handleReaction = () => {
     setHeart(!heart);
     console.log(heart);
   };
-  const handleNavigation = () => {
-    navigate(`/collection/${slugify(name)}&query=${id}`);
-  };
+
   return (
     <CardCollectionStyles>
       <div className="collection-image h-[310px] w-full z-0 absolute">
@@ -63,7 +63,10 @@ const CardCollection = ({ id, logo, banner, name, loading, ...props }) => {
         onClick={handleNavigation}
       />
       <div className="ml-5 mt-auto flex items-end w-full">
-        <div className="rounded-full h-[100px] w-[100px] flex items-end relative z-[2] cursor-pointer">
+        <div
+          onClick={handleNavigation}
+          className="rounded-full h-[100px] w-[100px] flex items-end relative z-[2] cursor-pointer"
+        >
           <img
             src={`${baseURL}/storage/logoImages/${logo}`}
             alt=""

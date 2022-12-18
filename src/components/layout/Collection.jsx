@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import slugify from "slugify";
 import styled from "styled-components";
 import Ethereum from "../../assets/outside/ethereum.png";
 
@@ -31,9 +32,11 @@ const CollectionStyles = styled.div`
   }
 `;
 
-const Collection = ({ name, url_image_logo, volume, logo, ...props }) => {
+const Collection = ({ id, name, url_image_logo, volume, logo, ...props }) => {
   const navigate = useNavigate();
-  const handleNavigation = () => {};
+  const handleNavigation = () => {
+    navigate(`/collection/${slugify(name)}&query=${id}`);
+  };
   return (
     <CollectionStyles>
       <div className="cell flex justify-between text-[14px]">

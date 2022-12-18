@@ -6,6 +6,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { baseURL } from "../../config/getConfig";
+import { useNavigate } from "react-router-dom";
+import slugify from "slugify";
 
 const ListData = [
   {
@@ -53,14 +55,19 @@ const TabSelectionStyles = styled.div`
   }
 `;
 
-const TabSelection = () => {
+const TabSelection = ({ id, logo, banner, name, loading, ...props }) => {
   const [collections, setCollections] = useState([]);
+  const navigate = useNavigate();
+  const handleNavigation = () => {
+    navigate(`/collection/${slugify(name)}&query=${id}`);
+  };
   useEffect(() => {
     (async () => {
       const res = await axios.get(`${baseURL}/api/collections/top`);
       setCollections(res?.data.collections);
     })();
   }, []);
+
   return (
     <TabSelectionStyles>
       <Tab.Group>
@@ -88,10 +95,12 @@ const TabSelection = () => {
                   .filter((item, index) => index <= 8)
                   .map((item) => (
                     <Collection
-                      key={item.id}
-                      name={item.name}
-                      logo={`${baseURL}/storage/logoImages/${item.url_image_logo}`}
-                      volume={item.volume}
+                      id={item?.id}
+                      key={item?.id}
+                      name={item?.name}
+                      logo={`${baseURL}/storage/logoImages/${item?.url_image_logo}`}
+                      volume={item?.volume}
+                      banner={item?.url_image_banner}
                     />
                   ))}
             </div>
