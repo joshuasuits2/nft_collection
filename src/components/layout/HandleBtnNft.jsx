@@ -76,7 +76,7 @@ const HandleBtnNft = ({
 
   const handleDelete = async () => {
     try {
-      await axios.post(`${baseURL}/api/nfts/${nft?.id}?_method=DELETE`, {
+      await axios.delete(`${baseURL}/api/nfts/${nft?.id}`, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
