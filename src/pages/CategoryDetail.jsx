@@ -192,10 +192,9 @@ const CategoryDetail = () => {
               </div>
             </div>
           </div>
-          <Heading className="mt-[70px]" alignItems="start">
+          {/* <Heading className="mt-[70px]" alignItems="start">
             MORE FROM THE COLLECTION
-          </Heading>
-          <CardList data={ListCategory}></CardList>
+          </Heading> */}
           <Footer></Footer>
           <BuyNow
             open={showModalBuyNow}
