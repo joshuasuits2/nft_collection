@@ -49,7 +49,7 @@ const CardSlide = ({ data, idOwner, ...props }) => {
             </div>
           )}
         </SliderCustom>
-        <Button className="mt-[100px] mx-auto" width={"181px"}>
+        <Button url="/explore" className="mt-[100px] mx-auto" width={"181px"}>
           See More
         </Button>
       </div>
