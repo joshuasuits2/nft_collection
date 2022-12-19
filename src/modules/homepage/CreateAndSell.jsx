@@ -5,6 +5,7 @@ import crystal_purple from "../../assets/step/crystal_purple.png";
 import crystal_green from "../../assets/step/crystal_green.png";
 import crystal_blue from "../../assets/step/crystal_blue.png";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const CreateAndSellStyles = styled.div`
   margin-top: 100px;
@@ -79,7 +80,10 @@ const CreateAndSell = () => {
             slowing down, NFTs are the next big thing that you as an investor
             should consider investing in. Keep reading
           </p>
-          <Button className="mt-[58px]">Connect Wallet</Button>
+
+          <Button url="/wallets" className="mt-[58px]">
+            Connect Wallet
+          </Button>
         </div>
         <div className="flex flex-col gap-y-[35px] flex-[45%]">
           <div className="step flex gap-[15px] items-center">

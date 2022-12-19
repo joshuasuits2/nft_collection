@@ -9,7 +9,6 @@ import CardCollection from "../layout/CardCollection";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import usePagination from "../../hooks/usePagination";
-import InputSearchCollections from "../input/InputSearchCollections";
 
 const PaginationStyles = styled.div`
   .active-btn {
@@ -70,12 +69,15 @@ const TabCollection = ({ topics, loadingTopics, ...props }) => {
     setLoadingCollection(true);
     (async () => {
       const res = await axios.get(
-        `${baseURL}/api/collections?topicName=${tabQuery}`
+        `${baseURL}/api/collections?topicName=${tabQuery}&limit=9&page=${
+          pQuery + 1
+        }`
       );
+
       setCollections(res?.data.collections);
       setLoadingCollection(false);
     })();
-  }, [tabQuery]);
+  }, [tabQuery, pQuery]);
 
   return (
     <TabCollectionStyles>
@@ -110,17 +112,6 @@ const TabCollection = ({ topics, loadingTopics, ...props }) => {
                   </div>
                 ))}
           </Tab.List>
-          {/* {!loadingTopics ? (
-            <InputSearchCollections
-              width="200px"
-              kind="search"
-              placeholder="Search here ..."
-            />
-          ) : (
-            <SkeletonTheme baseColor="#28282E" highlightColor="#383844">
-              <Skeleton width={200} height={40} />
-            </SkeletonTheme>
-          )} */}
         </div>
 
         <Tab.Panels className="mt-[80px]">

@@ -3,6 +3,10 @@ import Dropdown from "../../components/dropdown/Dropdown";
 import Heading from "../../components/layout/Heading";
 import StatsCollection from "../../components/layout/StatsCollection";
 import styled from "styled-components";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
+import { baseURL } from "../../config/getConfig";
 
 const categories = [
   { id: 1, name: "All categories" },
@@ -29,6 +33,14 @@ const CollectionStatsStyles = styled.div`
 `;
 
 const CollectionStats = () => {
+  const [collections, setCollections] = useState([]);
+  useEffect(() => {
+    (async () => {
+      const res = await axios.get(`${baseURL}/api/collections/top`);
+      console.log(res?.data?.collections);
+      setCollections(res?.data?.collections);
+    })();
+  }, []);
   return (
     <CollectionStatsStyles>
       <Heading alignItems="start">COLLECTION STATS</Heading>
@@ -57,16 +69,16 @@ const CollectionStats = () => {
         </div>
         {/* Data Collection */}
         <div className="body mt-10 list">
-          <StatsCollection index={1} className="stats-item"></StatsCollection>
-          <StatsCollection index={2} className="stats-item"></StatsCollection>
-          <StatsCollection index={3} className="stats-item"></StatsCollection>
-          <StatsCollection index={4} className="stats-item"></StatsCollection>
-          <StatsCollection index={5} className="stats-item"></StatsCollection>
-          <StatsCollection index={6} className="stats-item"></StatsCollection>
-          <StatsCollection index={7} className="stats-item"></StatsCollection>
-          <StatsCollection index={8} className="stats-item"></StatsCollection>
-          <StatsCollection index={9} className="stats-item"></StatsCollection>
-          <StatsCollection index={10} className="stats-item"></StatsCollection>
+          {collections.length > 0 &&
+            collections.map((item, index) => (
+              <StatsCollection
+                index={index + 1}
+                logo={`${baseURL}/storage/logoImages/${item?.url_image_logo}`}
+                key={item.id}
+                volume={item.volume}
+                className="stats-item"
+              />
+            ))}
         </div>
       </div>
     </CollectionStatsStyles>

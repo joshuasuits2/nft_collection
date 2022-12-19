@@ -3,6 +3,7 @@ import PageContainer from "../components/layout/PageContainer";
 import styled from "styled-components";
 import Footer from "../components/layout/Footer";
 import { ListWallets } from "../fakeAPI/Wallets";
+import { Link } from "react-router-dom";
 
 const WalletsPageStyles = styled.div`
   .text-gradient {
@@ -49,17 +50,19 @@ const WalletsPage = () => {
         </div>
         <div className="grid grid-rows-2 gap-x-[60px] gap-y-[60px] grid-cols-5 mt-[60px]">
           {ListWallets.map((item) => (
-            <div
-              key={item.id}
-              className="hover:transition-all hover:delay-1000 linear-blur flex items-center justify-center flex-col py-[15px] cursor-pointer"
-            >
-              <img
-                src={item.img}
-                alt=""
-                className="w-[100px] h-[100px] object-cover mb-[10px]"
-              />
-              <span>{item.title}</span>
-            </div>
+            <Link to="/login">
+              <div
+                key={item.id}
+                className="hover:transition-all hover:delay-1000 linear-blur flex items-center justify-center flex-col py-[15px] cursor-pointer"
+              >
+                <img
+                  src={item.img}
+                  alt=""
+                  className="w-[100px] h-[100px] object-cover mb-[10px]"
+                />
+                <span>{item.title}</span>
+              </div>
+            </Link>
           ))}
         </div>
         <Footer></Footer>

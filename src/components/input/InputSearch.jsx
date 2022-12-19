@@ -15,7 +15,7 @@ const InputStyle = styled.div`
   } */
 `;
 
-const InputSearchNfts = ({
+const InputSearch = ({
   searchValue = "",
   className = "",
   placeholder = "",
@@ -130,4 +130,4 @@ focus:border-purple-400 transition-all
   );
 };
 
-export default InputSearchNfts;
+export default InputSearch;
