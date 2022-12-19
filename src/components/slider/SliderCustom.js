@@ -40,13 +40,13 @@ const SliderCustomStyles = styled.div`
   }
 `;
 
-const SliderCustom = ({ children }) => {
+const SliderCustom = ({ perPage = 4, children, ...props }) => {
   return (
     <SliderCustomStyles>
       <Splide
         options={{
           type: "loop",
-          perPage: 4,
+          perPage: perPage,
           focus: "left",
           gap: "50px",
           autoScroll: {

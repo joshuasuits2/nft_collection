@@ -1,7 +1,6 @@
 import React from "react";
 import { Tab } from "@headlessui/react";
 import styled from "styled-components";
-import Input from "../input/Input";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
@@ -9,6 +8,21 @@ import { baseURL } from "../../config/getConfig";
 import CardCollection from "../layout/CardCollection";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import usePagination from "../../hooks/usePagination";
+import InputSearchCollections from "../input/InputSearchCollections";
+
+const PaginationStyles = styled.div`
+  .active-btn {
+    background: linear-gradient(180deg, #b444ff 0%, #f582ff 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`;
 
 const TabCollectionStyles = styled.div`
   margin-top: 50px;
@@ -49,6 +63,9 @@ const TabCollection = ({ topics, loadingTopics, ...props }) => {
   const [tabQuery, setTabQuery] = useState("Music");
   const [collections, setCollections] = useState([]);
   const [loadingCollection, setLoadingCollection] = useState(true);
+  const { buildPagination, page, pages } = usePagination(5, 10);
+  const [pQuery, setQuery] = useState("");
+
   useEffect(() => {
     setLoadingCollection(true);
     (async () => {
@@ -93,13 +110,17 @@ const TabCollection = ({ topics, loadingTopics, ...props }) => {
                   </div>
                 ))}
           </Tab.List>
-          {!loadingTopics ? (
-            <Input width="200px" kind="search" placeholder="Search here ..." />
+          {/* {!loadingTopics ? (
+            <InputSearchCollections
+              width="200px"
+              kind="search"
+              placeholder="Search here ..."
+            />
           ) : (
             <SkeletonTheme baseColor="#28282E" highlightColor="#383844">
               <Skeleton width={200} height={40} />
             </SkeletonTheme>
-          )}
+          )} */}
         </div>
 
         <Tab.Panels className="mt-[80px]">
@@ -171,6 +192,38 @@ const TabCollection = ({ topics, loadingTopics, ...props }) => {
             ))}
         </Tab.Panels>
       </Tab.Group>
+      <PaginationStyles className="mt-[83px] flex gap-x-5 justify-end">
+        <button
+          disabled={page === 0}
+          onClick={() => buildPagination(0)}
+          type="button"
+        >
+          Previous
+        </button>
+        {pages?.map((p) => (
+          <button
+            key={p}
+            type="button"
+            onClick={() => {
+              buildPagination(p);
+              console.log("Clicked");
+              setQuery(p);
+            }}
+            className={`item w-6 h-6 rounded-full  ${
+              p === page ? "active-btn" : ""
+            }`}
+          >
+            {p + 1}
+          </button>
+        ))}
+        <button
+          disabled={page === 10 - 1}
+          onClick={() => buildPagination(10 - 1)}
+          type="button"
+        >
+          Next
+        </button>
+      </PaginationStyles>
     </TabCollectionStyles>
   );
 };

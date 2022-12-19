@@ -2,9 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 import UserIcon from "../../assets/icons/UserIcon";
-import Input from "../input/Input";
+
 import DropWallets from "./DropWallets";
 import logo from "../../assets/logo.png";
+import InputSearchNfts from "../input/InputSearchNfts";
 
 const ListLink = [
   {
@@ -105,7 +106,7 @@ const Header = ({ loading }) => {
             >
               <img src={logo} alt="" className="w-full h-full object-cover" />
             </Link>
-            <Input
+            <InputSearchNfts
               className="ml-[85px]"
               placeholder="Search item here..."
               kind="search"

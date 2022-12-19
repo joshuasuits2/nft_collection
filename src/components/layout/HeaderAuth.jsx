@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Input from "../input/Input";
+import InputSearchNfts from "../input/InputSearchNfts";
 import logo from "../../assets/logo.png";
 import bell from "../../assets/icons/bell.png";
 import useClickOutSide from "../../hooks/useClickOutSide";
@@ -115,11 +115,11 @@ const HeaderAuth = ({ handleSignOut, ...props }) => {
               </div>
             </Link>
             {userImage ? (
-              <Input
+              <InputSearchNfts
                 className="ml-[85px]"
                 placeholder="Search item here..."
                 kind="search"
-              ></Input>
+              ></InputSearchNfts>
             ) : (
               <div className="ml=[85px] w-[300px] h-[53px]">{""}</div>
             )}

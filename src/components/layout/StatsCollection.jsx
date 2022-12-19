@@ -1,6 +1,9 @@
+import axios from "axios";
 import React from "react";
+import { useEffect } from "react";
 import Blood_bat from "../../assets/collection/Blood_bat.png";
 import verify from "../../assets/outside/verify.png";
+import { baseURL } from "../../config/getConfig";
 
 const StatsCollection = ({
   className,
@@ -12,6 +15,11 @@ const StatsCollection = ({
   sales,
   img,
 }) => {
+  useEffect(() => {
+    (async () => {
+      const res = await axios.get(`${baseURL}/api/`);
+    })();
+  }, []);
   return (
     <div
       className={`flex rounded-lg items-center justify-center ${className} h-20`}

@@ -2,10 +2,15 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Card from "../components/layout/Card";
+import CardCollection from "../components/layout/CardCollection";
 import PageContainer from "../components/layout/PageContainer";
 import { baseURL } from "../config/getConfig";
+import { SplideSlide } from "@splidejs/react-splide";
+import SliderCustom from "../components/slider/SliderCustom";
+
 const SearchAllItem = () => {
   const [allNfts, setAllNfts] = useState([]);
+  const [allCollections, setAllCollections] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState();
 
@@ -17,10 +22,17 @@ const SearchAllItem = () => {
     (async () => {
       setLoading(true);
       try {
-        const responseOwner = await axios.get(
+        const resNfts = await axios.get(
           `${baseURL}/api/nfts?includeOwner=1&name=${slugID}`
         );
-        setAllNfts(responseOwner?.data?.nfts);
+
+        const resCollections = await axios.get(
+          `${baseURL}/api/collections?includeOwner=1&name=${slugID}`
+        );
+
+        setAllNfts(resNfts?.data?.nfts);
+        setAllCollections(resCollections?.data?.collections);
+        console.log(resCollections);
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -38,29 +50,62 @@ const SearchAllItem = () => {
         </span>
 
         <div className="mt-[50px]">
-          <span className="font-[400]">+{allNfts?.length} results found</span>
+          <span className="font-[400]">
+            +{allNfts?.length + allCollections?.length} results found
+          </span>
         </div>
 
-        {allNfts?.length > 0 && (
-          <div className="mt-10 grid grid-cols-4 gap-[50px]">
-            {allNfts?.length > 0 &&
-              allNfts.map((category) => (
-                <Card
-                  key={category.id}
-                  srcTop={`${baseURL}/storage/nftImages/${category.url_image_nft}`}
-                  name={category.name}
-                  owner={`by ${category.owner.name}`}
-                  srcCoin={category.coin}
-                  price={category.price}
-                  remaining={"22d 12h 12m 12s"}
-                  crypto={category.crypto_id}
-                  id={category.id}
-                  status={category.status}
-                ></Card>
+        <div className="mt-10">
+          {allCollections?.length >= 3 ? (
+            allCollections.map((card) => (
+              <SliderCustom perPage={3}>
+                <SplideSlide key={card.id}>
+                  <CardCollection
+                    id={card?.id}
+                    logo={card?.url_image_logo}
+                    banner={card?.url_image_banner}
+                    name={card?.name}
+                  />
+                </SplideSlide>
+              </SliderCustom>
+            ))
+          ) : (
+            <div className="grid grid-cols-3">
+              {allCollections.map((card) => (
+                <CardCollection
+                  key={card.id}
+                  id={card?.id}
+                  logo={card?.url_image_logo}
+                  banner={card?.url_image_banner}
+                  name={card?.name}
+                />
               ))}
-            {allNfts?.length === 0 && <span>No result was found!</span>}
-          </div>
-        )}
+            </div>
+          )}
+        </div>
+
+        <div className="mt-20">
+          {allNfts?.length > 0 && (
+            <div className="grid grid-cols-4 gap-[50px]">
+              {allNfts?.length > 0 &&
+                allNfts.map((category) => (
+                  <Card
+                    key={category.id}
+                    srcTop={`${baseURL}/storage/nftImages/${category.url_image_nft}`}
+                    name={category.name}
+                    owner={`by ${category.owner.name}`}
+                    srcCoin={category.coin}
+                    price={category.price}
+                    remaining={"22d 12h 12m 12s"}
+                    crypto={category.crypto_id}
+                    id={category.id}
+                    status={category.status}
+                  ></Card>
+                ))}
+              {allNfts?.length === 0 && <span>No result was found!</span>}
+            </div>
+          )}
+        </div>
       </PageContainer>
       <div className="h-20 w-full"></div>
     </div>

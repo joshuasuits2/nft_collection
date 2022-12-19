@@ -15,7 +15,7 @@ const InputStyle = styled.div`
   } */
 `;
 
-const Input = ({
+const InputSearchCollections = ({
   searchValue = "",
   className = "",
   placeholder = "",
@@ -96,8 +96,8 @@ focus:border-purple-400 transition-all
             ) : (
               <span className="transition-all" onClick={handleClick}>
                 <svg
-                  width="14"
-                  height="14"
+                  width="10"
+                  height="10"
                   viewBox="0 0 14 14"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -129,4 +129,4 @@ focus:border-purple-400 transition-all
   );
 };
 
-export default Input;
+export default InputSearchCollections;

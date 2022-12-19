@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "../button/Button";
-import Input from "../input/Input";
 import logo from "../../assets/logo.png";
+import InputEmail from "../input/InputEmail";
 
 const FooterStyles = styled.div`
   margin-top: 150px;
@@ -34,7 +34,7 @@ const Footer = () => {
             Stay updated, join our mailing list.
           </span>
           <div className="flex gap-x-4 items-start mt-5">
-            <Input placeholder="Enter your email"></Input>
+            <InputEmail placeholder="Enter your email"></InputEmail>
             <Button height="55px" width="100px" kind="small">
               Send
             </Button>

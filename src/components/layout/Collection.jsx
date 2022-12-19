@@ -40,7 +40,7 @@ const Collection = ({ id, name, url_image_logo, volume, logo, ...props }) => {
   return (
     <CollectionStyles>
       <div className="cell flex justify-between text-[14px]">
-        <div className="cell-left flex gap-[6px]">
+        <div className="cell-left flex gap-x-4">
           <img
             src={logo}
             alt=""
@@ -52,7 +52,7 @@ const Collection = ({ id, name, url_image_logo, volume, logo, ...props }) => {
             <div className="mt-auto flex gap-[5px] items-center">
               <span>Floor price:</span>
               <img src={Ethereum} alt="" className="h-[20px]" />
-              <span>15.1123120</span>
+              <span>0.02 ETH</span>
             </div>
           </div>
         </div>

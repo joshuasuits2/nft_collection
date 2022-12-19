@@ -5,6 +5,13 @@ import styled from "styled-components";
 import Ethereum from "../../assets/outside/ethereum.png";
 
 const CardStyles = styled.div`
+  .text-wrap {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   .before-layout {
     top: 0;
     left: 0;
@@ -63,16 +70,18 @@ const Card = ({
           <div className="px-1 text-[13px] flex-1 flex flex-col">
             <div className="top flex justify-between mt-[10px]">
               <div className="top-left flex flex-col">
-                <span className=" cursor-pointer leading-[20px] font-bold">
-                  {name}
-                </span>
+                <div className="w-[140px]">
+                  <span className="text-wrap cursor-pointer leading-[20px] font-bold">
+                    {name}
+                  </span>
+                </div>
                 <Link to="/collection/123">
                   <span className=" cursor-pointer leading-[16px]">
                     {owner}
                   </span>
                 </Link>
               </div>
-              <div className="top-right flex gap-[5px]  font-bold">
+              <div className="top-right flex gap-[5px] font-bold">
                 {crypto === 1 && (
                   <img
                     src={Ethereum}
@@ -80,9 +89,11 @@ const Card = ({
                     className="w-[18px] h-[18px] object-cover"
                   />
                 )}
-                <span>
-                  {parseFloat(price).toFixed(3).replace(/\.0+$/, "")} ETH
-                </span>
+                <div className="w-[70px]">
+                  <span className="text-wrap">
+                    {parseFloat(price).toFixed(3).replace(/\.0+$/, "")} ETH
+                  </span>
+                </div>
               </div>
             </div>
             <div className="bottom mt-auto text-[#141118] font-[600] flex items-center justify-between">

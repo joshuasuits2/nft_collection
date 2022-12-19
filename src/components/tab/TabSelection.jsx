@@ -6,8 +6,6 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { baseURL } from "../../config/getConfig";
-import { useNavigate } from "react-router-dom";
-import slugify from "slugify";
 
 const ListData = [
   {
@@ -57,10 +55,6 @@ const TabSelectionStyles = styled.div`
 
 const TabSelection = ({ id, logo, banner, name, loading, ...props }) => {
   const [collections, setCollections] = useState([]);
-  const navigate = useNavigate();
-  const handleNavigation = () => {
-    navigate(`/collection/${slugify(name)}&query=${id}`);
-  };
   useEffect(() => {
     (async () => {
       const res = await axios.get(`${baseURL}/api/collections/top`);
