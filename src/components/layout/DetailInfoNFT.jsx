@@ -1,25 +1,57 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { baseURL } from "../../config/getConfig";
 
-const DetailInfoNFT = ({ CTA, tokenID, ...props }) => {
+const DetailInfoNFT = ({ CTA, tokenID, nftId, ...props }) => {
+  const [transactions, setTransactions] = useState();
+  useEffect(() => {
+    (async () => {
+      const res = await axios.get(`${baseURL}/api/transactions`);
+      const list = res.data.transactions;
+      const item = list.filter((item) => item.nft_id === nftId);
+      setTransactions(item);
+    })();
+  }, []);
   return (
-    <div className="details flex gap-x-[130px] mt-5">
-      <div>
-        <ul className="flex flex-col gap-y-4">
-          <li className="text-gradient">Contract Address</li>
-          <li className="text-gradient">Token ID</li>
-          <li className="text-gradient">Blockchain</li>
-          <li className="text-gradient">Last Updated</li>
-        </ul>
+    <>
+      <div className="details flex gap-x-[130px] mt-5">
+        <div>
+          <ul className="flex flex-col gap-y-4">
+            <li className="text-gradient">Contract Address</li>
+            <li className="text-gradient">Token ID</li>
+            <li className="text-gradient">Blockchain</li>
+            <li className="text-gradient">Last Updated</li>
+          </ul>
+        </div>
+        <div>
+          <ul className="flex flex-col gap-y-4">
+            <li className="text-[#FBFF2A]">0x1263...5df5</li>
+            <li className="text-[#FBFF2A]">602</li>
+            <li className="text-[#FBFF2A]">Ethereum</li>
+            <li>2 days ago</li>
+          </ul>
+        </div>
       </div>
-      <div>
-        <ul className="flex flex-col gap-y-4">
-          <li className="text-[#FBFF2A]">0x1263...5df5</li>
-          <li className="text-[#FBFF2A]">602</li>
-          <li className="text-[#FBFF2A]">Ethereum</li>
-          <li>2 days ago</li>
-        </ul>
+      <div className="history mt-10 w-full">
+        <span className="text-gradient font-bold">History transactions:</span>
+        <div className="mt-5 flex gap-x-5 w-full">
+          <span className="flex-[20%] text-[#FBFF2A]">Buyer_id</span>
+          <span className="flex-[20%] text-[#FBFF2A]">Seller_id</span>
+          <span className="flex-[30%] text-[#FBFF2A]">Price</span>
+          <span className="flex-[40%] text-[#FBFF2A]">Time</span>
+        </div>
+
+        {transactions?.length > 0 &&
+          transactions.map((item) => (
+            <div key={item.id} className="mt-5 flex gap-x-5 w-full">
+              <span className="flex-[20%]">{item.buyer_id}</span>
+              <span className="flex-[20%]">{item.seller_id}</span>
+              <span className="flex-[30%]">{item.price} ETH</span>
+              <span className="flex-[40%]">{item.date.slice(0, 10)}</span>
+            </div>
+          ))}
       </div>
-    </div>
+    </>
   );
 };
 

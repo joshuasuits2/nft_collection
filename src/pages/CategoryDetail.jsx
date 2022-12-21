@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import PageContainer from "../components/layout/PageContainer";
 import styled from "styled-components";
 import Footer from "../components/layout/Footer";
-import Heading from "../components/layout/Heading";
-import CardList from "../components/layout/CardList";
 import verify from "../assets/outside/verify.png";
-import { ListCategory } from "../fakeAPI/Categories";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import EyeIcon from "../assets/icons/EyeIcon";
 import HeartIcon from "../assets/icons/HeartIcon";
@@ -18,6 +15,7 @@ import AuthUser from "../config/AuthUser";
 import { useAuthentication } from "../config/auth-context";
 import WalletsPage from "./WalletsPage";
 import HandleBtnNft from "../components/layout/HandleBtnNft";
+import avatarUserImage from "../assets/userImages/user.jpg";
 
 const CategoryDetailStyles = styled.div`
   .linear-property {
@@ -115,7 +113,7 @@ const CategoryDetail = () => {
                 </div>
               </div>
               <span className="mt-10">Details</span>
-              <DetailInfoNFT CTA="" tokenID="" />
+              <DetailInfoNFT CTA="" tokenID="" nftId={nft?.id} />
             </div>
             <div className="flex-[70%]">
               <div className="desc flex flex-col">
@@ -156,11 +154,21 @@ const CategoryDetail = () => {
                 <div className="owner-and-collection flex items-center gap-x-[60px] mt-[50px]">
                   <div className="own flex gap-x-[10px] items-center">
                     <Link to="/profile">
-                      <img
-                        src={`${baseURL}/storage/avatarImages/${nft?.owner.avatar}`}
-                        alt=""
-                        className="w-[60px] h-[60px] object-cover rounded-full"
-                      />
+                      <>
+                        {nft?.owner.avatar === "user.jpg" ? (
+                          <img
+                            src={avatarUserImage}
+                            alt=""
+                            className="w-[60px] h-[60px] object-cover rounded-full"
+                          />
+                        ) : (
+                          <img
+                            src={`${baseURL}/storage/avatarImages/${nft?.owner.avatar}`}
+                            alt=""
+                            className="w-[60px] h-[60px] object-cover rounded-full"
+                          />
+                        )}
+                      </>
                     </Link>
                     <div className="name flex flex-col">
                       <span className="font-[600]">Current Owner</span>

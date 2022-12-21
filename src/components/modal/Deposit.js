@@ -120,7 +120,7 @@ const Deposit = ({
           </button>
         </form>
       </div>
-      <ToastContainer autoClose={800} />
+      {/* <ToastContainer autoClose={800} /> */}
     </div>,
     document.querySelector("body")
   );

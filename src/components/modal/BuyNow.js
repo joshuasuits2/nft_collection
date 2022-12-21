@@ -67,7 +67,7 @@ const BuyNow = ({
         </div>
       </div>
       <ToastContainer
-        position="bottom-center"
+        position="top-center"
         autoClose={800}
         hideProgressBar={false}
         newestOnTop={false}

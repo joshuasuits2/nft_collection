@@ -145,15 +145,15 @@ const FormSign = ({ token, nftInfoDetail, handleSetConfirmBtn = () => {} }) => {
                 </div>
                 <div className="flex flex-col">
                   <span className="font-[600] text-gradient">
-                    Collection: {nftInfoDetail.collection.name}
+                    Collection: {nftInfoDetail?.collection.name}
                   </span>
                   <span className="mt-2">
                     <span className="font-[600]"> Owner:</span>{" "}
-                    {nftInfoDetail.owner.name}
+                    {nftInfoDetail?.owner.name}
                   </span>
                 </div>
               </div>
-              <span className="text-end">{nftInfoDetail.price} ETH</span>
+              <span className="text-end">{nftInfoDetail?.price} ETH</span>
             </div>
           </div>
           <div className="mt-5 flex w-full justify-between items-center">
@@ -169,7 +169,7 @@ const FormSign = ({ token, nftInfoDetail, handleSetConfirmBtn = () => {} }) => {
           <button
             type="submit"
             onClick={handleDisableBtn}
-            className={`mt-5 inline-flex items-center justify-center px-8 py-4 font-sans font-semibold tracking-wide text-white bg-[#c084fc] rounded-lg mx-auto w-[300px] [h-[53px] active:bg-purple-300 ${
+            className={`mt-5 inline-flex items-center justify-center px-8 py-4 font-sans font-semibold tracking-wide text-white bg-[#c084fc] rounded-lg mx-auto w-[300px] h-[53px] active:bg-purple-300 ${
               disableBtn === true || parseFloat(remainBalance) < 0
                 ? "pointer-events-none bg-purple-300"
                 : ""

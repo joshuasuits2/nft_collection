@@ -67,7 +67,6 @@ const UserProfile = () => {
     (async () => {
       const res = await axios.get(`${baseURL}/api/nfts?includeOwner=1`);
       setNfts(res?.data?.nfts);
-      console.log(res?.data?.nfts);
     })();
   }, [userId]);
 
@@ -137,7 +136,7 @@ const UserProfile = () => {
                   />
                   {!cover ? (
                     <>
-                      {userImage.cover === "cover.jpg" ? (
+                      {userImage?.cover === "cover.jpg" ? (
                         <img
                           src={coverUserImage}
                           alt=""
@@ -145,7 +144,7 @@ const UserProfile = () => {
                         />
                       ) : (
                         <img
-                          src={`${baseURL}/storage/coverImages/${userImage.cover}`}
+                          src={`${baseURL}/storage/coverImages/${userImage?.cover}`}
                           alt=""
                           className="w-full h-full object-cover"
                         />
@@ -154,7 +153,7 @@ const UserProfile = () => {
                   ) : (
                     <div className="w-full h-full">
                       <img
-                        src={cover.preview}
+                        src={cover?.preview}
                         alt=""
                         className="w-full h-full object-cover"
                       />
@@ -187,7 +186,7 @@ const UserProfile = () => {
                           />
                         ) : (
                           <img
-                            src={`${baseURL}/storage/avatarImages/${userImage.avatar}`}
+                            src={`${baseURL}/storage/avatarImages/${userImage?.avatar}`}
                             alt=""
                             className="w-[180px] h-[180px] object-cover rounded-full"
                           />
@@ -241,7 +240,7 @@ const UserProfile = () => {
                 <span className="text-[16px] font-[600] text-[#c68afc]">
                   Account balance:
                 </span>
-                <span>{accountBalance.balance}</span>
+                <span>{accountBalance?.balance}</span>
                 <span className="font-[500]">ETH</span>
               </div>
               <button
@@ -257,7 +256,7 @@ const UserProfile = () => {
             <div className="">
               <Tab.Group>
                 <Tab.List className="flex gap-x-[30px]">
-                  {ListData.length > 0 &&
+                  {ListData?.length > 0 &&
                     ListData.map((item) => (
                       <Tab key={item.id}>
                         {({ selected }) => (
