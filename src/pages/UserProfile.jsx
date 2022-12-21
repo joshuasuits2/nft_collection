@@ -56,8 +56,16 @@ const UserProfile = () => {
       );
       setUser(res?.data?.user);
       setNfts(resNft?.data.nfts);
-      console.log(res?.data?.user);
-      console.log("resNft?.data.nfts: ", resNft?.data.nfts);
+    })();
+  }, [slugValue]);
+
+  useEffect(() => {
+    (async () => {
+      const res = await axios.get(`${baseURL}/api/collections`);
+      const list = res?.data.collections;
+      const item = list.filter((item) => item.creator_id === slugValue);
+      setMyCollection(item);
+      console.log("item: ", item);
     })();
   }, [slugValue]);
 

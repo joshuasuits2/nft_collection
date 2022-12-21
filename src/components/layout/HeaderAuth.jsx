@@ -92,8 +92,8 @@ const HeaderAuth = ({ handleSignOut, ...props }) => {
       if (userId) {
         try {
           const res = await http?.get(`/notifies`);
-          setShowNotification(res);
-          // console.log(res);
+          setShowNotification(res?.data.notifies);
+          console.log(res?.data.notifies);
         } catch (error) {
           console.log(error);
         }

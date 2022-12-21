@@ -99,6 +99,8 @@ const FormSign = ({
 
   const handleComplete = (e) => {
     e.preventDefault();
+    console.log(userId);
+    console.log(nftInfoDetail);
     axios
       .post(
         `${baseURL}/api/transactions`,
