@@ -71,9 +71,6 @@ const UserProfile = () => {
   }, [userId]);
 
   const onSubmit = async (values) => {
-    console.log(values);
-    console.log(avatar);
-    console.log(cover);
     console.log(`${baseURL}/api/users/${userId}?_method=PUT`);
     await axios
       .post(
@@ -346,7 +343,6 @@ const UserProfile = () => {
             open={showModal}
             accountBalance={accountBalance}
             handleAccountBalanceChange={(exchange) => {
-              console.log(accountBalance);
               setAccountBalance({
                 ...accountBalance,
                 balance: (

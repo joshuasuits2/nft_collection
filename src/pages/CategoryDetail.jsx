@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import PageContainer from "../components/layout/PageContainer";
 import styled from "styled-components";
 import Footer from "../components/layout/Footer";
@@ -222,5 +223,4 @@ const CategoryDetail = () => {
     </CategoryDetailStyles>
   );
 };
-
 export default CategoryDetail;

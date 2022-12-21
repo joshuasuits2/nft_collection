@@ -1,10 +1,11 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TimingNFT from "./TimingNFT";
 import { baseURL } from "../../config/getConfig";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import Listing from "../modal/Listing";
 
 const HandleBtnNft = ({
   nft,
@@ -15,6 +16,8 @@ const HandleBtnNft = ({
   ...props
 }) => {
   const [statusListing, setStatusListing] = useState(false);
+  console.log("statusListing: ", statusListing);
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const handleCancel = async () => {
     try {
@@ -45,35 +48,6 @@ const HandleBtnNft = ({
     }
   };
 
-  const handleListing = async () => {
-    try {
-      await axios.put(
-        `${baseURL}/api/nfts/${nft?.id}`,
-        {
-          name: nft.name,
-          description: nft.description,
-          reaction: nft.reaction,
-          price: parseFloat(nft.price) + 0.01,
-          crypto_id: nft.crypto_id,
-          owner_id: nft.owner.id,
-          creator_id: nft.creator.id,
-          collection_id: nft.collection.id,
-          status: 1,
-        },
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      toast.success("Listed!");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleDelete = async () => {
     try {
       await axios.delete(`${baseURL}/api/nfts/${nft?.id}`, {
@@ -92,7 +66,6 @@ const HandleBtnNft = ({
       console.log(error);
     }
   };
-
   return (
     <>
       {nft?.owner?.id === userId && (
@@ -100,8 +73,7 @@ const HandleBtnNft = ({
           {nft.status === 1 && statusListing === true && (
             <button
               onClick={() => {
-                handleListing();
-                setStatusListing(false);
+                setShowModal(true);
               }}
               className="translate-y-5 w-[150px] h-[55px] font-[500] bg-[#c084fc] rounded-lg text-[#fff] active:bg-opacity-80 transition-all"
             >
@@ -112,30 +84,33 @@ const HandleBtnNft = ({
             <button
               onClick={() => {
                 handleCancel();
-                setStatusListing(true);
+                setTimeout(() => {
+                  setStatusListing(true);
+                }, 2000);
               }}
               className="translate-y-5 w-[150px] h-[55px] font-[500] bg-[#e9e9e9] rounded-lg text-[#141418] active:bg-opacity-80 transition-all"
             >
               Cancel listing
             </button>
           )}
-
           {nft.status === 0 && statusListing === false && (
             <button
               onClick={() => {
-                handleListing();
-                setStatusListing(true);
+                setShowModal(true);
               }}
               className="translate-y-5 w-[150px] h-[55px] font-[500] bg-[#c084fc] rounded-lg text-[#fff] active:bg-opacity-80 transition-all"
             >
               Listing
             </button>
           )}
+
           {nft.status === 0 && statusListing === true && (
             <button
               onClick={() => {
                 handleCancel();
-                setStatusListing(false);
+                setTimeout(() => {
+                  setStatusListing(false);
+                }, 2000);
               }}
               className="translate-y-5 w-[150px] h-[55px] font-[500] bg-[#e9e9e9] rounded-lg text-[#141418] active:bg-opacity-80 transition-all"
             >
@@ -204,6 +179,15 @@ const HandleBtnNft = ({
           )}
         </div>
       )}
+      <Listing
+        open={showModal}
+        nft={nft}
+        token={token}
+        handleClose={() => setShowModal(false)}
+        handleSetStatusListing={() => {
+          setStatusListing(false);
+        }}
+      />
       <ToastContainer autoClose={800} />
     </>
   );

@@ -6,7 +6,9 @@ const DetailInfoNFT = ({ CTA, tokenID, nftId, ...props }) => {
   const [transactions, setTransactions] = useState();
   useEffect(() => {
     (async () => {
-      const res = await axios.get(`${baseURL}/api/transactions`);
+      const res = await axios.get(
+        `${baseURL}/api/transactions/includeBuyer=1&includeSeller=1`
+      );
       const list = res.data.transactions;
       const item = list.filter((item) => item.nft_id === nftId);
       setTransactions(item);
@@ -44,10 +46,10 @@ const DetailInfoNFT = ({ CTA, tokenID, nftId, ...props }) => {
         {transactions?.length > 0 &&
           transactions.map((item) => (
             <div key={item.id} className="mt-5 flex gap-x-5 w-full">
-              <span className="flex-[20%]">{item.buyer_id}</span>
-              <span className="flex-[20%]">{item.seller_id}</span>
-              <span className="flex-[30%]">{item.price} ETH</span>
-              <span className="flex-[40%]">{item.date.slice(0, 10)}</span>
+              <span className="flex-[20%]">{item?.buyer.name}</span>
+              <span className="flex-[20%]">{item?.seller.name}</span>
+              <span className="flex-[30%]">{item?.price} ETH</span>
+              <span className="flex-[40%]">{item?.date.slice(0, 10)}</span>
             </div>
           ))}
       </div>

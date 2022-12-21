@@ -2,14 +2,96 @@ import axios from "axios";
 import React, { useState } from "react";
 import { baseURL } from "../../config/getConfig";
 import useAccountBalance from "../../hooks/useAccountBalance";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
-const FormSign = ({ token, nftInfoDetail, handleSetConfirmBtn = () => {} }) => {
+const CheckStyles = styled.div`
+  label {
+    position: relative;
+    height: 36px;
+    width: 36px;
+    display: inline-block;
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    border-left-color: #5df875;
+    border-radius: 50%;
+    animation: rotate 1s linear infinite;
+  }
+  .checked-label-active {
+    animation: none;
+    border-color: #5df875;
+    transition: border 0.5s ease-out;
+  }
+
+  label .check-icon {
+    position: relative;
+  }
+  .checked-icon-label-active {
+    animation: none;
+    border-color: #5df875;
+    transition: border 0.5s ease-out;
+  }
+
+  label .check-icon:after {
+    content: "";
+    height: 16px;
+    width: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-130%, -22%) scaleX(-1) rotate(135deg);
+    border-top: 3.5px solid #5df875;
+    border-right: 3.5px solid #5df875;
+    transform-origin: left top;
+    animation: check-icon 1s ease;
+  }
+  @keyframes rotate {
+    50% {
+      border-left-color: #6d82f8;
+    }
+    75% {
+      border-left-color: #fd8bd2;
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes check-icon {
+    0% {
+      height: 0;
+      width: 0;
+      opacity: 1;
+    }
+    20% {
+      height: 0;
+      width: 10px;
+      opacity: 1;
+    }
+    40% {
+      height: 16px;
+      width: 10px;
+      opacity: 1;
+    }
+    100% {
+      height: 16px;
+      width: 10px;
+      opacity: 1;
+    }
+  }
+`;
+
+const FormSign = ({
+  token,
+  nftInfoDetail,
+  handleSetConfirmBtn = () => {},
+  ...props
+}) => {
   const [signBtn, setSignBtn] = useState(false);
   const [disableBtn, setDisableBtn] = useState(false);
   const { accountBalance, userId } = useAccountBalance();
+  const [checkSign, setCheckSign] = useState(false);
   const navigate = useNavigate();
   let remainBalance = (
     accountBalance?.balance - parseFloat(nftInfoDetail?.price)
@@ -38,7 +120,7 @@ const FormSign = ({ token, nftInfoDetail, handleSetConfirmBtn = () => {} }) => {
       )
       .then((res) => {
         toast("🦄 Successful transaction!", {
-          position: "bottom-center",
+          position: "top-center",
           autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -62,7 +144,10 @@ const FormSign = ({ token, nftInfoDetail, handleSetConfirmBtn = () => {} }) => {
         <div className="flex flex-col transition-all duration-500">
           <span
             className="top-5 left-5 absolute cursor-pointer"
-            onClick={handleSetConfirmBtn}
+            onClick={() => {
+              setCheckSign(false);
+              handleSetConfirmBtn();
+            }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -84,16 +169,33 @@ const FormSign = ({ token, nftInfoDetail, handleSetConfirmBtn = () => {} }) => {
           <div className="h-[1px] mt-3 w-full bg-gray-200"></div>
           <div className="mt-5 text-[16px] flex flex-col text-left">
             <span>To complete your purchase, follow these step:</span>
-            <div className="flex gap-x-4 items-center mt-5 w-full font-[600] text-[16px] px-5 py-4 border border-solid  border-gray-200">
-              <div className="w-8 h-8 border-4 border-solid border-gray-900 rounded-full "></div>
+            <CheckStyles className="flex gap-x-4 items-center mt-5 w-full font-[600] text-[16px] px-5 py-4 border border-solid  border-gray-200 cursor-pointer ">
+              <label
+                className={`${
+                  checkSign === true ? "checked-label-active block" : "hidden"
+                }`}
+              >
+                <div
+                  className={`w-9 h-9 rounded-full check-icon ${
+                    checkSign === true
+                      ? "checked-icon-label-active block"
+                      : "hidden"
+                  }`}
+                ></div>
+              </label>
               <span>Sign message</span>
-            </div>
+            </CheckStyles>
             <div className="w-full font-[600] text-[14px] p-5 border border-solid  border-gray-200 text-gray-500 border-t-transparent ">
               <span>Sign a message using your wallet to continue</span>
             </div>
           </div>
           <button
-            onClick={() => setSignBtn(true)}
+            onClick={() => {
+              setCheckSign(true);
+              setTimeout(() => {
+                setSignBtn(true);
+              }, 2200);
+            }}
             className="mt-5 inline-flex items-center justify-center px-8 py-4 font-sans font-semibold tracking-wide text-white bg-[#c084fc] rounded-lg mx-auto w-[300px] [h-[53px] active:bg-purple-300"
           >
             Sign
@@ -106,7 +208,10 @@ const FormSign = ({ token, nftInfoDetail, handleSetConfirmBtn = () => {} }) => {
         >
           <span
             className="top-5 left-5 absolute cursor-pointer"
-            onClick={() => setSignBtn(false)}
+            onClick={() => {
+              setCheckSign(false);
+              setSignBtn(false);
+            }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
