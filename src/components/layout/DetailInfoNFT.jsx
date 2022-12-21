@@ -7,7 +7,7 @@ const DetailInfoNFT = ({ CTA, tokenID, nftId, ...props }) => {
   useEffect(() => {
     (async () => {
       const res = await axios.get(
-        `${baseURL}/api/transactions/includeBuyer=1&includeSeller=1`
+        `${baseURL}/api/transactions?&includeBuyer=1&includeSeller=1`
       );
       const list = res.data.transactions;
       const item = list.filter((item) => item.nft_id === nftId);
