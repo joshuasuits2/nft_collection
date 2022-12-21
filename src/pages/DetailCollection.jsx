@@ -10,7 +10,6 @@ import telegram from "../assets/collection-images/telegram.png";
 import twitter from "../assets/collection-images/twitter.png";
 import share from "../assets/collection-images/share.png";
 import ethereum from "../assets/outside/ethereum.png";
-import CardList from "../components/layout/CardList";
 import Footer from "../components/layout/Footer";
 import { useParams } from "react-router-dom";
 import axios from "axios";

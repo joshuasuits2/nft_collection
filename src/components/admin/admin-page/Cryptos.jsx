@@ -12,7 +12,6 @@ const Cryptos = () => {
       try {
         const res = await axios.get(`${baseURL}/api/cryptos`);
         setCryptos(res.data.cryptos);
-        console.log(res.data.cryptos);
       } catch (error) {}
     })();
   }, []);

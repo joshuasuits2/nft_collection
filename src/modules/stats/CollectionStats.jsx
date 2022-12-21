@@ -7,6 +7,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { baseURL } from "../../config/getConfig";
+import { useNavigate } from "react-router-dom";
+import slugify from "slugify";
 
 const categories = [
   { id: 1, name: "All categories" },
@@ -75,8 +77,10 @@ const CollectionStats = () => {
                 index={index + 1}
                 logo={`${baseURL}/storage/logoImages/${item?.url_image_logo}`}
                 key={item.id}
+                id={item.id}
                 volume={item.volume}
                 className="stats-item"
+                name={item.name}
               />
             ))}
         </div>

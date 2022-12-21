@@ -9,9 +9,8 @@ import useAuth from "../../hooks/useAuth";
 import { useAuthentication } from "../../config/auth-context";
 
 const Main = () => {
-  const { userImage, setUser, setUserId, setUserName, setUserImage } =
-    useAuthentication();
-  const { logout, token, setToken } = AuthUser();
+  const { setUser, setUserId, setUserName } = useAuthentication();
+  const { logout, token } = AuthUser();
   const { user } = useAuth();
 
   const handleSignOut = () => {

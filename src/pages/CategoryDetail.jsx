@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
 import PageContainer from "../components/layout/PageContainer";
 import styled from "styled-components";
 import Footer from "../components/layout/Footer";
@@ -154,7 +153,9 @@ const CategoryDetail = () => {
                 </p>
                 <div className="owner-and-collection flex items-center gap-x-[60px] mt-[50px]">
                   <div className="own flex gap-x-[10px] items-center">
-                    <Link to="/profile">
+                    <Link
+                      to={`/profile/${nft?.owner.name}&query=${nft?.owner.id}`}
+                    >
                       <>
                         {nft?.owner.avatar === "user.jpg" ? (
                           <img

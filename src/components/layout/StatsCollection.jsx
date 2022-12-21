@@ -1,19 +1,25 @@
 import React from "react";
-import Blood_bat from "../../assets/collection/Blood_bat.png";
+import { useNavigate } from "react-router-dom";
+import slugify from "slugify";
 import verify from "../../assets/outside/verify.png";
 
 const StatsCollection = ({
   className,
+  name,
   index,
+  id,
   logo = "",
   collection,
   volume,
   change,
   floor_price,
   sales,
-  img,
   ...props
 }) => {
+  const navigate = useNavigate();
+  const handleNavigation = () => {
+    navigate(`/collection/${slugify(name)}&query=${id}`);
+  };
   return (
     <div
       className={`flex rounded-lg items-center justify-center ${className} h-20`}
@@ -23,9 +29,12 @@ const StatsCollection = ({
         <img
           src={logo}
           alt=""
-          className="w-[60px] h-[60px] object-cover rounded-[4px] mr-9"
+          className="w-[60px] h-[60px] object-cover rounded-[4px] mr-9 cursor-pointer"
+          onClick={handleNavigation}
         />
-        <span className="mr-[10px]">Blood bats</span>
+        <span className="mr-[10px] cursor-pointer" onClick={handleNavigation}>
+          {name}
+        </span>
         <img src={verify} alt="" className="w-4 h-4 object-cover" />
       </div>
       <div className="flex-1 flex items-center justify-center">

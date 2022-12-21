@@ -34,21 +34,22 @@ const DetailInfoNFT = ({ CTA, tokenID, nftId, ...props }) => {
           </ul>
         </div>
       </div>
-      <div className="history mt-10 w-full">
-        <span className="text-gradient font-bold">History transactions:</span>
-        <div className="mt-5 flex gap-x-5 w-full">
-          <span className="flex-[50%] text-[#FBFF2A] text-[16px]">
-            Buyer_id
-          </span>
-          <span className="flex-[50%] text-[#FBFF2A] text-[16px]">
-            Seller_id
-          </span>
-          <span className="flex-[40%] text-[#FBFF2A] text-[16px]">Price</span>
-          <span className="flex-[40%] text-[#FBFF2A] text-[16px]">Time</span>
-        </div>
 
-        {transactions?.length > 0 &&
-          transactions.map((item) => (
+      {transactions?.length > 0 && (
+        <div className="history mt-10 w-full">
+          <span className="text-gradient font-bold">History transactions:</span>
+          <div className="mt-5 flex gap-x-5 w-full">
+            <span className="flex-[50%] text-[#FBFF2A] text-[16px]">
+              Buyer_id
+            </span>
+            <span className="flex-[50%] text-[#FBFF2A] text-[16px]">
+              Seller_id
+            </span>
+            <span className="flex-[40%] text-[#FBFF2A] text-[16px]">Price</span>
+            <span className="flex-[40%] text-[#FBFF2A] text-[16px]">Time</span>
+          </div>
+
+          {transactions.map((item) => (
             <div key={item.id} className="mt-5 flex gap-x-5 w-full">
               <span className="flex-[50%] text-[14px]">{item?.buyer.name}</span>
               <span className="flex-[50%] text-[14px]">
@@ -60,7 +61,8 @@ const DetailInfoNFT = ({ CTA, tokenID, nftId, ...props }) => {
               </span>
             </div>
           ))}
-      </div>
+        </div>
+      )}
     </>
   );
 };

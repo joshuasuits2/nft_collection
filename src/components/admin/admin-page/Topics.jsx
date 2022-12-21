@@ -12,7 +12,6 @@ const Topics = () => {
       try {
         const res = await axios.get(`${baseURL}/api/topics`);
         setTopics(res.data.topics);
-        console.log(res.data.topics);
       } catch (error) {}
     })();
   }, []);

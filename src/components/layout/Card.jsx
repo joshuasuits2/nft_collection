@@ -75,7 +75,7 @@ const Card = ({
                     {name}
                   </span>
                 </div>
-                <Link to="/collection/123">
+                <Link to={`/profile/${owner}&query=${id}`}>
                   <span className=" cursor-pointer leading-[16px]">
                     {owner}
                   </span>

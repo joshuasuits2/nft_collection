@@ -13,13 +13,14 @@ import SignUp from "../pages/SignUp";
 import Create from "../pages/Create";
 import CreateCollection from "../pages/CreateCollection";
 import SearchAllItem from "../pages/SearchAllItem";
-import UserProfile from "../pages/UserProfile";
+import MyProfile from "../pages/MyProfile";
 import AuthenWrapper from "../components/layout/AuthenWrapper";
 import Dashboard from "../components/admin/admin-page/Dashboard";
 import Topics from "../components/admin/admin-page/Topics";
 import Collections from "../components/admin/admin-page/Collections";
 import Cryptos from "../components/admin/admin-page/Cryptos";
 import NFTs from "../components/admin/admin-page/NFTs";
+import UserProfile from "../pages/UserProfile";
 
 const RoutesConfig = () => {
   return (
@@ -42,7 +43,8 @@ const RoutesConfig = () => {
         <Route path="/create" element={<Create />} />
         <Route element={<AuthenWrapper />}>
           <Route path="/create-collection" element={<CreateCollection />} />
-          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/profile" element={<MyProfile />} />
+          <Route path="/profile/:slug" element={<UserProfile />} />
           <Route path="/:slug" element={<CategoryDetail />} />
         </Route>
 

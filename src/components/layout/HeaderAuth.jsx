@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import InputSearch from "../input/InputSearch";
@@ -7,9 +7,9 @@ import bell from "../../assets/icons/bell.png";
 import useClickOutSide from "../../hooks/useClickOutSide";
 import avatarUserImage from "../../assets/userImages/user.jpg";
 import { baseURL } from "../../config/getConfig";
-import AuthUser from "../../config/AuthUser";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import useAuth from "../../hooks/useAuth";
+import AuthUser from "../../config/AuthUser";
 
 const ListLink = [
   {
@@ -75,11 +75,31 @@ const HeaderStyles = styled.div`
 `;
 
 const HeaderAuth = ({ handleSignOut, ...props }) => {
-  const { userImage } = useAuth();
-
   const navigate = useNavigate();
-  const { userName } = useAuth();
+  const { userName, userImage, userId } = useAuth();
   const { show, setShow, nodeRef: nodeRefUser } = useClickOutSide();
+  const { http } = AuthUser();
+
+  const {
+    show: showNotif,
+    setShow: setShowNotif,
+    nodeRef: nodeRefNotif,
+  } = useClickOutSide();
+  const [notifications, setShowNotification] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      if (userId) {
+        try {
+          const res = await http?.get(`/notifies`);
+          setShowNotification(res);
+          // console.log(res);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    })();
+  }, [userId]);
 
   useEffect(() => {
     const header = document.getElementById("header");
@@ -125,7 +145,7 @@ const HeaderAuth = ({ handleSignOut, ...props }) => {
             )}
           </div>
 
-          <div className="header-right  flex items-center justify-between">
+          <div className="header-right flex items-center justify-between">
             <ul className="flex items-center gap-10">
               {ListLink.map((item) => (
                 <NavLink
@@ -142,11 +162,12 @@ const HeaderAuth = ({ handleSignOut, ...props }) => {
                 </NavLink>
               ))}
             </ul>
-            <div
-              className="user relative flex items-center gap-[30px]"
-              ref={nodeRefUser}
-            >
-              <div className="relative z-[9]" onClick={() => setShow(!show)}>
+            <div className="relative flex items-center gap-[30px]">
+              <div
+                className="relative z-[9] cursor-pointer"
+                ref={nodeRefUser}
+                onClick={() => setShow(!show)}
+              >
                 {userImage.avatar ? (
                   <>
                     {userImage.avatar === "user.jpg" ? (
@@ -164,10 +185,7 @@ const HeaderAuth = ({ handleSignOut, ...props }) => {
                     )}
                   </>
                 ) : (
-                  <div
-                    className="relative z-[9]"
-                    onClick={() => setShow(!show)}
-                  >
+                  <div className="relative z-[9]">
                     <SkeletonTheme baseColor="#28282E" highlightColor="#383844">
                       <Skeleton width={35} height={35} circle />
                     </SkeletonTheme>
@@ -205,15 +223,30 @@ const HeaderAuth = ({ handleSignOut, ...props }) => {
                   <div className="absolute"></div>
                 )}
               </div>
-              <button type="button">
-                <div className="w-[35px] bg-white p-1 relative h-[35px] grid place-items-center rounded-full rotate-[-15deg] ">
+
+              <div
+                className="relative z-[9] cursor-pointer"
+                onClick={() => setShowNotif(!showNotif)}
+              >
+                <div
+                  className="w-[35px] bg-white p-1 relative h-[35px] grid place-items-center rounded-full rotate-[-15deg]"
+                  ref={nodeRefNotif}
+                >
                   <img
                     src={bell}
                     alt=""
                     className="w-[80%] h-[80%] object-cover"
                   />
                 </div>
-              </button>
+                {showNotif === true ? (
+                  <div className="transition-all duration-100 absolute top-[150%] rounded-lg right-0 min-w-[220px] p-3 shadow-lg bg-[#ffffff] text-[#141418] flex flex-col">
+                    <span className="px-3 font-bold">Notification</span>
+                  </div>
+                ) : (
+                  <div className="absolute"></div>
+                )}
+              </div>
+
               <button
                 className="h-[53px]  px-5 py-4 flex items-center justify-center font-medium tracking-[0.02em] bg-purple-400 rounded-lg border border-solid border-purple-700"
                 onClick={() => navigate("/create")}

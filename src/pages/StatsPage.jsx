@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Footer from "../components/layout/Footer";
 import PageContainer from "../components/layout/PageContainer";
 import CollectionStats from "../modules/stats/CollectionStats";
-import FindAllNFT from "../modules/stats/FindAllNFT";
 
 const StatsPageStyles = styled.div``;
 

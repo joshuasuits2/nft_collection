@@ -28,6 +28,5 @@ export default function useAccountBalance() {
   return {
     accountBalance,
     setAccountBalance,
-    userId,
   };
 }
