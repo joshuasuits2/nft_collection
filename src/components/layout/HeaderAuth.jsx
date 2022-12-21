@@ -241,6 +241,15 @@ const HeaderAuth = ({ handleSignOut, ...props }) => {
                 {showNotif === true ? (
                   <div className="transition-all duration-100 absolute top-[150%] rounded-lg right-0 min-w-[220px] p-3 shadow-lg bg-[#ffffff] text-[#141418] flex flex-col">
                     <span className="px-3 font-bold">Notification</span>
+                    {notifications.length > 0 &&
+                      notifications.map((item) => (
+                        <div
+                          key={item.id}
+                          className="hover:bg-slate-500 text-sm hover:bg-opacity-10 transition-all cursor-pointer w-full px-3 py-4 rounded-md font-[500] "
+                        >
+                          Favorites
+                        </div>
+                      ))}
                   </div>
                 ) : (
                   <div className="absolute"></div>
