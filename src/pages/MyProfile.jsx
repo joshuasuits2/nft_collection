@@ -85,7 +85,6 @@ const MyProfile = () => {
   }, [userId]);
 
   const onSubmit = async (values) => {
-    console.log(`${baseURL}/api/users/${userId}?_method=PUT`);
     await axios
       .post(
         `${baseURL}/api/users/${userId}?_method=PUT`,
