@@ -9,7 +9,8 @@ import useAuth from "../../hooks/useAuth";
 import { useAuthentication } from "../../config/auth-context";
 
 const Main = () => {
-  const { setUser, setUserId, setUserName, userId } = useAuthentication();
+  const { setUser, setUserId, setUserName, userId, userType } =
+    useAuthentication();
   const { logout, token } = AuthUser();
   const { user } = useAuth();
 
@@ -30,7 +31,11 @@ const Main = () => {
     <div>
       {user ? (
         <>
-          <HeaderAuth userId={userId} handleSignOut={handleSignOut} />
+          <HeaderAuth
+            userId={userId}
+            handleSignOut={handleSignOut}
+            type={userType}
+          />
           <ProgressBar />
           <Outlet></Outlet>
         </>

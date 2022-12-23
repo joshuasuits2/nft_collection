@@ -87,7 +87,6 @@ const CategoryDetail = () => {
         setNft(nftItem.data.nft);
       } catch (error) {
         navigate("/error");
-        console.log(error);
       }
     })();
   }, [navigate, slugValue]);

@@ -5,6 +5,7 @@ import LoginHookForm from "../components/form/LoginHookForm";
 import PageContainer from "../components/layout/PageContainer";
 import AuthUser from "../config/AuthUser";
 import logo from "../assets/logo.png";
+import { useAuthentication } from "../config/auth-context";
 
 const LoginStyles = styled.div`
   width: 100%;
@@ -23,10 +24,11 @@ const LoginStyles = styled.div`
 
 const Login = () => {
   const { http, setToken, token } = AuthUser();
+  const { userType } = useAuthentication();
   const navigate = useNavigate();
   useEffect(() => {
     if (token) return navigate("/");
-  }, [navigate, token]);
+  }, [navigate, userType, token]);
   return (
     <LoginStyles className="body-style">
       <PageContainer>

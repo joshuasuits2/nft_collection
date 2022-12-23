@@ -76,9 +76,7 @@ const HeaderStyles = styled.div`
 
 const HeaderAuth = ({ handleSignOut, userId, ...props }) => {
   const navigate = useNavigate();
-  const { userName, userType, userImage } = useAuth();
-  console.log("userName: ", userName);
-  console.log("userType: ", userType);
+  const { userName, userImage } = useAuth();
   const { show, setShow, nodeRef: nodeRefUser } = useClickOutSide();
   const { http, token } = AuthUser();
 
@@ -249,115 +247,92 @@ const HeaderAuth = ({ handleSignOut, userId, ...props }) => {
                 )}
               </div>
 
-              {userImage?.avatar ? (
+              <div
+                className="relative z-[51] cursor-pointer"
+                onClick={() => setShowNotif(!showNotif)}
+              >
                 <div
-                  className="relative z-[51] cursor-pointer"
-                  onClick={() => setShowNotif(!showNotif)}
+                  className="w-[35px] bg-white p-1 relative h-[35px] grid place-items-center rounded-full"
+                  ref={nodeRefNotif}
                 >
-                  <div
-                    className="w-[35px] bg-white p-1 relative h-[35px] grid place-items-center rounded-full"
-                    ref={nodeRefNotif}
-                  >
-                    <img
-                      src={bell}
-                      alt=""
-                      className="w-[80%] h-[80%] object-cover rotate-[-15deg]"
-                    />
-                    {notifications?.length > 0 && (
-                      <div
-                        className={`flex items-center justify-center w-[18px] h-[18px] rounded-full bg-red-500 absolute -top-[5px] -right-[5px] text-[12px] ${
+                  <img
+                    src={bell}
+                    alt=""
+                    className="w-[80%] h-[80%] object-cover rotate-[-15deg]"
+                  />
+                  {notifications?.length > 0 && (
+                    <div
+                      className={`flex items-center justify-center w-[18px] h-[18px] rounded-full bg-red-500 absolute -top-[5px] -right-[5px] text-[12px] ${
+                        notifications?.filter((item) => item.seen === 0)
+                          .length === 0
+                          ? "hidden"
+                          : "block"
+                      }`}
+                    >
+                      <span className="px-3 font-[400]">
+                        {
                           notifications?.filter((item) => item.seen === 0)
-                            .length === 0
-                            ? "hidden"
-                            : "block"
-                        }`}
-                      >
-                        <span className="px-3 font-[400]">
-                          {
-                            notifications?.filter((item) => item.seen === 0)
-                              .length
-                          }
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                  {showNotif === true ? (
-                    <div className="transition-all duration-100 absolute top-[150%] rounded-lg -right-[130px] w-[360px] p-3 shadow-lg bg-[#ffffff] text-[#141418] flex flex-col">
-                      <span className="px-3 font-bold">Notification</span>
-                      {notifications.length > 0 &&
-                        notifications
-                          .slice(0)
-                          .reverse()
-                          .map((item, index) => (
-                            <div
-                              key={item.id}
-                              className="mt-5 hover:bg-slate-500 text-sm hover:bg-opacity-10 transition-all cursor-pointer w-full p-3 rounded-md font-[500] flex items-center"
-                            >
-                              <img
-                                src={`${baseURL}/storage/nftImages/${
-                                  item.notify.split("\n")[1]
-                                }`}
-                                alt=""
-                                className="mr-3 w-[50px] h-[50px] rounded-lg object-cover"
-                              />
-                              <span className="font-[300]">
-                                {item.notify.split("\n")[0]}
-                              </span>
-                              <button
-                                onClick={handleMarkAsRead(item.id, index)}
-                                className="inline-flex items-center justify-center font-sans font-semibold tracking-wide text-white rounded-full"
-                              >
-                                {item.seen === 0 ? (
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="25"
-                                    height="25"
-                                    fill="#c084fc"
-                                    className="bi bi-check-circle-fill"
-                                    viewBox="0 0 16 16"
-                                  >
-                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
-                                  </svg>
-                                ) : (
-                                  ""
-                                )}
-                              </button>
-                            </div>
-                          ))}
+                            .length
+                        }
+                      </span>
                     </div>
-                  ) : (
-                    <div className="absolute"></div>
                   )}
                 </div>
-              ) : (
-                <SkeletonTheme baseColor="#28282E" highlightColor="#383844">
-                  <Skeleton width={35} height={35} circle />
-                </SkeletonTheme>
-              )}
+                {showNotif === true ? (
+                  <div className="transition-all duration-100 absolute top-[150%] rounded-lg -right-[130px] w-[360px] p-3 shadow-lg bg-[#ffffff] text-[#141418] flex flex-col">
+                    <span className="px-3 font-bold">Notification</span>
+                    {notifications.length > 0 &&
+                      notifications
+                        .slice(0)
+                        .reverse()
+                        .map((item, index) => (
+                          <div
+                            key={item.id}
+                            className="mt-5 hover:bg-slate-500 text-sm hover:bg-opacity-10 transition-all cursor-pointer w-full p-3 rounded-md font-[500] flex items-center"
+                          >
+                            <img
+                              src={`${baseURL}/storage/nftImages/${
+                                item.notify.split("\n")[1]
+                              }`}
+                              alt=""
+                              className="mr-3 w-[50px] h-[50px] rounded-lg object-cover"
+                            />
+                            <span className="font-[300]">
+                              {item.notify.split("\n")[0]}
+                            </span>
+                            <button
+                              onClick={handleMarkAsRead(item.id, index)}
+                              className="inline-flex items-center justify-center font-sans font-semibold tracking-wide text-white rounded-full"
+                            >
+                              {item.seen === 0 ? (
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="25"
+                                  height="25"
+                                  fill="#c084fc"
+                                  className="bi bi-check-circle-fill"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                                </svg>
+                              ) : (
+                                ""
+                              )}
+                            </button>
+                          </div>
+                        ))}
+                  </div>
+                ) : (
+                  <div className="absolute"></div>
+                )}
+              </div>
 
-              {userType !== undefined ? (
-                <>
-                  {userType === 0 ? (
-                    <button
-                      className="h-[53px]  px-5 py-4 flex items-center justify-center font-medium tracking-[0.02em] bg-purple-400 rounded-lg border border-solid border-purple-700"
-                      onClick={() => navigate("/create")}
-                    >
-                      <span className="text-white">Create</span>
-                    </button>
-                  ) : (
-                    <button
-                      className="h-[53px]  px-5 py-4 flex items-center justify-center font-medium tracking-[0.02em] bg-purple-400 rounded-lg border border-solid border-purple-700"
-                      onClick={() => navigate("/dashboard")}
-                    >
-                      <span className="text-white">Dashboard</span>
-                    </button>
-                  )}
-                </>
-              ) : (
-                <SkeletonTheme baseColor="#28282E" highlightColor="#383844">
-                  <Skeleton width={135} height={53} className="rounded-lg" />
-                </SkeletonTheme>
-              )}
+              <button
+                className="h-[53px]  px-5 py-4 flex items-center justify-center font-medium tracking-[0.02em] bg-purple-400 rounded-lg border border-solid border-purple-700"
+                onClick={() => navigate("/dashboard")}
+              >
+                <span className="text-white">Dashboard</span>
+              </button>
             </div>
           </div>
         </header>

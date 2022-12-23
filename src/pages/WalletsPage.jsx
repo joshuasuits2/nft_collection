@@ -50,11 +50,8 @@ const WalletsPage = () => {
         </div>
         <div className="grid grid-rows-2 gap-x-[60px] gap-y-[60px] grid-cols-5 mt-[60px]">
           {ListWallets.map((item) => (
-            <Link to="/login">
-              <div
-                key={item.id}
-                className="hover:transition-all hover:delay-1000 linear-blur flex items-center justify-center flex-col py-[15px] cursor-pointer"
-              >
+            <Link to="/login" key={item.id}>
+              <div className="hover:transition-all hover:delay-1000 linear-blur flex items-center justify-center flex-col py-[15px] cursor-pointer">
                 <img
                   src={item.img}
                   alt=""

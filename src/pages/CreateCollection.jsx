@@ -57,7 +57,6 @@ const CreateCollection = () => {
   const { token } = AuthUser();
   const navigate = useNavigate();
   if (!token) return navigate("/error");
-
   const onSubmit = (values) => {
     console.log("values: ", values);
     http

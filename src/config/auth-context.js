@@ -7,24 +7,28 @@ const AuthContext = createContext();
 function AuthProvider(props) {
   const {
     user,
+    userType,
     userName,
-    userId,
     userImage,
+    userId,
     setUser,
     setUserId,
     setUserName,
     setUserImage,
+    setUserType,
   } = useAuth();
 
   const value = {
     user,
+    userType,
     userName,
-    userId,
     userImage,
+    userId,
     setUser,
     setUserId,
     setUserName,
     setUserImage,
+    setUserType,
   };
   return <AuthContext.Provider value={value} {...props}></AuthContext.Provider>;
 }

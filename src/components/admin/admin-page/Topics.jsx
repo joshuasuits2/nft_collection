@@ -20,8 +20,18 @@ const Topics = () => {
       {topics.length <= 0 ? (
         <div className="fixed inset-0 flex items-center justify-center">
           <div className="spinner">
-            <div className="double-bounce1"></div>
-            <div className="double-bounce2"></div>
+            <div className="left-[320px] transition-all fixed inset-0 mt-[200px]">
+              <div className="spinner">
+                <div
+                  className="double-bounce1"
+                  style={{ backgroundColor: "#eee" }}
+                ></div>
+                <div
+                  className="double-bounce2"
+                  style={{ backgroundColor: "#eee" }}
+                ></div>
+              </div>
+            </div>
           </div>
         </div>
       ) : (

@@ -16,7 +16,6 @@ const HandleBtnNft = ({
   ...props
 }) => {
   const [statusListing, setStatusListing] = useState(!!nft.status);
-  console.log(statusListing);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const handleCancel = async () => {

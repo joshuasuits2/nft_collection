@@ -21,20 +21,25 @@ import Collections from "../components/admin/admin-page/Collections";
 import Cryptos from "../components/admin/admin-page/Cryptos";
 import NFTs from "../components/admin/admin-page/NFTs";
 import UserProfile from "../pages/UserProfile";
+import { useAuthentication } from "./auth-context";
 
 const RoutesConfig = () => {
+  const { userType } = useAuthentication();
   return (
     <Routes>
-      <Route path="/dashboard" element={<Dashboard></Dashboard>}>
-        <Route path="/dashboard/topics" element={<Topics></Topics>}></Route>
-        <Route path="/dashboard/cryptos" element={<Cryptos></Cryptos>}></Route>
+      <Route
+        path="/dashboard"
+        element={<Dashboard type={userType}></Dashboard>}
+      >
+        <Route path="/dashboard/" element={<Topics></Topics>} />
+        <Route path="/dashboard/cryptos" element={<Cryptos></Cryptos>} />
         <Route
           path="/dashboard/collections"
           element={<Collections></Collections>}
         />
-        <Route path="/dashboard/nfts" element={<NFTs></NFTs>}></Route>
+        <Route path="/dashboard/nfts" element={<NFTs></NFTs>} />
       </Route>
-      <Route element={<Main />}>
+      <Route element={<Main type={userType} />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/stats" element={<StatsPage />} />
@@ -47,13 +52,13 @@ const RoutesConfig = () => {
           <Route path="/profile/:slug" element={<UserProfile />} />
           <Route path="/:slug" element={<CategoryDetail />} />
         </Route>
-
         <Route path="/collection/:slug" element={<DetailCollection />} />
       </Route>
-      <Route path="/error" element={<PageNotFound></PageNotFound>}></Route>
-      <Route path="/login" element={<Login></Login>}></Route>
-      <Route path="/signup" element={<SignUp></SignUp>}></Route>
-      <Route path="/*" element={<PageNotFound></PageNotFound>}></Route>
+
+      <Route path="/error" element={<PageNotFound></PageNotFound>} />
+      <Route path="/login" element={<Login></Login>} />
+      <Route path="/signup" element={<SignUp></SignUp>} />
+      <Route path="/*" element={<PageNotFound></PageNotFound>} />
     </Routes>
   );
 };

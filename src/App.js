@@ -1,4 +1,4 @@
-import { AuthProvider } from "./config/auth-context";
+import { AuthProvider, useAuthentication } from "./config/auth-context";
 import RoutesConfig from "./config/RoutesConfig";
 const App = () => {
   return (

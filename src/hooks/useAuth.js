@@ -8,6 +8,7 @@ export default function useAuth() {
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
   const [userImage, setUserImage] = useState({ avatar: "", cover: "" });
+  const [userType, setUserType] = useState();
 
   useEffect(() => {
     (async () => {
@@ -16,6 +17,7 @@ export default function useAuth() {
         setUser(hashString(res?.data?.name));
         setUserId(res?.data?.id);
         setUserName(res?.data?.name);
+        setUserType(res?.data?.type);
         setUserImage((prev) => {
           return {
             ...prev,
@@ -36,6 +38,7 @@ export default function useAuth() {
   sessionStorage.setItem("user", JSON.stringify(user));
   return {
     user,
+    userType,
     userName,
     userImage,
     userId,
@@ -43,5 +46,6 @@ export default function useAuth() {
     setUserId,
     setUserName,
     setUserImage,
+    setUserType,
   };
 }
