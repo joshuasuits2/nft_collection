@@ -61,7 +61,18 @@ const SignUpHookForm = ({ http, setToken, ...props }) => {
           });
         }
       })
-      .catch((error) => setExistEmail(error?.response?.data.errors[0]));
+      .catch((error) =>
+        toast.warn(error?.response?.data.errors[0], {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        })
+      );
   };
   useEffect(() => {
     setFocus("username");
@@ -102,9 +113,6 @@ const SignUpHookForm = ({ http, setToken, ...props }) => {
             <p className="text-sm font-[300] text-red-500">
               {errors?.email?.message}
             </p>
-          )}
-          {existEmail && (
-            <p className="text-sm font-[300] text-red-500">{existEmail}</p>
           )}
         </div>
 
