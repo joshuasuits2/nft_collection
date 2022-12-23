@@ -194,7 +194,7 @@ const FormSign = ({
               setCheckSign(true);
               setTimeout(() => {
                 setSignBtn(true);
-              }, 2200);
+              }, 1200);
             }}
             className="mt-5 inline-flex items-center justify-center px-8 py-4 font-sans font-semibold tracking-wide text-white bg-[#c084fc] rounded-lg mx-auto w-[300px] [h-[53px] active:bg-purple-300"
           >

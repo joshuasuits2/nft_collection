@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import TimingNFT from "./TimingNFT";
 import { baseURL } from "../../config/getConfig";
 import { ToastContainer, toast } from "react-toastify";
@@ -15,7 +15,8 @@ const HandleBtnNft = ({
   handleShowBuyNow = () => {},
   ...props
 }) => {
-  const [statusListing, setStatusListing] = useState(false);
+  const [statusListing, setStatusListing] = useState(!!nft.status);
+  console.log(statusListing);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const handleCancel = async () => {
@@ -53,7 +54,6 @@ const HandleBtnNft = ({
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          // "Content-Type": "multipart/form-data",
           authorization: `Bearer ${token}`,
         },
       });
@@ -69,46 +69,7 @@ const HandleBtnNft = ({
     <>
       {nft?.owner?.id === userId && (
         <div className="deal mt-5 flex gap-x-8">
-          {nft.status === 1 && statusListing === true && (
-            <button
-              type="submit"
-              onClick={() => {
-                setShowModal(true);
-                navigate("/profile");
-              }}
-              className="translate-y-5 w-[150px] h-[55px] font-[500] bg-[#c084fc] rounded-lg text-[#fff] active:bg-opacity-80 transition-all"
-            >
-              Listing
-            </button>
-          )}
-          {nft.status === 1 && statusListing === false && (
-            <button
-              type="submit"
-              onClick={() => {
-                handleCancel();
-                setTimeout(() => {
-                  setStatusListing(true);
-                }, 2000);
-              }}
-              className="translate-y-5 w-[150px] h-[55px] font-[500] bg-[#e9e9e9] rounded-lg text-[#141418] active:bg-opacity-80 transition-all"
-            >
-              Cancel listing
-            </button>
-          )}
-          {nft.status === 0 && statusListing === false && (
-            <button
-              type="submit"
-              onClick={() => {
-                setShowModal(true);
-                navigate("/profile");
-              }}
-              className="translate-y-5 w-[150px] h-[55px] font-[500] bg-[#c084fc] rounded-lg text-[#fff] active:bg-opacity-80 transition-all"
-            >
-              Listing
-            </button>
-          )}
-
-          {nft.status === 0 && statusListing === true && (
+          {statusListing === true && (
             <button
               type="submit"
               onClick={() => {
@@ -120,6 +81,18 @@ const HandleBtnNft = ({
               className="translate-y-5 w-[150px] h-[55px] font-[500] bg-[#e9e9e9] rounded-lg text-[#141418] active:bg-opacity-80 transition-all"
             >
               Cancel listing
+            </button>
+          )}
+
+          {statusListing === false && (
+            <button
+              type="submit"
+              onClick={() => {
+                setShowModal(true);
+              }}
+              className="translate-y-5 w-[150px] h-[55px] font-[500] bg-[#c084fc] rounded-lg text-[#fff] active:bg-opacity-80 transition-all"
+            >
+              Listing
             </button>
           )}
 
@@ -190,7 +163,7 @@ const HandleBtnNft = ({
         token={token}
         handleClose={() => setShowModal(false)}
         handleSetStatusListing={() => {
-          setStatusListing(false);
+          setStatusListing(true);
         }}
       />
       <ToastContainer autoClose={800} />

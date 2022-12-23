@@ -251,7 +251,7 @@ const HeaderAuth = ({ handleSignOut, userId, ...props }) => {
               </div>
 
               <div
-                className="relative z-[9] cursor-pointer"
+                className="relative z-[51] cursor-pointer"
                 onClick={() => setShowNotif(!showNotif)}
               >
                 <div
