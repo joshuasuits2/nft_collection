@@ -7,21 +7,17 @@ import AuthUser from "../../../config/AuthUser";
 import { baseURL } from "../../../config/getConfig";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
 import { useReducer } from "react";
 
 const Topics = () => {
-  const [topics, setTopics] = useState([]);
-  const [addTopics, setAddTopics] = useState(false);
-  const [editTopic, setEditTopic] = useState(false);
-  const [deleteTopic, setDeleteTopic] = useState(false);
-  const [posEditTopic, setPosEditTopic] = useState();
-  const [posDeleteTopic, setPosDeleteTopic] = useState();
   const { token } = AuthUser();
+  const [topics, setTopics] = useState([]);
+  const [addTopic, setAddTopic] = useState(false);
+  const [editTopic, setEditTopic] = useState(false);
+  const [posEditTopic, setPosEditTopic] = useState();
   const [textTopic, setTextTopic] = useState();
   const [textEditTopic, setTextEditTopic] = useState();
   const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
-  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -188,7 +184,6 @@ const Topics = () => {
                             onClick={() => {
                               handleSaveEditTopic();
                               setEditTopic(false);
-                              navigate("/dashboard");
                             }}
                           >
                             Save
@@ -198,12 +193,10 @@ const Topics = () => {
                     )}
                   </tbody>
                 ))}
-              {addTopics === true && (
+              {addTopic === true && (
                 <tbody>
                   <tr>
-                    <th className="font-[400] py-3">
-                      {topics?.length + 1 || ""}
-                    </th>
+                    <th className="font-[400] py-3"></th>
                     <th className="font-[400] py-3">
                       <input
                         type="text"
@@ -216,10 +209,10 @@ const Topics = () => {
                 </tbody>
               )}
             </table>
-            {addTopics === true ? (
+            {addTopic === true ? (
               <div className="flex gap-x-6 w-[300px] ml-auto">
                 <button
-                  onClick={() => setAddTopics(false)}
+                  onClick={() => setAddTopic(false)}
                   className="top-[10%] right-0 mt-5 w-full inline-flex items-center justify-center px-8 py-4 font-sans font-semibold text-white bg-[#ed3e50] rounded-lg h-[53px]"
                 >
                   Cancel
@@ -227,7 +220,7 @@ const Topics = () => {
                 <button
                   onClick={() => {
                     handleAddNewTopic();
-                    setAddTopics(false);
+                    setAddTopic(false);
                   }}
                   className="top-[10%] right-0 mt-5 w-full inline-flex items-center justify-center px-8 py-4 font-sans font-semibold text-white bg-[#4df6a1] rounded-lg h-[53px]"
                 >
@@ -237,7 +230,7 @@ const Topics = () => {
             ) : (
               <div className="w-full ml-auto max-w-[200px]">
                 <button
-                  onClick={() => setAddTopics(true)}
+                  onClick={() => setAddTopic(true)}
                   className="top-[10%] right-0 mt-5 w-full inline-flex items-center justify-center px-8 py-4 font-sans font-semibold text-white bg-[#4df6a1] rounded-lg h-[53px]"
                 >
                   + Add New Item
