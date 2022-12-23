@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -7,7 +7,6 @@ import InputHookForm from "../input/InputHookForm";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { baseURL } from "../../config/getConfig";
 
 const schema = Yup.object({
   name: Yup.string().required("Please enter your username"),
@@ -38,6 +37,7 @@ const SignUpHookForm = ({ http, setToken, ...props }) => {
     resolver: yupResolver(schema),
   });
 
+  const [existEmail, setExistEmail] = useState(null);
   const onSubmit = async (data) => {
     console.log(data);
     http
@@ -61,7 +61,7 @@ const SignUpHookForm = ({ http, setToken, ...props }) => {
           });
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => setExistEmail(error?.response?.data.errors[0]));
   };
   useEffect(() => {
     setFocus("username");
@@ -102,6 +102,9 @@ const SignUpHookForm = ({ http, setToken, ...props }) => {
             <p className="text-sm font-[300] text-red-500">
               {errors?.email?.message}
             </p>
+          )}
+          {existEmail && (
+            <p className="text-sm font-[300] text-red-500">{existEmail}</p>
           )}
         </div>
 

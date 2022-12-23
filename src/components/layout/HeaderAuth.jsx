@@ -347,7 +347,7 @@ const HeaderAuth = ({ handleSignOut, userId, ...props }) => {
                   ) : (
                     <button
                       className="h-[53px]  px-5 py-4 flex items-center justify-center font-medium tracking-[0.02em] bg-purple-400 rounded-lg border border-solid border-purple-700"
-                      onClick={() => navigate("/dashboard")}
+                      onClick={() => navigate("/Dashboard")}
                     >
                       <span className="text-white">Dashboard</span>
                     </button>
