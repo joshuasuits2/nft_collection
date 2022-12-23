@@ -77,8 +77,6 @@ const HeaderStyles = styled.div`
 const HeaderAuth = ({ handleSignOut, userId, ...props }) => {
   const navigate = useNavigate();
   const { userName, userType, userImage } = useAuth();
-  console.log("userName: ", userName);
-  console.log("userType: ", userType);
   const { show, setShow, nodeRef: nodeRefUser } = useClickOutSide();
   const { http, token } = AuthUser();
 
