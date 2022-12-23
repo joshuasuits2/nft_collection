@@ -1,8 +1,6 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import logo from "../../../assets/logo.png";
-import { MdTopic } from "react-icons/md";
-
 const Dashboard = () => {
   return (
     <div className="flex h-screen w-screen bg-[#30373f] font-[400]">

@@ -14,13 +14,13 @@ const CheckStyles = styled.div`
     width: 36px;
     display: inline-block;
     border: 4px solid rgba(255, 255, 255, 0.2);
-    border-left-color: #5df875;
+    border-left-color: #4df6a1;
     border-radius: 50%;
     animation: rotate 1s linear infinite;
   }
   .checked-label-active {
     animation: none;
-    border-color: #5df875;
+    border-color: #4df6a1;
     transition: border 0.5s ease-out;
   }
 
@@ -29,7 +29,7 @@ const CheckStyles = styled.div`
   }
   .checked-icon-label-active {
     animation: none;
-    border-color: #5df875;
+    border-color: #4df6a1;
     transition: border 0.5s ease-out;
   }
 
@@ -41,8 +41,8 @@ const CheckStyles = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-130%, -22%) scaleX(-1) rotate(135deg);
-    border-top: 3.5px solid #5df875;
-    border-right: 3.5px solid #5df875;
+    border-top: 3.5px solid #4df6a1;
+    border-right: 3.5px solid #4df6a1;
     transform-origin: left top;
     animation: check-icon 1s ease;
   }

@@ -39,7 +39,6 @@ const CollectionStats = () => {
   useEffect(() => {
     (async () => {
       const res = await axios.get(`${baseURL}/api/collections/top`);
-      console.log(res?.data?.collections);
       setCollections(res?.data?.collections);
     })();
   }, []);

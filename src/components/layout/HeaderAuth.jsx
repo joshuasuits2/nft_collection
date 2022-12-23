@@ -11,6 +11,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import useAuth from "../../hooks/useAuth";
 import AuthUser from "../../config/AuthUser";
 import axios from "axios";
+import { useCallback } from "react";
 
 const ListLink = [
   {
@@ -75,9 +76,9 @@ const HeaderStyles = styled.div`
   }
 `;
 
-const HeaderAuth = ({ handleSignOut, ...props }) => {
+const HeaderAuth = ({ handleSignOut, userId, ...props }) => {
   const navigate = useNavigate();
-  const { userName, userImage, userId } = useAuth();
+  const { userName, userImage } = useAuth();
   const { show, setShow, nodeRef: nodeRefUser } = useClickOutSide();
   const { http, token } = AuthUser();
 
@@ -95,9 +96,7 @@ const HeaderAuth = ({ handleSignOut, ...props }) => {
           const res = await http?.get(`/notifies?user_id=${userId}`);
           setShowNotification(res?.data.notifies);
           console.log(res?.data.notifies);
-        } catch (error) {
-          console.log(error);
-        }
+        } catch (error) {}
       }
     })();
   }, [userId]);
@@ -121,8 +120,8 @@ const HeaderAuth = ({ handleSignOut, ...props }) => {
               },
             }
           )
-          .then((res) => console.log(res))
-          .catch((err) => console.log(err));
+          .then((res) => {})
+          .catch((err) => {});
       }
     })();
   };
@@ -292,14 +291,23 @@ const HeaderAuth = ({ handleSignOut, ...props }) => {
                         .map((item, index) => (
                           <div
                             key={item.id}
-                            className="mt-5 hover:bg-slate-500 text-sm hover:bg-opacity-10 transition-all cursor-pointer w-full px-3 py-4 rounded-md font-[500] flex items-center"
+                            className="mt-5 hover:bg-slate-500 text-sm hover:bg-opacity-10 transition-all cursor-pointer w-full p-3 rounded-md font-[500] flex items-center"
                           >
-                            <span className="font-[300]">{item.notify}</span>
+                            <img
+                              src={`${baseURL}/storage/nftImages/${
+                                item.notify.split("\n")[1]
+                              }`}
+                              alt=""
+                              className="mr-3 w-[50px] h-[50px] rounded-lg object-cover"
+                            />
+                            <span className="font-[300]">
+                              {item.notify.split("\n")[0]}
+                            </span>
                             <button
                               onClick={handleMarkAsRead(item.id, index)}
-                              className="inline-flex items-center justify-center font-sans font-semibold tracking-wide text-white rounded-full "
+                              className="inline-flex items-center justify-center font-sans font-semibold tracking-wide text-white rounded-full"
                             >
-                              {item.status === 0 ? (
+                              {item.seen === 0 ? (
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
                                   width="25"

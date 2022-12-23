@@ -58,7 +58,7 @@ const Topics = () => {
                 ))}
             </table>
             <div className="w-full ml-auto max-w-[200px]">
-              <button className="top-[10%] right-0 mt-5 w-full inline-flex items-center justify-center px-8 py-4 font-sans font-semibold text-white bg-[#906be7] rounded-lg h-[53px]">
+              <button className="top-[10%] right-0 mt-5 w-full inline-flex items-center justify-center px-8 py-4 font-sans font-semibold text-white bg-[#4df6a1] rounded-lg h-[53px]">
                 + Add New Item
               </button>
             </div>
