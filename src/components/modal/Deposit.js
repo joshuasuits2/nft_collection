@@ -9,6 +9,12 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
+
+const schema = Yup.object({
+  balance: Yup.string().required("Please enter your number"),
+}).required();
 
 //createPortal
 const Deposit = ({
@@ -25,8 +31,10 @@ const Deposit = ({
     handleSubmit,
     register,
     reset,
-    formState: { isValid },
-  } = useForm();
+    formState: { errors, isValid },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const onSubmit = async (values) => {
     setIsSubmit(true);
@@ -91,9 +99,7 @@ const Deposit = ({
           </span>
           <div className="mt-4 flex gap-x-3 items-center">
             <CurrencyInput
-              id="input-example"
               {...register("balance")}
-              name="input-name"
               placeholder="Please enter a number"
               decimalsLimit={2}
               onValueChange={(value, name) =>
@@ -103,6 +109,11 @@ const Deposit = ({
             />
             <span className="font-[500]">USD</span>
           </div>
+          {errors?.balance && (
+            <p className="mt-2 text-sm font-[300] text-red-500">
+              {errors?.balance?.message}
+            </p>
+          )}
           <div className="mt-4 flex gap-x-3 items-center">
             <img src={transfer} alt="" className="w-4 h-4 object-cover" />
             {!exchange || exchange === "NaN" ? null : (

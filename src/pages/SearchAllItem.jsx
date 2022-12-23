@@ -93,13 +93,13 @@ const SearchAllItem = () => {
                     key={category.id}
                     srcTop={`${baseURL}/storage/nftImages/${category.url_image_nft}`}
                     name={category.name}
-                    owner={`by ${category.owner.name}`}
-                    srcCoin={category.coin}
+                    owner={category.owner.name}
                     price={category.price}
-                    remaining={"22d 12h 12m 12s"}
+                    remaining={category.updated_at}
                     crypto={category.crypto_id}
                     id={category.id}
                     status={category.status}
+                    coin={category.crypto}
                   ></Card>
                 ))}
               {allNfts?.length === 0 && <span>No result was found!</span>}
