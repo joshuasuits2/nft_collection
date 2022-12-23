@@ -10,6 +10,7 @@ import { baseURL } from "../../config/getConfig";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import useAuth from "../../hooks/useAuth";
 import AuthUser from "../../config/AuthUser";
+import axios from "axios";
 
 const ListLink = [
   {
@@ -78,7 +79,7 @@ const HeaderAuth = ({ handleSignOut, ...props }) => {
   const navigate = useNavigate();
   const { userName, userImage, userId } = useAuth();
   const { show, setShow, nodeRef: nodeRefUser } = useClickOutSide();
-  const { http } = AuthUser();
+  const { http, token } = AuthUser();
 
   const {
     show: showNotif,
@@ -91,7 +92,7 @@ const HeaderAuth = ({ handleSignOut, ...props }) => {
     (async () => {
       if (userId) {
         try {
-          const res = await http?.get(`/notifies`);
+          const res = await http?.get(`/notifies?user_id=${userId}`);
           setShowNotification(res?.data.notifies);
           console.log(res?.data.notifies);
         } catch (error) {
@@ -100,6 +101,31 @@ const HeaderAuth = ({ handleSignOut, ...props }) => {
       }
     })();
   }, [userId]);
+
+  const handleMarkAsRead = (id, index) => {
+    (async () => {
+      if (userId) {
+        await axios
+          .post(
+            `${baseURL}/api/notifies/${id}?_method=PUT`,
+            {
+              user_id: userId,
+              notify: notifications[index]?.notify,
+              seen: parseInt(1),
+            },
+            {
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                authorization: `Bearer ${token}`,
+              },
+            }
+          )
+          .then((res) => console.log(res))
+          .catch((err) => console.log(err));
+      }
+    })();
+  };
 
   useEffect(() => {
     const header = document.getElementById("header");
@@ -111,6 +137,7 @@ const HeaderAuth = ({ handleSignOut, ...props }) => {
         header.classList.remove("header-fixed");
       }
     };
+
     window.onscroll = function () {
       handleFixed();
     };
@@ -192,7 +219,7 @@ const HeaderAuth = ({ handleSignOut, ...props }) => {
                   </div>
                 )}
                 {show === true ? (
-                  <div className="transition-all duration-100 absolute top-[150%] rounded-lg right-0 min-w-[220px] p-3 shadow-lg bg-[#ffffff] text-[#141418]">
+                  <div className="transition-all duration-100 absolute top-[150%] rounded-lg -right-[30px] min-w-[220px] p-3 shadow-lg bg-[#ffffff] text-[#141418]">
                     <span className="px-3 font-bold">
                       Hello {userName.split(" ")[0]}!
                     </span>
@@ -229,27 +256,66 @@ const HeaderAuth = ({ handleSignOut, ...props }) => {
                 onClick={() => setShowNotif(!showNotif)}
               >
                 <div
-                  className="w-[35px] bg-white p-1 relative h-[35px] grid place-items-center rounded-full rotate-[-15deg]"
+                  className="w-[35px] bg-white p-1 relative h-[35px] grid place-items-center rounded-full"
                   ref={nodeRefNotif}
                 >
                   <img
                     src={bell}
                     alt=""
-                    className="w-[80%] h-[80%] object-cover"
+                    className="w-[80%] h-[80%] object-cover rotate-[-15deg]"
                   />
+                  {notifications?.length > 0 && (
+                    <div
+                      className={`flex items-center justify-center w-[18px] h-[18px] rounded-full bg-red-500 absolute -top-[5px] -right-[5px] text-[12px] ${
+                        notifications?.filter((item) => item.seen === 0)
+                          .length === 0
+                          ? "hidden"
+                          : "block"
+                      }`}
+                    >
+                      <span className="px-3 font-[400]">
+                        {
+                          notifications?.filter((item) => item.seen === 0)
+                            .length
+                        }
+                      </span>
+                    </div>
+                  )}
                 </div>
                 {showNotif === true ? (
-                  <div className="transition-all duration-100 absolute top-[150%] rounded-lg right-0 min-w-[220px] p-3 shadow-lg bg-[#ffffff] text-[#141418] flex flex-col">
+                  <div className="transition-all duration-100 absolute top-[150%] rounded-lg -right-[130px] w-[360px] p-3 shadow-lg bg-[#ffffff] text-[#141418] flex flex-col">
                     <span className="px-3 font-bold">Notification</span>
                     {notifications.length > 0 &&
-                      notifications.map((item) => (
-                        <div
-                          key={item.id}
-                          className="hover:bg-slate-500 text-sm hover:bg-opacity-10 transition-all cursor-pointer w-full px-3 py-4 rounded-md font-[500] "
-                        >
-                          Favorites
-                        </div>
-                      ))}
+                      notifications
+                        .slice(0)
+                        .reverse()
+                        .map((item, index) => (
+                          <div
+                            key={item.id}
+                            className="mt-5 hover:bg-slate-500 text-sm hover:bg-opacity-10 transition-all cursor-pointer w-full px-3 py-4 rounded-md font-[500] flex items-center"
+                          >
+                            <span className="font-[300]">{item.notify}</span>
+                            <button
+                              onClick={handleMarkAsRead(item.id, index)}
+                              className="inline-flex items-center justify-center font-sans font-semibold tracking-wide text-white rounded-full "
+                            >
+                              {item.status === 0 ? (
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="25"
+                                  height="25"
+                                  fill="#c084fc"
+                                  className="bi bi-check-circle-fill"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                                </svg>
+                              ) : (
+                                ""
+                              )}
+                            </button>
+                          </div>
+                        ))}
                   </div>
                 ) : (
                   <div className="absolute"></div>

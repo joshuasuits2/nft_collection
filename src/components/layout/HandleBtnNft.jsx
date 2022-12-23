@@ -71,8 +71,10 @@ const HandleBtnNft = ({
         <div className="deal mt-5 flex gap-x-8">
           {nft.status === 1 && statusListing === true && (
             <button
+              type="submit"
               onClick={() => {
                 setShowModal(true);
+                navigate("/profile");
               }}
               className="translate-y-5 w-[150px] h-[55px] font-[500] bg-[#c084fc] rounded-lg text-[#fff] active:bg-opacity-80 transition-all"
             >
@@ -81,6 +83,7 @@ const HandleBtnNft = ({
           )}
           {nft.status === 1 && statusListing === false && (
             <button
+              type="submit"
               onClick={() => {
                 handleCancel();
                 setTimeout(() => {
@@ -94,8 +97,10 @@ const HandleBtnNft = ({
           )}
           {nft.status === 0 && statusListing === false && (
             <button
+              type="submit"
               onClick={() => {
                 setShowModal(true);
+                navigate("/profile");
               }}
               className="translate-y-5 w-[150px] h-[55px] font-[500] bg-[#c084fc] rounded-lg text-[#fff] active:bg-opacity-80 transition-all"
             >
@@ -105,6 +110,7 @@ const HandleBtnNft = ({
 
           {nft.status === 0 && statusListing === true && (
             <button
+              type="submit"
               onClick={() => {
                 handleCancel();
                 setTimeout(() => {
