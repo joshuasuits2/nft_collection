@@ -40,6 +40,12 @@ const SignUpHookForm = ({ http, setToken, ...props }) => {
   const [existEmail, setExistEmail] = useState(null);
   const onSubmit = async (data) => {
     console.log(data);
+    reset({
+      name: "",
+      email: "",
+      password: "",
+      password_confirmation: "",
+    });
     http
       .post("/register", {
         ...data,
@@ -49,17 +55,9 @@ const SignUpHookForm = ({ http, setToken, ...props }) => {
         toast.success("Create Success!");
         setTimeout(() => {
           navigate("/login");
-        }, 2000);
+        }, 1000);
         setToken(res.data.remember_token);
-        if (isValid) {
-          console.log("Send data to backend");
-          reset({
-            name: "",
-            email: "",
-            password: "",
-            password_confirmation: "",
-          });
-        }
+        console.log("Send data to backend");
       })
       .catch((error) =>
         toast.warn(error?.response?.data.errors[0], {
