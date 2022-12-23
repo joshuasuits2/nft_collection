@@ -187,7 +187,7 @@ const HeaderAuth = ({ handleSignOut, userId, ...props }) => {
             </ul>
             <div className="relative flex items-center gap-[30px]">
               <div
-                className="relative z-[9] cursor-pointer"
+                className="relative z-[100] cursor-pointer"
                 ref={nodeRefUser}
                 onClick={() => setShow(!show)}
               >
@@ -219,27 +219,34 @@ const HeaderAuth = ({ handleSignOut, userId, ...props }) => {
                     <span className="px-3 font-bold">
                       Hello {userName.split(" ")[0]}!
                     </span>
-                    <NavLink
-                      to="/profile"
-                      onClick={() => {
-                        window.scrollTo({
-                          top: 0,
-                          left: 0,
-                          behavior: "smooth",
-                        });
-                      }}
-                      className="mt-3 w-full px-3 text-sm py-4 rounded-md hover:bg-slate-500 hover:bg-opacity-10 transition-all cursor-pointer font-[500] "
-                    >
-                      <div>My Profile</div>
-                    </NavLink>
-                    <div className="hover:bg-slate-500 text-sm hover:bg-opacity-10 transition-all cursor-pointer w-full px-3 py-4 rounded-md font-[500] ">
-                      Favorites
-                    </div>
-                    <div
-                      className="hover:bg-slate-500 text-sm hover:bg-opacity-10 transition-all cursor-pointer w-full px-3 py-4 rounded-md font-[500]"
-                      onClick={handleSignOut}
-                    >
-                      Sign Out
+                    <div className="mt-3">
+                      {userType === 1 && (
+                        <div
+                          onClick={() => navigate("/create")}
+                          className="text-sm hover:bg-[#c084fc] font-[500] hover:text-[white] transition-all cursor-pointer w-full px-3 py-4 rounded-md"
+                        >
+                          Create
+                        </div>
+                      )}
+                      <NavLink
+                        to="/profile"
+                        onClick={() => {
+                          window.scrollTo({
+                            top: 0,
+                            left: 0,
+                            behavior: "smooth",
+                          });
+                        }}
+                        className="w-full px-3 text-sm py-4 rounded-md hover:bg-slate-500 hover:bg-opacity-10 transition-all cursor-pointer font-[500] "
+                      >
+                        <div>My Profile</div>
+                      </NavLink>
+                      <div
+                        className="hover:bg-slate-500 text-sm hover:bg-opacity-10 transition-all cursor-pointer w-full px-3 py-4 rounded-md font-[500]"
+                        onClick={handleSignOut}
+                      >
+                        Sign Out
+                      </div>
                     </div>
                   </div>
                 ) : (
