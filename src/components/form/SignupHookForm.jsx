@@ -36,8 +36,6 @@ const SignUpHookForm = ({ http, setToken, ...props }) => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-  const [existEmail, setExistEmail] = useState(null);
   const onSubmit = async (data) => {
     console.log(data);
     reset({
@@ -52,10 +50,19 @@ const SignUpHookForm = ({ http, setToken, ...props }) => {
         type: 0,
       })
       .then((res) => {
-        toast.success("Create Success!");
+        toast.success("Create Success!", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
         setTimeout(() => {
           navigate("/login");
-        }, 1000);
+        }, 2000);
         setToken(res.data.remember_token);
         console.log("Send data to backend");
       })
