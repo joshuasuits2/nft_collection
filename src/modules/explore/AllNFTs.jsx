@@ -28,9 +28,10 @@ const AllNFTs = ({ pageRefs }) => {
     (async () => {
       try {
         const res = await axios.get(
-          `${baseURL}/api/nfts?limit=12&page=${pQuery + 1}`
+          `${baseURL}/api/nfts?includeOwner=1&limit=12&page=${pQuery + 1}`
         );
         setNfts(res?.data?.nfts);
+        console.log("res?.data?.nfts: ", res?.data?.nfts);
       } catch (error) {
         console.log(error);
       }
@@ -74,7 +75,6 @@ const AllNFTs = ({ pageRefs }) => {
             type="button"
             onClick={() => {
               buildPagination(p);
-              console.log("Clicked");
               setQuery(p);
             }}
             className={`item w-6 h-6 rounded-full  ${
