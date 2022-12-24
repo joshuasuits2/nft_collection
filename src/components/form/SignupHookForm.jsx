@@ -145,9 +145,9 @@ const SignUpHookForm = ({ http, setToken, ...props }) => {
             placeholder="Confirm your password"
             id="password_confirmation"
           />
-          {errors?.password && (
+          {errors?.password_confirmation && (
             <p className="text-sm font-[300] text-red-500">
-              {errors?.password?.message}
+              {errors?.password_confirmation?.message}
             </p>
           )}
         </div>
