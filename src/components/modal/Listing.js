@@ -60,7 +60,7 @@ const Listing = ({
 
       <div className="relative w-[450px] rounded-lg bg-white flex flex-col items-center justify-center">
         <div
-          className={`transition-all duration-500 w-full h-[370px] flex flex-col bg-white z-10 p-10 rounded-lg shadow-2xl text-[#141418]`}
+          className={`transition-all duration-500 w-full flex flex-col bg-white z-10 p-10 rounded-lg shadow-2xl text-[#141418]`}
         >
           <span
             className="absolute top-3 right-3 cursor-pointer"
@@ -83,6 +83,9 @@ const Listing = ({
                 placeholder={`${(parseFloat(nft.price) + 0.01).toFixed(3)} ETH`}
                 onChange={(e) => setPriceInput(e.target.value)}
               />
+              {!isNaN(+priceInput) === false && (
+                <span className="mt-3 text-red-500">Please enter a number</span>
+              )}
             </div>
           </div>
           <button
@@ -93,7 +96,11 @@ const Listing = ({
                 handleCloseListing();
               }, 500);
             }}
-            className="mt-8 inline-flex items-center justify-center px-8 py-4 font-sans font-semibold tracking-wide text-white bg-[#c084fc] rounded-lg h-[53px]"
+            className={`mt-8 inline-flex items-center justify-center px-8 py-4 font-sans font-semibold tracking-wide text-white bg-[#c084fc] rounded-lg h-[53px] ${
+              priceInput.length === 0 || !isNaN(+priceInput) === false
+                ? "opacity-60 pointer-events-none"
+                : ""
+            }`}
           >
             Accept
           </button>
