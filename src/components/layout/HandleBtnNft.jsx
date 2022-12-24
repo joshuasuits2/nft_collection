@@ -6,64 +6,23 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import Listing from "../modal/Listing";
+import DeleteNft from "../modal/DeleteNft";
+import Canceling from "../modal/Canceling";
 
 const HandleBtnNft = ({
   nft,
   userId,
   userName,
   token,
+  handelUpdate = () => {},
   handleShowBuyNow = () => {},
   ...props
 }) => {
   const [statusListing, setStatusListing] = useState(!!nft.status);
-  const [showModal, setShowModal] = useState(false);
-  const navigate = useNavigate();
-  const handleCancel = async () => {
-    try {
-      await axios.put(
-        `${baseURL}/api/nfts/${nft?.id}`,
-        {
-          name: nft.name,
-          description: nft.description,
-          reaction: nft.reaction,
-          price: nft.price,
-          crypto_id: nft.crypto_id,
-          owner_id: nft.owner.id,
-          creator_id: nft.creator.id,
-          collection_id: nft.collection.id,
-          status: 0,
-        },
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      toast.success("Canceled");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const [showModalListing, setShowModalListing] = useState(false);
+  const [showModalDeleting, setShowModalDeleting] = useState(false);
+  const [showModalCanceling, setShowModalCanceling] = useState(false);
 
-  const handleDelete = async () => {
-    try {
-      await axios.delete(`${baseURL}/api/nfts/${nft?.id}`, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          authorization: `Bearer ${token}`,
-        },
-      });
-      toast.success("Deleted!");
-      setTimeout(() => {
-        navigate("/profile");
-      }, 1000);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   return (
     <>
       {nft?.owner?.id === userId && (
@@ -72,10 +31,7 @@ const HandleBtnNft = ({
             <button
               type="submit"
               onClick={() => {
-                handleCancel();
-                setTimeout(() => {
-                  setStatusListing(false);
-                }, 2000);
+                setShowModalCanceling(true);
               }}
               className="translate-y-5 w-[150px] h-[55px] font-[500] bg-[#e9e9e9] rounded-lg text-[#141418] active:bg-opacity-80 transition-all"
             >
@@ -87,7 +43,7 @@ const HandleBtnNft = ({
             <button
               type="submit"
               onClick={() => {
-                setShowModal(true);
+                setShowModalListing(true);
               }}
               className="translate-y-5 w-[150px] h-[55px] font-[500] bg-[#c084fc] rounded-lg text-[#fff] active:bg-opacity-80 transition-all"
             >
@@ -96,7 +52,9 @@ const HandleBtnNft = ({
           )}
 
           <button
-            onClick={handleDelete}
+            onClick={() => {
+              setShowModalDeleting(true);
+            }}
             className="translate-y-5 w-[150px] h-[55px] font-[500] bg-[#d6454c] rounded-lg text-[#fff]"
           >
             Delete
@@ -157,12 +115,28 @@ const HandleBtnNft = ({
         </div>
       )}
       <Listing
-        open={showModal}
+        openListing={showModalListing}
         nft={nft}
+        handelUpdate={handelUpdate}
         token={token}
-        handleClose={() => setShowModal(false)}
+        handleCloseListing={() => setShowModalListing(false)}
         handleSetStatusListing={() => {
           setStatusListing(true);
+        }}
+      />
+      <DeleteNft
+        openDeleting={showModalDeleting}
+        nft={nft}
+        token={token}
+        handleCloseDeleting={() => setShowModalDeleting(false)}
+      />
+      <Canceling
+        openCanceling={showModalCanceling}
+        nft={nft}
+        token={token}
+        handleCloseCanceling={() => setShowModalCanceling(false)}
+        handleSetStatusListing={() => {
+          setStatusListing(false);
         }}
       />
       <ToastContainer autoClose={800} />

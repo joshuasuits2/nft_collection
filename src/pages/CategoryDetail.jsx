@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import PageContainer from "../components/layout/PageContainer";
 import styled from "styled-components";
 import Footer from "../components/layout/Footer";
@@ -78,6 +78,7 @@ const CategoryDetail = () => {
   const navigate = useNavigate();
   let params = new URLSearchParams(slug);
   let slugValue = params.get("query");
+  const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
   const { token } = AuthUser();
 
   useEffect(() => {
@@ -89,7 +90,7 @@ const CategoryDetail = () => {
         navigate("/error");
       }
     })();
-  }, [navigate, slugValue]);
+  }, [navigate, slugValue, reducerValue]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -191,6 +192,7 @@ const CategoryDetail = () => {
                   </div>
                 </div>
                 <HandleBtnNft
+                  handelUpdate={() => forceUpdate()}
                   nft={nft}
                   token={token}
                   userId={userId}

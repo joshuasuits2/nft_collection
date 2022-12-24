@@ -1,12 +1,12 @@
 import React from "react";
 
-const CloseIcon = () => {
+const CloseIcon = ({ color = "#c084fc", ...props }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="25"
       height="25"
-      fill="#c084fc"
+      fill={color}
       className="bi bi-x-circle-fill"
       viewBox="0 0 16 16"
     >
