@@ -40,10 +40,10 @@ const DetailInfoNFT = ({ CTA, tokenID, nftId, ...props }) => {
           <span className="text-gradient font-bold">History transactions:</span>
           <div className="mt-5 flex gap-x-5 w-full">
             <span className="flex-[50%] text-[#FBFF2A] text-[16px]">
-              Buyer_id
+              Buyer
             </span>
             <span className="flex-[50%] text-[#FBFF2A] text-[16px]">
-              Seller_id
+              Seller
             </span>
             <span className="flex-[40%] text-[#FBFF2A] text-[16px]">Price</span>
             <span className="flex-[40%] text-[#FBFF2A] text-[16px]">Time</span>
