@@ -69,7 +69,7 @@ const TabCollection = ({ topics, loadingTopics, ...props }) => {
     setLoadingCollection(true);
     (async () => {
       const res = await axios.get(
-        `${baseURL}/api/collections?topicName=${tabQuery}&limit=9&page=${
+        `${baseURL}/api/collections?topicName=${tabQuery}&limit=6&page=${
           pQuery + 1
         }`
       );

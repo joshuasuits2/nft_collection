@@ -46,20 +46,28 @@ const AllNFTs = ({ pageRefs }) => {
       <Heading alignItems={"start"}>ALL NFTs</Heading>
       <div className="grid grid-cols-4 gap-x-[50px] gap-y-[70px]">
         {nfts.length > 0 &&
-          nfts.map((category) => (
-            <Card
-              key={category.id}
-              srcTop={`${baseURL}/storage/nftImages/${category.url_image_nft}`}
-              name={category?.name}
-              owner={category?.owner?.name}
-              price={category?.price}
-              remaining={category?.updated_at}
-              crypto={category?.crypto_id}
-              id={category?.id}
-              coin={category?.crypto}
-              status={category.status}
-            />
-          ))}
+          nfts
+            .sort(function (a, b) {
+              var keyA = new Date(a.updated_at),
+                keyB = new Date(b.updated_at);
+              if (keyA < keyB) return 1;
+              if (keyA > keyB) return -1;
+              return 0;
+            })
+            .map((category) => (
+              <Card
+                key={category.id}
+                srcTop={`${baseURL}/storage/nftImages/${category.url_image_nft}`}
+                name={category?.name}
+                owner={category?.owner?.name}
+                price={category?.price}
+                remaining={category?.updated_at}
+                crypto={category?.crypto_id}
+                id={category?.id}
+                coin={category?.crypto}
+                status={category.status}
+              />
+            ))}
       </div>
       <PaginationStyles className="mt-[83px] flex gap-x-5 justify-end">
         <button

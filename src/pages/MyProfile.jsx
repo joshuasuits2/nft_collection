@@ -55,6 +55,7 @@ const MyProfile = () => {
   const [showModal, setShowModal] = useState(false);
   const [myCollection, setMyCollection] = useState([]);
   const [nfts, setNfts] = useState([]);
+  const [countImages, setCountImages] = useState(0);
 
   const { image: cover, handleSelectImage: handleSelectCover } =
     useImageUpload();
@@ -64,16 +65,23 @@ const MyProfile = () => {
   const displayTokenUser = `0x${token?.slice(0, 10).toLowerCase()}...${token
     ?.slice(40, 44)
     .toLowerCase()}`;
-
   useEffect(() => {
     (async () => {
-      const res = await axios.get(`${baseURL}/api/nfts?includeOwner=1`);
+      const res = await axios.get(
+        `${baseURL}/api/nfts?includeOwner=1&limit=1000`
+      );
       const nfts = res?.data?.nfts;
+      console.log(nfts);
       setNfts(nfts);
+      const countImagesTemp = nfts?.filter(
+        (item) => item.owner_id === userId
+      ).length;
+      console.log("countImagesTemp : ", countImagesTemp);
+      setCountImages(countImagesTemp);
     })();
   }, [userId]);
 
-  let countImages = nfts?.filter((item) => item.owner_id === userId).length;
+  console.log("userId: ", userId);
 
   useEffect(() => {
     (async () => {

@@ -133,9 +133,9 @@ const UserProfile = () => {
                     </p>
                   </div>
                   <div className="flex mt-5 gap-x-[30px]">
-                    <span>10,5k followers</span>
+                    {/* <span>10,5k followers</span>
                     <span>150 following</span>
-                    <span>34 images</span>
+                    <span>34 images</span> */}
                   </div>
                 </div>
               </div>

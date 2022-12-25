@@ -305,7 +305,7 @@ const HeaderAuth = ({ handleSignOut, userId, ...props }) => {
                                 alt=""
                                 className="mr-3 w-[50px] h-[50px] rounded-lg object-cover"
                               />
-                              <span className="font-[300]">
+                              <span className="mr-3 font-[300]">
                                 {item.notify.split("\n")[0]}
                               </span>
                               <button
